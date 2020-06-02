@@ -96,6 +96,17 @@ public class BrandController {
         return brandService.findBrandByCid(cid);
     }
 
+    /**
+     * 根据品牌id 查询品牌
+     * @param id
+     * @return
+     */
+    @RequestMapping("findBrandById")
+    public Brand findBrandById(@RequestParam("id")Long id){
+
+        return brandService.findBrandById(id);
+    }
+
 
 
 }

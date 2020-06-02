@@ -21,6 +21,10 @@ public class PageResult<T> {
     //总页数
     private Integer totalPage;
 
+
+    public PageResult() {
+    }
+
     public PageResult(Long total) {
         this.total = total;
     }

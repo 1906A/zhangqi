@@ -118,48 +118,39 @@
         </div>
         <!--selector-->
         <div class="clearfix selector">
-            <div class="type-wrap">
-                <div class="fl key">分类</div>
+            <div class="type-wrap" v-for="f in filters" v-show="f.key=='分类'">
+                <div class="fl key">{{f.key}}</div>
                 <div class="fl value">
-                    <ul class="type-list">
+                    <ul class="type-list" v-for="opt in f.options">
                         <li>
-                            <a>手机</a>
+                            <a>{{opt.name}}</a>
                         </li>
-                        <li>
-                            <a>儿童手表</a>
-                        </li>
+
                     </ul>
                 </div>
                 <div class="fl ext"></div>
             </div>
-            <div class="type-wrap logo">
-                <div class="fl key brand">品牌</div>
+
+
+
+            <div class="type-wrap logo" v-for="f in filters" v-show="f.key=='品牌'">
+                <div class="fl key brand">{{f.key}}</div>
                 <div class="value logos">
-                    <ul class="logo-list">
-                        <li><img src="img/_/phone01.png" /></li>
-                        <li><img src="img/_/phone02.png" /></li>
-                        <li><img src="img/_/phone03.png" /></li>
-                        <li><img src="img/_/phone04.png" /></li>
-                        <li><img src="img/_/phone05.png" /></li>
-                        <li><img src="img/_/phone06.png" /></li>
-                        <li><img src="img/_/phone07.png" /></li>
-                        <li><img src="img/_/phone08.png" /></li>
-                        <li><img src="img/_/phone09.png" /></li>
-                        <li><img src="img/_/phone10.png" /></li>
-                        <li><img src="img/_/phone11.png" /></li>
-                        <li><img src="img/_/phone12.png" /></li>
-                        <li><img src="img/_/phone13.png" /></li>
-                        <li><img src="img/_/phone14.png" /></li>
-                        <li><img src="img/_/phone05.png" /></li>
-                        <li><img src="img/_/phone06.png" /></li>
-                        <li><img src="img/_/phone07.png" /></li>
-                        <li style="text-align: center"><a style="line-height: 30px; font-size: 12px" href="#">黑马</a></li>
+                    <ul class="logo-list" >
+                        <li v-for="opt in f.options"><img :src="opt.image" v-show="opt.image!=''" /></li>
+                        <li v-for="opt in f.options" style="text-align: center"v-show="opt.image==''"><a style="line-height: 30px; font-size: 12px" href="#">{{opt.name}}</a></li>
                     </ul>
                 </div>
                 <div class="fl ext">
                     <a href="javascript:void(0);" class="sui-btn">多选</a>
                 </div>
             </div>
+
+
+
+
+
+
             <div class="type-wrap">
                 <div class="fl key">网络制式</div>
                 <div class="fl value">
@@ -198,6 +189,9 @@
                 </div>
                 <div class="fl ext"></div>
             </div>
+
+
+
             <div class="type-wrap">
                 <div class="fl key">显示屏尺寸</div>
                 <div class="fl value">
@@ -212,6 +206,9 @@
                 </div>
                 <div class="fl ext"></div>
             </div>
+
+
+
             <div class="type-wrap">
                 <div class="fl key">摄像头像素</div>
                 <div class="fl value">
@@ -235,6 +232,9 @@
                 </div>
                 <div class="fl ext"></div>
             </div>
+
+
+
             <div class="type-wrap">
                 <div class="fl key">价格</div>
                 <div class="fl value">
@@ -262,6 +262,16 @@
                 <div class="fl ext">
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
+
             <div class="type-wrap" style="text-align: center">
                 <v-btn small flat>
                     更多<v-icon>arrow_drop_down</v-icon>
@@ -461,7 +471,9 @@
             goodsList:[],
             total:0, //总条数
             totalPage:0, //总页数,
-            toPage:1  //要跳转得页数
+            toPage:1 , //要跳转得页数
+            filters: []
+
         },
         methods:{
             orderBy(v,s){
@@ -496,17 +508,27 @@
             },
             loaddata() {
                 ly.http.post("/search/search/page", this.search)
-                    .then((res) => {
-                        console.info(res)
+                    .then(({data}) => {
+                        console.info(data)
                         //将当前得总条数数赋值给total
-                        this.total=res.data.total;
+                        this.total=data.total;
                         //将当前得总页数赋值给totalPage
-                        this.totalPage=res.data.totalPage;
-                        res.data.items.forEach(goods=>{
+                        this.totalPage=data.totalPage;
+                        data.items.forEach(goods=>{
                             goods.skus=JSON.parse(goods.skus);
                             goods.selected =goods.skus[0];
                         });
-                        this.goodsList=res.data.items;
+                        this.goodsList=data.items;
+                        this.filters.push({
+                            key: "分类",
+                            options:data.categoryList
+
+                        });
+                        this.filters.push({
+                            key: "品牌",
+                            options:data.brandList
+                        });
+
                     }).catch()
             }
         },
