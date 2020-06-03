@@ -1,5 +1,7 @@
 package com.leyou.pojo;
 
+import java.util.Map;
+
 public class SearchRequest {
     private String key;// 搜索条件
 
@@ -7,6 +9,7 @@ public class SearchRequest {
 
     private String SortBy; //排序字段
 
+    private Map<String,Object>  filter;
     public String getSortBy() {
         return SortBy;
     }
@@ -53,4 +56,13 @@ public class SearchRequest {
     public Integer getSize() {
         return DEFAULT_SIZE;
     }
+
+    public Map<String, Object> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Map<String, Object> filter) {
+        this.filter = filter;
+    }
+
 }

@@ -17,6 +17,8 @@ public class CORSConfig {
         //core配置
         corsConfiguration.addAllowedOrigin("http://manage.leyou.com");
         corsConfiguration.addAllowedOrigin("http://www.leyou.com");
+        corsConfiguration.addAllowedOrigin("http://127.0.0.1:9002");
+        corsConfiguration.addAllowedOrigin("http://zhangqi.free.idcfengye.com");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowCredentials(true);
