@@ -106,7 +106,7 @@
             <!--已选择过滤项-->
             <ul class="tags-choose">
                 <li class="tag">
-                    品牌:<span style="color: red">apple</span>
+                    品牌:<span style="color: #ff0000">apple</span>
                     <i class="sui-icon icon-tb-close"></i>
                 </li>
                 <li class="tag">
@@ -118,7 +118,7 @@
         </div>
         <!--selector-->
         <div class="clearfix selector">
-            <div class="type-wrap" v-for="(f,index) in filters" v-if="f.key!='品牌'" >
+            <div class="type-wrap" v-for="(f,index) in filters" v-if="f.key!='品牌'" v-show="show || index<5"  >
                 <div class="fl key">{{f.key}}</div>
                 <div class="fl value">
                     <ul class="type-list">
@@ -150,11 +150,11 @@
 
 
 
-            <div class="type-wrap" style="text-align: center">
-                <v-btn small flat>
+            <div class="type-wrap " style="text-align: center">
+                <v-btn small flat  @click="show=true"  v-show="!show">
                     更多<v-icon>arrow_drop_down</v-icon>
                 </v-btn>
-                <v-btn small="" flat>
+                <v-btn  small="" flat  @click="show=false" v-show="show">
                     收起<v-icon>arrow_drop_up</v-icon>
                 </v-btn>
             </div>
@@ -193,7 +193,8 @@
                     <li class="yui3-u-1-5" v-for="goods in goodsList" :key="goods.id">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <a href="item.html" target="_blank"><img :src="goods.selected.images" height="200"/></a>
+                                <!--静态页面化-->
+                                <a :href="'item/'+goods.id+'.html'" target="_blank"><img :src="goods.selected.images" height="200"/></a>
                                 <ul class="skus">
                                     <li :class="{selected:sku.id == goods.selected.id}" v-for="sku in goods.skus"
                                    :key="sku.id" @mouseOver="goods.selected=sku" @click="goods.selected=sku">

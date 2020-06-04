@@ -10,6 +10,7 @@
         <module>ly-common</module>
         <module>ly-load</module>
         <module>ly-searchservice</module>
+        <module>ly-goods-web</module>
 
 
     </modules>
