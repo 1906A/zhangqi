@@ -425,13 +425,14 @@
                             options:data.categoryList
 
                         });
+                        this.filters=[];
                         this.filters.push({
                             key: "品牌",
                             options:data.brandList
                         });
 
                         data.paramList.forEach(p=>{
-                            vm.filters.push(p);
+                            this.filters.push(p);
                         });
 
                     }).catch()
