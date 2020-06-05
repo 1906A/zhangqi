@@ -127,4 +127,19 @@ public class SpecController {
     }
 
 
+    /**根据三级分类id加上是否通用参数查询
+     * @param cid
+     * @return
+     */
+    @RequestMapping("findSpecParamsByCidAndGeneric")
+    public List<SpecParam>  findSpecParamsByCidAndGeneric(@RequestParam("cid")Long cid,
+                                                          @RequestParam("generic")Boolean generic
+                                                          ){
+
+        List<SpecParam> specParamList=  specParamService.findSpecParamsByCidAndGeneric(cid,generic);
+
+        return  specParamList;
+    }
+
+
 }

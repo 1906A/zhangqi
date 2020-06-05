@@ -8,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class GoodsDetailController {
@@ -58,6 +56,7 @@ public class GoodsDetailController {
      *
      * 5：规格参数详情
      * 6；三级分类
+     * 7 品牌
      * @param spuId
      * @param model
      * @return
@@ -76,20 +75,8 @@ public class GoodsDetailController {
        //一 specgroup
         List<SpecGroup> specGroupList = specClientServer.findAllSpecGroup(spu.getCid3());
         model.addAttribute("specGroupList",specGroupList);
-        //一 specparm
-        List<SpecParam> params = specClientServer.findSpecParamsByCid1(spu.getCid1());
 
-        List<SpecParam> specParamList=new ArrayList<>();
-
-        params.forEach(param -> {
-            //判断条件
-            if(!param.getGeneric()){
-                specParamList.add(param);
-            }
-
-        });
-        model.addAttribute("specParamList",specParamList);
-
+        //一 三级分类
         List<Category> categoryList= Arrays.asList(
                 categotyClientServer.findCategoryById(spu.getCid1()),
                 categotyClientServer.findCategoryById(spu.getCid2()),
@@ -97,6 +84,23 @@ public class GoodsDetailController {
         );
 
         model.addAttribute("categoryList",categoryList);
+
+
+        //一 specparm详情 根据cid 是否通用查询
+        List<SpecParam> specParamList = specClientServer.findSpecParamsByCidAndGeneric(spuId,false);
+
+        Map<Long,String> specParamMap=new HashMap<>();
+        //存的是id跟名称
+        specParamList.forEach(specParam -> {
+            specParamMap.put(specParam.getId(),specParam.getName());
+        });
+
+        model.addAttribute("specParamMap",specParamMap);
+
+        //一 品牌
+        Brand brand = brandClientServer.findBrandById(spu.getBrandId());
+        model.addAttribute("brand",brand);
+
 
         return  "item";
 
