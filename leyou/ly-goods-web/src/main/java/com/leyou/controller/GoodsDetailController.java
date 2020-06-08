@@ -72,7 +72,12 @@ public class GoodsDetailController {
         SpuDetail spuDetail = spuClientServer.findSpuDetailBySpuId(spuId);
         model.addAttribute("spuDetail",spuDetail);
 
-       //一 specgroup
+        //根据spuId查询sku
+        List<Sku> skuList = skuCilentServer.findSkuBySpuId(spuId);
+        model.addAttribute("skuList",skuList);
+
+
+       //一 specgroup 查询规格参数及组内信息
         List<SpecGroup> specGroupList = specClientServer.findAllSpecGroup(spu.getCid3());
         model.addAttribute("specGroupList",specGroupList);
 
@@ -87,8 +92,9 @@ public class GoodsDetailController {
 
 
         //一 specparm详情 根据cid 是否通用查询
-        List<SpecParam> specParamList = specClientServer.findSpecParamsByCidAndGeneric(spuId,false);
+        List<SpecParam> specParamList = specClientServer.findSpecParamsByCidAndGeneric(spu.getCid3(),false);
 
+        //规格参数的特殊属性
         Map<Long,String> specParamMap=new HashMap<>();
         //存的是id跟名称
         specParamList.forEach(specParam -> {
