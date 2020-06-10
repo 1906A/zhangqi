@@ -1,7 +1,9 @@
 package com.leyou.controller;
 
 import com.leyou.client.*;
+import com.leyou.listener.MessageListener;
 import com.leyou.pojo.*;
+import com.leyou.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,7 @@ import java.util.*;
 public class GoodsDetailController {
 
 
-    @Autowired
+   /* @Autowired
     BrandClientServer brandClientServer;
 
     @Autowired
@@ -34,9 +36,13 @@ public class GoodsDetailController {
     @Autowired
     SpuClientServer spuClientServer;
 
+*/
+  /*  @Autowired
+    TemplateEngine templateEngine;*/
 
+    //rabbit同步数据
     @Autowired
-    TemplateEngine templateEngine;
+    GoodService goodService;
 
 
     @RequestMapping("hello")
@@ -68,51 +74,16 @@ public class GoodsDetailController {
     @RequestMapping("item/{spuId}.html")
     public String item(@PathVariable("spuId") Long spuId, Model model) {
 
-        //一spu
-        Spu spu = spuClientServer.findSpuById(spuId);
-        model.addAttribute("spu", spu);
+        //获取查询数据
 
-        //一 spuDetail
-        SpuDetail spuDetail = spuClientServer.findSpuDetailBySpuId(spuId);
-        model.addAttribute("spuDetail", spuDetail);
+        Map<String, Object> map = goodService.item(spuId);
 
-        //根据spuId查询sku
-        List<Sku> skuList = skuCilentServer.findSkuBySpuId(spuId);
-        model.addAttribute("skuList", skuList);
-
-
-        //一 specgroup 查询规格参数及组内信息
-        List<SpecGroup> specGroupList = specClientServer.findAllSpecGroup(spu.getCid3());
-        model.addAttribute("specGroupList", specGroupList);
-
-        //一 三级分类
-        List<Category> categoryList = Arrays.asList(
-                categotyClientServer.findCategoryById(spu.getCid1()),
-                categotyClientServer.findCategoryById(spu.getCid2()),
-                categotyClientServer.findCategoryById(spu.getCid3())
-        );
-
-        model.addAttribute("categoryList", categoryList);
-
-
-        //一 specparm详情 根据cid 是否通用查询
-        List<SpecParam> specParamList = specClientServer.findSpecParamsByCidAndGeneric(spu.getCid3(), false);
-
-        //规格参数的特殊属性
-        Map<Long, String> paramMap = new HashMap<>();
-        //存的是id跟名称
-        specParamList.forEach(specParam -> {
-            paramMap.put(specParam.getId(), specParam.getName());
-        });
-
-        model.addAttribute("paramMap", paramMap);
-
-        //一 品牌
-        Brand brand = brandClientServer.findBrandById(spu.getBrandId());
-        model.addAttribute("brand", brand);
+        model.addAllAttributes(map);
 
         //写入文件
-        createHtml(spu, spuDetail, skuList, specGroupList, categoryList, brand, paramMap);
+        /*createHtml(spu, spuDetail, skuList, specGroupList, categoryList, brand, paramMap);
+*/
+        goodService.createHtml(spuId);
 
         return "item";
 
@@ -130,7 +101,7 @@ public class GoodsDetailController {
      * @param brand
      * @param paramMap
      */
-    private void createHtml(Spu spu, SpuDetail spuDetail, List<Sku> skuList, List<SpecGroup> specGroupList, List<Category> categoryList, Brand brand, Map<Long, String> paramMap) {
+  /*  public void createHtml(Spu spu, SpuDetail spuDetail, List<Sku> skuList, List<SpecGroup> specGroupList, List<Category> categoryList, Brand brand, Map<Long, String> paramMap) {
 
         PrintWriter writer = null;
 
@@ -159,7 +130,7 @@ public class GoodsDetailController {
         }
 
 
-    }
+    }*/
 
 
 }

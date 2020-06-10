@@ -14,7 +14,8 @@
         </select>
         <!-- Add subscript and superscript buttons -->
         <span class="ql-formats"><button class="ql-script" value="sub"></button></span>
-        <span class="ql-formats"><button class="ql-script" value="super"></button></button></span>
+        <span class="ql-formats"><button class="ql-script" value="super"></button>
+          </button></span>
         <span class="ql-formats"><button type="button" class="ql-bold"></button></span>
         <span class="ql-formats"><button type="button" class="ql-italic"></button></span>
         <span class="ql-formats"><button type="button" class="ql-blockquote"></button></span>
@@ -56,8 +57,8 @@
         type: String,
         default: 'file'
       },
-      maxUploadSize:{
-        type:Number,
+      maxUploadSize: {
+        type: Number,
         default: 1024 * 1024 * 500
       }
     },

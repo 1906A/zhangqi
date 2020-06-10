@@ -5,7 +5,7 @@
       <!--搜索框，与search属性关联-->
       <v-spacer/>
       <v-flex xs3>
-      <v-text-field label="输入关键字搜索" v-model.lazy="search" append-icon="search" hide-details/>
+        <v-text-field label="输入关键字搜索" v-model.lazy="search" append-icon="search" hide-details/>
       </v-flex>
     </v-card-title>
     <v-divider/>
@@ -43,7 +43,9 @@
           <v-toolbar-title>{{isEdit ? '修改' : '新增'}}品牌</v-toolbar-title>
           <v-spacer/>
           <!--关闭窗口的按钮-->
-          <v-btn icon @click="closeWindow"><v-icon>close</v-icon></v-btn>
+          <v-btn icon @click="closeWindow">
+            <v-icon>close</v-icon>
+          </v-btn>
         </v-toolbar>
         <!--对话框的内容，表单-->
         <v-card-text class="px-5" style="height:400px">
@@ -92,7 +94,7 @@
         }
       },
       search: { // 监视搜索字段
-        handler(newValue,oldValue) {
+        handler(newValue, oldValue) {
           this.getDataFromServer();
         }
       }
@@ -123,7 +125,7 @@
         // 把oldBrand变为null
         this.oldBrand = null;
       },
-      editBrand(oldBrand){
+      editBrand(oldBrand) {
         // 根据品牌信息查询商品分类
         this.$http.get("/item/brand/bid/" + oldBrand.id)
           .then(({data}) => {
@@ -137,7 +139,7 @@
             this.oldBrand.categories = data;
           })
       },
-      deleteBrand(brand){
+      deleteBrand(brand) {
         console.log(brand);
         this.$message.confirm('此操作将永久删除数据，是否继续?', '提示', {
           confirmButtonText: '确定删除',
@@ -146,22 +148,22 @@
         }).then(() => {
           this.$http.get("/item/brand/deleteById/" + brand.id)
             .then((res) => {
-                  this.$message.info('删除成功');
-                  this.getDataFromServer();
+              this.$message.info('删除成功');
+              this.getDataFromServer();
             })
-        }).catch(()=>{
+        }).catch(() => {
           this.$message.info('删除失败');
         })
       },
-      closeWindow(){
+      closeWindow() {
         // 重新加载数据
         this.getDataFromServer();
         // 关闭窗口
         this.show = false;
       }
     },
-    components:{
-        BrandForm
+    components: {
+      BrandForm
     }
   }
 </script>

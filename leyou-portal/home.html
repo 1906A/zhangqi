@@ -59,11 +59,16 @@
                 <div class="list-items">
                     <dl>
                         <dt><i>·</i> 订单中心</dt>
-                        <dd><a href="javascript:void(0)" @click="query.status=0" :class="{'list-active':query.status===0}">我的订单</a></dd>
-                        <dd><a href="javascript:void(0)" @click="query.status=1" :class="{'list-active':query.status===1}">待付款</a></dd>
-                        <dd><a href="javascript:void(0)" @click="query.status=2" :class="{'list-active':query.status===2}">待发货</a></dd>
-                        <dd><a href="javascript:void(0)" @click="query.status=3" :class="{'list-active':query.status===3}">待收货</a></dd>
-                        <dd><a href="javascript:void(0)" @click="query.status=4" :class="{'list-active':query.status===4}">待评价</a></dd>
+                        <dd><a href="javascript:void(0)" @click="query.status=0"
+                               :class="{'list-active':query.status===0}">我的订单</a></dd>
+                        <dd><a href="javascript:void(0)" @click="query.status=1"
+                               :class="{'list-active':query.status===1}">待付款</a></dd>
+                        <dd><a href="javascript:void(0)" @click="query.status=2"
+                               :class="{'list-active':query.status===2}">待发货</a></dd>
+                        <dd><a href="javascript:void(0)" @click="query.status=3"
+                               :class="{'list-active':query.status===3}">待收货</a></dd>
+                        <dd><a href="javascript:void(0)" @click="query.status=4"
+                               :class="{'list-active':query.status===4}">待评价</a></dd>
                     </dl>
                     <dl>
                         <dt><i>·</i> 我的中心</dt>
@@ -113,63 +118,67 @@
 
                             <!--order1-->
                             <div v-for="(o, i) in orders" :key="i">
-                            <div class="choose-title">
-                                <label data-toggle="checkbox" class="checkbox-pretty ">
-                                    <input type="checkbox" checked="checked" />
-                                    <span>{{formatDate(o.createTime)}}　订单编号：{{o.orderId}} <a>联系客服</a></span>
-                                </label>
-                                <a class="sui-btn btn-info share-btn">分享</a>
-                            </div>
-                            <table class="sui-table table-bordered order-datatable">
-                                <tbody>
-                                <tr v-for="(d,j) in o.orderDetails" :key="j">
-                                    <td width="35%">
-                                        <div class="typographic"><img width="70px" height="70px" :src="d.image"/>
-                                            <a href="#" class="block-text">包邮 {{d.title}}</a>
-                                            <span class="guige" v-for="(v,k) in JSON.parse(d.ownSpec)" :key="k">{{k+':'+ v}}</span>
-                                        </div>
-                                    </td>
-                                    <td width="5%" class="center">
-                                        <ul class="unstyled">
-                                            <li>¥{{formatPrice(d.price)}}</li>
-                                        </ul>
-                                    </td>
-                                    <td width
-                                                ="5%" class="center">{{d.num}}</td>
-                                    <td width="8%" class="center" :rowspan="o.orderDetails.length" v-if="j === 0">
-                                        <ul class="unstyled" v-if="o.status === 3">
-                                            <li>已发货</li>
-                                            <li><a>退货/退款</a></li>
-                                        </ul>
-                                    </td>
-                                    <td width="10%" class="center" :rowspan="o.orderDetails.length" v-if="j === 0">
-                                        <ul class="unstyled">
-                                            <li>¥{{formatPrice(getTotalPrice(o))}}</li>
-                                            <li>（含运费：￥0.00）</li>
-                                        </ul>
-                                    </td>
-                                    <td width="10%" class="center" :rowspan="o.orderDetails.length" v-if="j === 0">
-                                        <ul class="unstyled">
-                                            <li v-if="o.status === 1">等待买家付款</li>
-                                            <li v-if="o.status === 2">已付款</li>
-                                            <li v-if="o.status === 3">已发货</li>
-                                            <li><a href="home-orderDetail.html" class="btn">订单详情 </a></li>
-                                        </ul>
-                                    </td>
-                                    <td width="10%" class="center" :rowspan="o.orderDetails.length" v-if="j === 0">
-                                        <ul class="unstyled">
-                                            <li v-if="o.status === 1"><a href="#" class="sui-btn btn-info">立即付款</a></li>
-                                            <li v-if="o.status === 2"><a href="#" class="sui-btn btn-info">提醒发货</a></li>
-                                            <li v-if="o.status === 3"><a href="#" class="sui-btn btn-info">确认收货</a></li>
-                                            <li v-if="o.status === 3">4天23时后自动确认</li>
-                                            <li><a href="javascript:void(0)">取消订单</a></li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                <div class="choose-title">
+                                    <label data-toggle="checkbox" class="checkbox-pretty ">
+                                        <input type="checkbox" checked="checked"/>
+                                        <span>{{formatDate(o.createTime)}}　订单编号：{{o.orderId}} <a>联系客服</a></span>
+                                    </label>
+                                    <a class="sui-btn btn-info share-btn">分享</a>
+                                </div>
+                                <table class="sui-table table-bordered order-datatable">
+                                    <tbody>
+                                    <tr v-for="(d,j) in o.orderDetails" :key="j">
+                                        <td width="35%">
+                                            <div class="typographic"><img width="70px" height="70px" :src="d.image"/>
+                                                <a href="#" class="block-text">包邮 {{d.title}}</a>
+                                                <span class="guige" v-for="(v,k) in JSON.parse(d.ownSpec)" :key="k">{{k+':'+ v}}</span>
+                                            </div>
+                                        </td>
+                                        <td width="5%" class="center">
+                                            <ul class="unstyled">
+                                                <li>¥{{formatPrice(d.price)}}</li>
+                                            </ul>
+                                        </td>
+                                        <td width
+                                                    ="5%" class="center">{{d.num}}
+                                        </td>
+                                        <td width="8%" class="center" :rowspan="o.orderDetails.length" v-if="j === 0">
+                                            <ul class="unstyled" v-if="o.status === 3">
+                                                <li>已发货</li>
+                                                <li><a>退货/退款</a></li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center" :rowspan="o.orderDetails.length" v-if="j === 0">
+                                            <ul class="unstyled">
+                                                <li>¥{{formatPrice(getTotalPrice(o))}}</li>
+                                                <li>（含运费：￥0.00）</li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center" :rowspan="o.orderDetails.length" v-if="j === 0">
+                                            <ul class="unstyled">
+                                                <li v-if="o.status === 1">等待买家付款</li>
+                                                <li v-if="o.status === 2">已付款</li>
+                                                <li v-if="o.status === 3">已发货</li>
+                                                <li><a href="home-orderDetail.html" class="btn">订单详情 </a></li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center" :rowspan="o.orderDetails.length" v-if="j === 0">
+                                            <ul class="unstyled">
+                                                <li v-if="o.status === 1"><a href="#" class="sui-btn btn-info">立即付款</a>
+                                                </li>
+                                                <li v-if="o.status === 2"><a href="#" class="sui-btn btn-info">提醒发货</a>
+                                                </li>
+                                                <li v-if="o.status === 3"><a href="#" class="sui-btn btn-info">确认收货</a>
+                                                </li>
+                                                <li v-if="o.status === 3">4天23时后自动确认</li>
+                                                <li><a href="javascript:void(0)">取消订单</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
 
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="choose-order">
@@ -300,11 +309,11 @@
         el: "#account",
         data: {
             user: {},
-            orders:[],
-            query:{
-                status:0,
-                page:1,
-                rows:5
+            orders: [],
+            query: {
+                status: 0,
+                page: 1,
+                rows: 5
             }
         },
         created() {
@@ -329,32 +338,32 @@
         methods: {
             logout() {
                 // 删除cookie中的token即可
-                Cookies.remove("LY_TOKEN",{
-                    path:"/",
-                    domain:"leyou.com"
+                Cookies.remove("LY_TOKEN", {
+                    path: "/",
+                    domain: "leyou.com"
                 });
                 window.location = 'http://www.leyou.com'
             },
             gotoLogin() {
                 window.location = "login.html?returnUrl=" + window.location;
             },
-            loadOrder(){
+            loadOrder() {
                 // 查询订单信息
-                ly.http.get("/order/list?"+ ly.stringify(this.query))
-                    .then(({data:{items,total}}) => {
+                ly.http.get("/order/list?" + ly.stringify(this.query))
+                    .then(({data: {items, total}}) => {
                         this.orders = items;
                     }).catch(() => this.orders = [])
             },
-            formatDate:ly.formatDate,
+            formatDate: ly.formatDate,
             formatPrice: ly.formatPrice,
-            getTotalPrice(order){
-                return order.orderDetails.map(d => d.num * d.price).reduce((v1,v2) => v1 + v2, 0);
+            getTotalPrice(order) {
+                return order.orderDetails.map(d => d.num * d.price).reduce((v1, v2) => v1 + v2, 0);
             }
         },
-        watch:{
-            'query':{
-                deep:true,
-                handler(){
+        watch: {
+            'query': {
+                deep: true,
+                handler() {
                     this.loadOrder();
                 }
             }

@@ -7,7 +7,8 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
             (global.VeeValidate = factory());
-}(this, (function () { 'use strict';
+}(this, (function () {
+    'use strict';
 
     var MILLISECONDS_IN_HOUR = 3600000;
     var MILLISECONDS_IN_MINUTE = 60000;
@@ -16,9 +17,9 @@
         dateTimeDelimeter: /[T ]/,
         plainTime: /:/,
         YY: /^(\d{2})$/,
-        YYY: [/^([+-]\d{2})$/,/^([+-]\d{3})$/,/^([+-]\d{4})$/],
+        YYY: [/^([+-]\d{2})$/, /^([+-]\d{3})$/, /^([+-]\d{4})$/],
         YYYY: /^(\d{4})/,
-        YYYYY: [/^([+-]\d{4})/,/^([+-]\d{5})/,/^([+-]\d{6})/],
+        YYYYY: [/^([+-]\d{4})/, /^([+-]\d{5})/, /^([+-]\d{6})/],
         MM: /^-(\d{2})$/,
         DDD: /^-?(\d{3})$/,
         MMDD: /^-?(\d{2})-?(\d{2})$/,
@@ -32,6 +33,7 @@
         timezoneHH: /^([+-])(\d{2})$/,
         timezoneHHMM: /^([+-])(\d{2}):?(\d{2})$/
     };
+
     function toDate(argument, dirtyOptions) {
         if (arguments.length < 1) {
             throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
@@ -247,6 +249,7 @@
     }
 
     var MILLISECONDS_IN_MINUTE$2 = 60000;
+
     function addMinutes(dirtyDate, dirtyAmount, dirtyOptions) {
         if (arguments.length < 2) {
             throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
@@ -318,6 +321,7 @@
             other: 'almost {{count}} years'
         }
     };
+
     function formatDistance(token, count, options) {
         options = options || {};
         var result;
@@ -339,6 +343,7 @@
     }
 
     var tokensToBeShortedPattern = /MMMM|MM|DD|dddd/g;
+
     function buildShortLongFormat(format) {
         return format.replace(tokensToBeShortedPattern, function (token) {
             return token.slice(1);
@@ -380,6 +385,7 @@
         nextWeek: 'dddd [at] LT',
         other: 'L'
     };
+
     function formatRelative(token, date, baseDate, options) {
         return formatRelativeLocale[token];
     }
@@ -403,20 +409,21 @@
     }
 
     var weekdayValues = {
-        narrow: ['Su','Mo','Tu','We','Th','Fr','Sa'],
-        short: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-        long: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+        narrow: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     };
     var monthValues = {
-        short: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-        long: ['January','February','March','April','May','June','July','August','September',
-            'October','November','December']
+        short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        long: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+            'October', 'November', 'December']
     };
     var timeOfDayValues = {
-        uppercase: ['AM','PM'],
-        lowercase: ['am','pm'],
-        long: ['a.m.','p.m.']
+        uppercase: ['AM', 'PM'],
+        lowercase: ['am', 'pm'],
+        long: ['a.m.', 'p.m.']
     };
+
     function ordinalNumber(dirtyNumber, dirtyOptions) {
         var number = Number(dirtyNumber);
         var rem100 = number % 100;
@@ -485,22 +492,22 @@
         long: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
     };
     var parseWeekdayPatterns = {
-        any: [/^su/i,/^m/i,/^tu/i,/^w/i,/^th/i,/^f/i,/^sa/i]
+        any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
     };
     var matchMonthsPatterns = {
         short: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
         long: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
     };
     var parseMonthPatterns = {
-        any: [/^ja/i,/^f/i,/^mar/i,/^ap/i,/^may/i,/^jun/i,/^jul/i,/^au/i,/^s/i,/^o/i,
-            /^n/i,/^d/i]
+        any: [/^ja/i, /^f/i, /^mar/i, /^ap/i, /^may/i, /^jun/i, /^jul/i, /^au/i, /^s/i, /^o/i,
+            /^n/i, /^d/i]
     };
     var matchTimesOfDayPatterns = {
         short: /^(am|pm)/i,
         long: /^([ap]\.?\s?m\.?)/i
     };
     var parseTimeOfDayPatterns = {
-        any: [/^a/i,/^p/i]
+        any: [/^a/i, /^p/i]
     };
     var match = {
         ordinalNumbers: buildMatchPatternFn(matchOrdinalNumbersPattern),
@@ -526,6 +533,7 @@
     };
 
     var MILLISECONDS_IN_DAY$1 = 86400000;
+
     function getUTCDayOfYear(dirtyDate, dirtyOptions) {
         var date = toDate(dirtyDate, dirtyOptions);
         var timestamp = date.getTime();
@@ -576,6 +584,7 @@
     }
 
     var MILLISECONDS_IN_WEEK$2 = 604800000;
+
     function getUTCISOWeek(dirtyDate, dirtyOptions) {
         var date = toDate(dirtyDate, dirtyOptions);
         var diff = startOfUTCISOWeek(date, dirtyOptions).getTime() - startOfUTCISOWeekYear(date, dirtyOptions).getTime();
@@ -757,6 +766,7 @@
             });
         }
     };
+
     function formatTimezone(offset, delimeter) {
         delimeter = delimeter || '';
         var sign = offset > 0 ? '-' : '+';
@@ -783,6 +793,7 @@
 
     var longFormattingTokensRegExp = /(\[[^[]*])|(\\)?(LTS|LT|LLLL|LLL|LL|L|llll|lll|ll|l)/g;
     var defaultFormattingTokensRegExp = /(\[[^[]*])|(\\)?(x|ss|s|mm|m|hh|h|do|dddd|ddd|dd|d|aa|a|ZZ|Z|YYYY|YY|X|Wo|WW|W|SSS|SS|S|Qo|Q|Mo|MMMM|MMM|MM|M|HH|H|GGGG|GG|E|Do|DDDo|DDDD|DDD|DD|D|A|.)/g;
+
     function format(dirtyDate, dirtyFormatStr, dirtyOptions) {
         if (arguments.length < 2) {
             throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
@@ -886,6 +897,7 @@
         fourDigits: /^(\d{4})/,
         anyDigits: /^(\d+)/
     };
+
     function parseDecimal$1(matchResult) {
         return parseInt(matchResult[1], 10);
     }
@@ -1323,6 +1335,7 @@
     }
 
     var MILLISECONDS_IN_DAY$3 = 86400000;
+
     function setUTCISOWeekYear(dirtyDate, dirtyISOYear, dirtyOptions) {
         var date = toDate(dirtyDate, dirtyOptions);
         var isoYear = Number(dirtyISOYear);
@@ -1337,6 +1350,7 @@
     }
 
     var MILLISECONDS_IN_MINUTE$6 = 60000;
+
     function setTimeOfDay(hours, timeOfDay) {
         var isAM = timeOfDay === 0;
         if (isAM) {
@@ -1498,6 +1512,7 @@
     var MILLISECONDS_IN_MINUTE$7 = 60000;
     var longFormattingTokensRegExp$1 = /(\[[^[]*])|(\\)?(LTS|LT|LLLL|LLL|LL|L|llll|lll|ll|l)/g;
     var defaultParsingTokensRegExp = /(\[[^[]*])|(\\)?(x|ss|s|mm|m|hh|h|do|dddd|ddd|dd|d|aa|a|ZZ|Z|YYYY|YY|X|Wo|WW|W|SSS|SS|S|Qo|Q|Mo|MMMM|MMM|MM|M|HH|H|GGGG|GG|E|Do|DDDo|DDDD|DDD|DD|D|A|.)/g;
+
     function parse(dirtyDateString, dirtyFormatString, dirtyBaseDate, dirtyOptions) {
         if (arguments.length < 3) {
             throw new TypeError('3 arguments required, but only ' + arguments.length + ' present');
@@ -1631,7 +1646,7 @@
         return parsed;
     }
 
-    function after (value, ref) {
+    function after(value, ref) {
         var otherValue = ref[0];
         var inclusion = ref[1];
         var format$$1 = ref[2];
@@ -1726,58 +1741,78 @@
     };
 
     var validate = function (value, ref) {
-        if ( ref === void 0 ) ref = [];
-        var locale = ref[0]; if ( locale === void 0 ) locale = null;
+        if (ref === void 0) ref = [];
+        var locale = ref[0];
+        if (locale === void 0) locale = null;
 
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate(val, [locale]); });
+            return value.every(function (val) {
+                return validate(val, [locale]);
+            });
         }
         if (!locale) {
-            return Object.keys(alpha).some(function (loc) { return alpha[loc].test(value); });
+            return Object.keys(alpha).some(function (loc) {
+                return alpha[loc].test(value);
+            });
         }
         return (alpha[locale] || alpha.en).test(value);
     };
 
     var validate$1 = function (value, ref) {
-        if ( ref === void 0 ) ref = [];
-        var locale = ref[0]; if ( locale === void 0 ) locale = null;
+        if (ref === void 0) ref = [];
+        var locale = ref[0];
+        if (locale === void 0) locale = null;
 
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate$1(val, [locale]); });
+            return value.every(function (val) {
+                return validate$1(val, [locale]);
+            });
         }
         if (!locale) {
-            return Object.keys(alphaDash).some(function (loc) { return alphaDash[loc].test(value); });
+            return Object.keys(alphaDash).some(function (loc) {
+                return alphaDash[loc].test(value);
+            });
         }
         return (alphaDash[locale] || alphaDash.en).test(value);
     };
 
     var validate$2 = function (value, ref) {
-        if ( ref === void 0 ) ref = [];
-        var locale = ref[0]; if ( locale === void 0 ) locale = null;
+        if (ref === void 0) ref = [];
+        var locale = ref[0];
+        if (locale === void 0) locale = null;
 
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate$2(val, [locale]); });
+            return value.every(function (val) {
+                return validate$2(val, [locale]);
+            });
         }
         if (!locale) {
-            return Object.keys(alphanumeric).some(function (loc) { return alphanumeric[loc].test(value); });
+            return Object.keys(alphanumeric).some(function (loc) {
+                return alphanumeric[loc].test(value);
+            });
         }
         return (alphanumeric[locale] || alphanumeric.en).test(value);
     };
 
     var validate$3 = function (value, ref) {
-        if ( ref === void 0 ) ref = [];
-        var locale = ref[0]; if ( locale === void 0 ) locale = null;
+        if (ref === void 0) ref = [];
+        var locale = ref[0];
+        if (locale === void 0) locale = null;
 
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate$3(val, [locale]); });
+            return value.every(function (val) {
+                return validate$3(val, [locale]);
+            });
         }
         if (!locale) {
-            return Object.keys(alphaSpaces).some(function (loc) { return alphaSpaces[loc].test(value); });
+            return Object.keys(alphaSpaces).some(function (loc) {
+                return alphaSpaces[loc].test(value);
+            });
         }
         return (alphaSpaces[locale] || alphaSpaces.en).test(value);
     };
 
-    function before (value, ref) {
+    function before(value, ref) {
         var otherValue = ref[0];
         var inclusion = ref[1];
         var format$$1 = ref[2];
@@ -1799,19 +1834,23 @@
         var max = ref[1];
 
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate$4(val, [min,max]); });
+            return value.every(function (val) {
+                return validate$4(val, [min, max]);
+            });
         }
         return Number(min) <= value && Number(max) >= value;
     };
 
-    function confirmed (value, other) { return String(value) === String(other); }
+    function confirmed(value, other) {
+        return String(value) === String(other);
+    }
 
-    function unwrapExports (x) {
+    function unwrapExports(x) {
         return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
     }
 
     function createCommonjsModule(fn, module) {
-        return module = { exports: {} }, fn(module, module.exports), module.exports;
+        return module = {exports: {}}, fn(module, module.exports), module.exports;
     }
 
     var assertString_1 = createCommonjsModule(function (module, exports) {
@@ -1819,6 +1858,7 @@
             value: true
         });
         exports.default = assertString;
+
         function assertString(input) {
             var isString = typeof input === 'string' || input instanceof String;
             if (!isString) {
@@ -1835,7 +1875,7 @@
         __moduleExports: assertString_1
     });
 
-    var _assertString = ( assertString$1 && assertString ) || assertString$1;
+    var _assertString = (assertString$1 && assertString) || assertString$1;
 
     var isCreditCard_1 = createCommonjsModule(function (module, exports) {
         Object.defineProperty(exports, "__esModule", {
@@ -1843,6 +1883,7 @@
         });
         exports.default = isCreditCard;
         var _assertString2 = _interopRequireDefault(_assertString);
+
         function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : {
                 default: obj
@@ -1850,6 +1891,7 @@
         }
 
         var creditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11}|62[0-9]{14})$/;
+
         function isCreditCard(str) {
             (0, _assertString2.default)(str);
             var sanitized = str.replace(/[- ]+/g, '');
@@ -1860,7 +1902,7 @@
             var digit = void 0;
             var tmpNum = void 0;
             var shouldDouble = void 0;
-            for (var i = sanitized.length - 1;i >= 0; i--) {
+            for (var i = sanitized.length - 1; i >= 0; i--) {
                 digit = sanitized.substring(i, i + 1);
                 tmpNum = parseInt(digit, 10);
                 if (shouldDouble) {
@@ -1882,15 +1924,21 @@
     });
     var isCreditCard = unwrapExports(isCreditCard_1)
 
-    function credit_card (value) { return isCreditCard(String(value)); }
+    function credit_card(value) {
+        return isCreditCard(String(value));
+    }
 
     var validate$5 = function (value, ref) {
-        if ( ref === void 0 ) ref = [];
-        var decimals = ref[0]; if ( decimals === void 0 ) decimals = '*';
-        var separator = ref[1]; if ( separator === void 0 ) separator = '.';
+        if (ref === void 0) ref = [];
+        var decimals = ref[0];
+        if (decimals === void 0) decimals = '*';
+        var separator = ref[1];
+        if (separator === void 0) separator = '.';
 
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate$5(val, [decimals,separator]); });
+            return value.every(function (val) {
+                return validate$5(val, [decimals, separator]);
+            });
         }
         if (value === null || value === undefined || value === '') {
             return true;
@@ -1907,7 +1955,7 @@
         return parsedValue === parsedValue;
     };
 
-    function date_between (value, params) {
+    function date_between(value, params) {
         var assign, assign$1;
 
         var min$$1;
@@ -1937,7 +1985,7 @@
         return isEqual(dateVal, maxDate) || isEqual(dateVal, minDate) || isBefore(dateVal, maxDate) && isAfter(dateVal, minDate);
     }
 
-    function date_format (value, ref) {
+    function date_format(value, ref) {
         var format = ref[0];
 
         return !(!parseDate$1(value, format));
@@ -1947,7 +1995,9 @@
         var length = ref[0];
 
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate$6(val, [length]); });
+            return value.every(function (val) {
+                return validate$6(val, [length]);
+            });
         }
         var strVal = String(value);
         return /^[0-9]*$/.test(strVal) && strVal.length === Number(length);
@@ -1957,27 +2007,34 @@
         var URL = window.URL || window.webkitURL;
         return new Promise(function (resolve) {
             var image = new Image();
-            image.onerror = (function () { return resolve({
-                valid: false
-            }); });
-            image.onload = (function () { return resolve({
-                valid: image.width === Number(width) && image.height === Number(height)
-            }); });
+            image.onerror = (function () {
+                return resolve({
+                    valid: false
+                });
+            });
+            image.onload = (function () {
+                return resolve({
+                    valid: image.width === Number(width) && image.height === Number(height)
+                });
+            });
             image.src = URL.createObjectURL(file);
         });
     };
-    function dimensions (files, ref) {
+
+    function dimensions(files, ref) {
         var width = ref[0];
         var height = ref[1];
 
         var list = [];
-        for (var i = 0;i < files.length; i++) {
+        for (var i = 0; i < files.length; i++) {
             if (!/\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(files[i].name)) {
                 return false;
             }
             list.push(files[i]);
         }
-        return Promise.all(list.map(function (file) { return validateImage(file, width, height); }));
+        return Promise.all(list.map(function (file) {
+            return validateImage(file, width, height);
+        }));
     }
 
     var merge_1 = createCommonjsModule(function (module, exports) {
@@ -1985,6 +2042,7 @@
             value: true
         });
         exports.default = merge;
+
         function merge() {
             var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
             var defaults = arguments[1];
@@ -2016,6 +2074,7 @@
         };
         exports.default = isByteLength;
         var _assertString2 = _interopRequireDefault(_assertString);
+
         function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : {
                 default: obj
@@ -2046,7 +2105,7 @@
         __moduleExports: isByteLength_1
     });
 
-    var _merge = ( merge$1 && merge ) || merge$1;
+    var _merge = (merge$1 && merge) || merge$1;
 
     var isFQDN_1 = createCommonjsModule(function (module, exports) {
         Object.defineProperty(exports, "__esModule", {
@@ -2055,6 +2114,7 @@
         exports.default = isFQDN;
         var _assertString2 = _interopRequireDefault(_assertString);
         var _merge2 = _interopRequireDefault(_merge);
+
         function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : {
                 default: obj
@@ -2066,6 +2126,7 @@
             allow_underscores: false,
             allow_trailing_dot: false
         };
+
         function isFQDN(str, options) {
             (0, _assertString2.default)(str);
             options = (0, _merge2.default)(options, default_fqdn_options);
@@ -2082,7 +2143,7 @@
                     return false;
                 }
             }
-            for (var part, i = 0;i < parts.length; i++) {
+            for (var part, i = 0; i < parts.length; i++) {
                 part = parts[i];
                 if (options.allow_underscores) {
                     part = part.replace(/_/g, '');
@@ -2109,9 +2170,9 @@
         __moduleExports: isFQDN_1
     });
 
-    var _isByteLength = ( isByteLength$1 && isByteLength ) || isByteLength$1;
+    var _isByteLength = (isByteLength$1 && isByteLength) || isByteLength$1;
 
-    var _isFQDN = ( isFQDN$1 && isFQDN ) || isFQDN$1;
+    var _isFQDN = (isFQDN$1 && isFQDN) || isFQDN$1;
 
     var isEmail_1 = createCommonjsModule(function (module, exports) {
         Object.defineProperty(exports, "__esModule", {
@@ -2122,6 +2183,7 @@
         var _merge2 = _interopRequireDefault(_merge);
         var _isByteLength2 = _interopRequireDefault(_isByteLength);
         var _isFQDN2 = _interopRequireDefault(_isFQDN);
+
         function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : {
                 default: obj
@@ -2139,6 +2201,7 @@
         var quotedEmailUser = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f]))*$/i;
         var emailUserUtf8Part = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+$/i;
         var quotedEmailUserUtf8 = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*$/i;
+
         function isEmail(str, options) {
             (0, _assertString2.default)(str);
             options = (0, _merge2.default)(options, default_email_options);
@@ -2158,15 +2221,15 @@
                 user = user.replace(/\./g, '').toLowerCase();
             }
             if (!(0, _isByteLength2.default)(user, {
-                    max: 64
-                }) || !(0, _isByteLength2.default)(domain, {
-                    max: 254
-                })) {
+                max: 64
+            }) || !(0, _isByteLength2.default)(domain, {
+                max: 254
+            })) {
                 return false;
             }
             if (!(0, _isFQDN2.default)(domain, {
-                    require_tld: options.require_tld
-                })) {
+                require_tld: options.require_tld
+            })) {
                 return false;
             }
             if (user[0] === '"') {
@@ -2175,7 +2238,7 @@
             }
             var pattern = options.allow_utf8_local_part ? emailUserUtf8Part : emailUserPart;
             var user_parts = user.split('.');
-            for (var i = 0;i < user_parts.length; i++) {
+            for (var i = 0; i < user_parts.length; i++) {
                 if (!pattern.test(user_parts[i])) {
                     return false;
                 }
@@ -2189,23 +2252,35 @@
 
     var validate$7 = function (value) {
         if (Array.isArray(value)) {
-            return value.every(function (val) { return isEmail(String(val)); });
+            return value.every(function (val) {
+                return isEmail(String(val));
+            });
         }
         return isEmail(String(value));
     };
 
-    function ext (files, extensions) {
+    function ext(files, extensions) {
         var regex = new RegExp((".(" + (extensions.join('|')) + ")$"), 'i');
-        return files.every(function (file) { return regex.test(file.name); });
+        return files.every(function (file) {
+            return regex.test(file.name);
+        });
     }
 
-    function image (files) { return files.every(function (file) { return /\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(file.name); }); }
+    function image(files) {
+        return files.every(function (file) {
+            return /\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(file.name);
+        });
+    }
 
     var validate$8 = function (value, options) {
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate$8(val, options); });
+            return value.every(function (val) {
+                return validate$8(val, options);
+            });
         }
-        return !(!options.filter(function (option) { return option == value; }).length);
+        return !(!options.filter(function (option) {
+            return option == value;
+        }).length);
     };
 
     var isIP_1 = createCommonjsModule(function (module, exports) {
@@ -2214,6 +2289,7 @@
         });
         exports.default = isIP;
         var _assertString2 = _interopRequireDefault(_assertString);
+
         function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : {
                 default: obj
@@ -2222,6 +2298,7 @@
 
         var ipv4Maybe = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
         var ipv6Block = /^[0-9A-F]{1,4}$/i;
+
         function isIP(str) {
             var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
             (0, _assertString2.default)(str);
@@ -2255,7 +2332,7 @@
                     blocks.pop();
                     foundOmissionBlock = true;
                 }
-                for (var i = 0;i < blocks.length; ++i) {
+                for (var i = 0; i < blocks.length; ++i) {
                     if (blocks[i] === '' && i > 0 && i < blocks.length - 1) {
                         if (foundOmissionBlock) {
                             return false;
@@ -2297,31 +2374,42 @@
             passive: true
         } : false);
     };
-    var isTextInput = function (el) { return ['text','number','password','search','email','tel',
-        'url','textarea'].indexOf(el.type) !== -1; };
-    var getDataAttribute = function (el, name) { return el.getAttribute(("data-vv-" + name)); };
-    var isNullOrUndefined = function (value) { return value === null || value === undefined; };
-    var setDataAttribute = function (el, name, value) { return el.setAttribute(("data-vv-" + name), value); };
-    var createFlags = function () { return ({
-        untouched: true,
-        touched: false,
-        dirty: false,
-        pristine: true,
-        valid: null,
-        invalid: null,
-        validated: false,
-        pending: false,
-        required: false,
-        changed: false
-    }); };
+    var isTextInput = function (el) {
+        return ['text', 'number', 'password', 'search', 'email', 'tel',
+            'url', 'textarea'].indexOf(el.type) !== -1;
+    };
+    var getDataAttribute = function (el, name) {
+        return el.getAttribute(("data-vv-" + name));
+    };
+    var isNullOrUndefined = function (value) {
+        return value === null || value === undefined;
+    };
+    var setDataAttribute = function (el, name, value) {
+        return el.setAttribute(("data-vv-" + name), value);
+    };
+    var createFlags = function () {
+        return ({
+            untouched: true,
+            touched: false,
+            dirty: false,
+            pristine: true,
+            valid: null,
+            invalid: null,
+            validated: false,
+            pending: false,
+            required: false,
+            changed: false
+        });
+    };
     var isEqual$1 = function (lhs, rhs) {
         if (lhs instanceof RegExp && rhs instanceof RegExp) {
             return isEqual$1(lhs.source, rhs.source) && isEqual$1(lhs.flags, rhs.flags);
         }
         if (Array.isArray(lhs) && Array.isArray(rhs)) {
-            if (lhs.length !== rhs.length)
-            { return false; }
-            for (var i = 0;i < lhs.length; i++) {
+            if (lhs.length !== rhs.length) {
+                return false;
+            }
+            for (var i = 0; i < lhs.length; i++) {
                 if (!isEqual$1(lhs[i], rhs[i])) {
                     return false;
                 }
@@ -2329,7 +2417,11 @@
             return true;
         }
         if (isObject(lhs) && isObject(rhs)) {
-            return Object.keys(lhs).every(function (key) { return isEqual$1(lhs[key], rhs[key]); }) && Object.keys(rhs).every(function (key) { return isEqual$1(lhs[key], rhs[key]); });
+            return Object.keys(lhs).every(function (key) {
+                return isEqual$1(lhs[key], rhs[key]);
+            }) && Object.keys(rhs).every(function (key) {
+                return isEqual$1(lhs[key], rhs[key]);
+            });
         }
         return lhs === rhs;
     };
@@ -2341,10 +2433,11 @@
         return !isNullOrUndefined(scope) ? scope : null;
     };
     var getPath = function (path, target, def) {
-        if ( def === void 0 ) def = undefined;
+        if (def === void 0) def = undefined;
 
-        if (!path || !target)
-        { return def; }
+        if (!path || !target) {
+            return def;
+        }
         var value = target;
         path.split('.').every(function (prop) {
             if (!Object.prototype.hasOwnProperty.call(value, prop) && value[prop] === undefined) {
@@ -2378,8 +2471,8 @@
         };
     };
     var debounce = function (fn, wait, immediate) {
-        if ( wait === void 0 ) wait = 0;
-        if ( immediate === void 0 ) immediate = false;
+        if (wait === void 0) wait = 0;
+        if (immediate === void 0) immediate = false;
 
         if (wait === 0) {
             return fn;
@@ -2387,18 +2480,20 @@
         var timeout;
         return function () {
             var args = [], len = arguments.length;
-            while ( len-- ) args[ len ] = arguments[ len ];
+            while (len--) args[len] = arguments[len];
 
             var later = function () {
                 timeout = null;
-                if (!immediate)
-                { fn.apply(void 0, args); }
+                if (!immediate) {
+                    fn.apply(void 0, args);
+                }
             };
             var callNow = immediate && !timeout;
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
-            if (callNow)
-            { fn.apply(void 0, args); }
+            if (callNow) {
+                fn.apply(void 0, args);
+            }
         };
     };
     var normalizeRules = function (rules) {
@@ -2437,9 +2532,15 @@
     var warn = function (message) {
         console.warn(("[vee-validate] " + message));
     };
-    var createError = function (message) { return new Error(("[vee-validate] " + message)); };
-    var isObject = function (obj) { return obj !== null && obj && typeof obj === 'object' && !Array.isArray(obj); };
-    var isCallable = function (func) { return typeof func === 'function'; };
+    var createError = function (message) {
+        return new Error(("[vee-validate] " + message));
+    };
+    var isObject = function (obj) {
+        return obj !== null && obj && typeof obj === 'object' && !Array.isArray(obj);
+    };
+    var isCallable = function (func) {
+        return typeof func === 'function';
+    };
     var hasClass = function (el, className) {
         if (el.classList) {
             return el.classList.contains(className);
@@ -2466,10 +2567,13 @@
         }
     };
     var toggleClass = function (el, className, status) {
-        if (!el || !className)
-        { return; }
+        if (!el || !className) {
+            return;
+        }
         if (Array.isArray(className)) {
-            className.forEach(function (item) { return toggleClass(el, item, status); });
+            className.forEach(function (item) {
+                return toggleClass(el, item, status);
+            });
             return;
         }
         if (status) {
@@ -2483,17 +2587,17 @@
         }
         var array = [];
         var length = arrayLike.length;
-        for (var i = 0;i < length; i++) {
+        for (var i = 0; i < length; i++) {
             array.push(arrayLike[i]);
         }
         return array;
     };
     var assign = function (target) {
         var others = [], len = arguments.length - 1;
-        while ( len-- > 0 ) others[ len ] = arguments[ len + 1 ];
+        while (len-- > 0) others[len] = arguments[len + 1];
 
         if (isCallable(Object.assign)) {
-            return Object.assign.apply(Object, [ target ].concat( others ));
+            return Object.assign.apply(Object, [target].concat(others));
         }
         if (target == null) {
             throw new TypeError('Cannot convert undefined or null to object');
@@ -2521,7 +2625,7 @@
     };
     var find = function (arrayLike, predicate) {
         var array = Array.isArray(arrayLike) ? arrayLike : toArray(arrayLike);
-        for (var i = 0;i < array.length; i++) {
+        for (var i = 0; i < array.length; i++) {
             if (predicate(array[i])) {
                 return array[i];
             }
@@ -2535,7 +2639,9 @@
         var tag = vnode.componentOptions.tag;
         return /keep-alive|transition|transition-group/.test(tag);
     };
-    var makeEventsArray = function (events) { return typeof events === 'string' && events.length ? events.split('|') : []; };
+    var makeEventsArray = function (events) {
+        return typeof events === 'string' && events.length ? events.split('|') : [];
+    };
     var makeDelayObject = function (events, delay, delayConfig) {
         if (typeof delay === 'number') {
             return events.reduce(function (prev, e) {
@@ -2557,10 +2663,12 @@
         }, {});
     };
     var deepParseInt = function (input) {
-        if (typeof input === 'number')
-        { return input; }
-        if (typeof input === 'string')
-        { return parseInt(input); }
+        if (typeof input === 'number') {
+            return input;
+        }
+        if (typeof input === 'string') {
+            return parseInt(input);
+        }
         var map = {};
         for (var element in input) {
             map[element] = parseInt(input[element]);
@@ -2576,38 +2684,41 @@
 
             if (isObject(source[key])) {
                 if (!target[key]) {
-                    assign(target, ( obj = {}, obj[key] = {}, obj ));
+                    assign(target, (obj = {}, obj[key] = {}, obj));
                 }
                 merge$2(target[key], source[key]);
                 return;
             }
-            assign(target, ( obj$1 = {}, obj$1[key] = source[key], obj$1 ));
+            assign(target, (obj$1 = {}, obj$1[key] = source[key], obj$1));
         });
         return target;
     };
 
-    function ip (value, ref) {
-        if ( ref === void 0 ) ref = [];
-        var version = ref[0]; if ( version === void 0 ) version = 4;
+    function ip(value, ref) {
+        if (ref === void 0) ref = [];
+        var version = ref[0];
+        if (version === void 0) version = 4;
 
         if (isNullOrUndefined(value)) {
             value = '';
         }
         if (Array.isArray(value)) {
-            return value.every(function (val) { return isIP(val, version); });
+            return value.every(function (val) {
+                return isIP(val, version);
+            });
         }
         return isIP(value, version);
     }
 
-    function is (value, ref) {
-        if ( ref === void 0 ) ref = [];
+    function is(value, ref) {
+        if (ref === void 0) ref = [];
         var other = ref[0];
 
         return value === other;
     }
 
-    function is_not (value, ref) {
-        if ( ref === void 0 ) ref = [];
+    function is_not(value, ref) {
+        if (ref === void 0) ref = [];
         var other = ref[0];
 
         return value !== other;
@@ -2620,9 +2731,11 @@
         max = Number(max);
         return value.length >= length && value.length <= max;
     };
-    function length (value, ref) {
+
+    function length(value, ref) {
         var length = ref[0];
-        var max = ref[1]; if ( max === void 0 ) max = undefined;
+        var max = ref[1];
+        if (max === void 0) max = undefined;
 
         length = Number(length);
         if (value === undefined || value === null) {
@@ -2637,14 +2750,16 @@
         return compare(value, length, max);
     }
 
-    function integer (value) {
+    function integer(value) {
         if (Array.isArray(value)) {
-            return value.every(function (val) { return /^-?[0-9]+$/.test(String(val)); });
+            return value.every(function (val) {
+                return /^-?[0-9]+$/.test(String(val));
+            });
         }
         return /^-?[0-9]+$/.test(String(value));
     }
 
-    function max$1 (value, ref) {
+    function max$1(value, ref) {
         var length = ref[0];
 
         if (value === undefined || value === null) {
@@ -2653,7 +2768,7 @@
         return String(value).length <= length;
     }
 
-    function max_value (value, ref) {
+    function max_value(value, ref) {
         var max = ref[0];
 
         if (Array.isArray(value) || value === null || value === undefined || value === '') {
@@ -2662,12 +2777,14 @@
         return Number(value) <= max;
     }
 
-    function mimes (files, mimes) {
+    function mimes(files, mimes) {
         var regex = new RegExp(((mimes.join('|').replace('*', '.+')) + "$"), 'i');
-        return files.every(function (file) { return regex.test(file.type); });
+        return files.every(function (file) {
+            return regex.test(file.type);
+        });
     }
 
-    function min$1 (value, ref) {
+    function min$1(value, ref) {
         var length = ref[0];
 
         if (value === undefined || value === null) {
@@ -2676,7 +2793,7 @@
         return String(value).length >= length;
     }
 
-    function min_value (value, ref) {
+    function min_value(value, ref) {
         var min = ref[0];
 
         if (Array.isArray(value) || value === null || value === undefined || value === '') {
@@ -2687,19 +2804,25 @@
 
     var validate$9 = function (value, options) {
         if (Array.isArray(value)) {
-            return value.every(function (val) { return validate$9(val, options); });
+            return value.every(function (val) {
+                return validate$9(val, options);
+            });
         }
-        return !options.filter(function (option) { return option == value; }).length;
+        return !options.filter(function (option) {
+            return option == value;
+        }).length;
     };
 
-    function numeric (value) {
+    function numeric(value) {
         if (Array.isArray(value)) {
-            return value.every(function (val) { return /^[0-9]+$/.test(String(val)); });
+            return value.every(function (val) {
+                return /^[0-9]+$/.test(String(val));
+            });
         }
         return /^[0-9]+$/.test(String(value));
     }
 
-    function regex (value, ref) {
+    function regex(value, ref) {
         var regex = ref[0];
         var flags = ref.slice(1);
 
@@ -2709,9 +2832,10 @@
         return new RegExp(regex, flags).test(String(value));
     }
 
-    function required (value, ref) {
-        if ( ref === void 0 ) ref = [];
-        var invalidateFalse = ref[0]; if ( invalidateFalse === void 0 ) invalidateFalse = false;
+    function required(value, ref) {
+        if (ref === void 0) ref = [];
+        var invalidateFalse = ref[0];
+        if (invalidateFalse === void 0) invalidateFalse = false;
 
         if (Array.isArray(value)) {
             return !(!value.length);
@@ -2725,14 +2849,14 @@
         return !(!String(value).trim().length);
     }
 
-    function size (files, ref) {
+    function size(files, ref) {
         var size = ref[0];
 
         if (isNaN(size)) {
             return false;
         }
         var nSize = Number(size) * 1024;
-        for (var i = 0;i < files.length; i++) {
+        for (var i = 0; i < files.length; i++) {
             if (files[i].size > nSize) {
                 return false;
             }
@@ -2749,6 +2873,7 @@
         var _isFQDN2 = _interopRequireDefault(_isFQDN);
         var _isIP2 = _interopRequireDefault(isIP_1);
         var _merge2 = _interopRequireDefault(_merge);
+
         function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : {
                 default: obj
@@ -2756,7 +2881,7 @@
         }
 
         var default_url_options = {
-            protocols: ['http','https','ftp'],
+            protocols: ['http', 'https', 'ftp'],
             require_tld: true,
             require_protocol: false,
             require_host: true,
@@ -2766,12 +2891,13 @@
             allow_protocol_relative_urls: false
         };
         var wrapped_ipv6 = /^\[([^\]]+)\](?::([0-9]+))?$/;
+
         function isRegExp(obj) {
             return Object.prototype.toString.call(obj) === '[object RegExp]';
         }
 
         function checkHost(host, matches) {
-            for (var i = 0;i < matches.length; i++) {
+            for (var i = 0; i < matches.length; i++) {
                 var match = matches[i];
                 if (host === match || isRegExp(match) && match.test(host)) {
                     return true;
@@ -2789,7 +2915,8 @@
                 return false;
             }
             options = (0, _merge2.default)(options, default_url_options);
-            var protocol = void 0, auth = void 0, host = void 0, hostname = void 0, port = void 0, port_str = void 0, split = void 0, ipv6 = void 0;
+            var protocol = void 0, auth = void 0, host = void 0, hostname = void 0, port = void 0, port_str = void 0,
+                split = void 0, ipv6 = void 0;
             split = url.split('#');
             url = split.shift();
             split = url.split('?');
@@ -2859,9 +2986,10 @@
     });
     var isURL = unwrapExports(isURL_1)
 
-    function url (value, ref) {
-        if ( ref === void 0 ) ref = [];
-        var requireProtocol = ref[0]; if ( requireProtocol === void 0 ) requireProtocol = false;
+    function url(value, ref) {
+        if (ref === void 0) ref = [];
+        var requireProtocol = ref[0];
+        if (requireProtocol === void 0) requireProtocol = false;
 
         var options = {
             require_protocol: !(!requireProtocol),
@@ -2871,7 +2999,9 @@
             value = '';
         }
         if (Array.isArray(value)) {
-            return value.every(function (val) { return isURL(val, options); });
+            return value.every(function (val) {
+                return isURL(val, options);
+            });
         }
         return isURL(value, options);
     }
@@ -2914,27 +3044,39 @@
     }
 
     var formatFileSize = function (size) {
-        var units = ['Byte','KB','MB','GB','TB','PB','EB','ZB','YB'];
+        var units = ['Byte', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         var threshold = 1024;
         size = Number(size) * threshold;
         var i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(threshold));
         return (((size / Math.pow(threshold, i)).toFixed(2) * 1) + " " + (units[i]));
     };
-    var isDefinedGlobally = function () { return typeof VeeValidate !== 'undefined'; };
+    var isDefinedGlobally = function () {
+        return typeof VeeValidate !== 'undefined';
+    };
 
     var obj;
     var messages = {
-        _default: function (field) { return ("The " + field + " value is not valid."); },
+        _default: function (field) {
+            return ("The " + field + " value is not valid.");
+        },
         after: function (field, ref) {
             var target = ref[0];
             var inclusion = ref[1];
 
             return ("The " + field + " must be after " + (inclusion ? 'or equal to ' : '') + target + ".");
         },
-        alpha_dash: function (field) { return ("The " + field + " field may contain alpha-numeric characters as well as dashes and underscores."); },
-        alpha_num: function (field) { return ("The " + field + " field may only contain alpha-numeric characters."); },
-        alpha_spaces: function (field) { return ("The " + field + " field may only contain alphabetic characters as well as spaces."); },
-        alpha: function (field) { return ("The " + field + " field may only contain alphabetic characters."); },
+        alpha_dash: function (field) {
+            return ("The " + field + " field may contain alpha-numeric characters as well as dashes and underscores.");
+        },
+        alpha_num: function (field) {
+            return ("The " + field + " field may only contain alpha-numeric characters.");
+        },
+        alpha_spaces: function (field) {
+            return ("The " + field + " field may only contain alphabetic characters as well as spaces.");
+        },
+        alpha: function (field) {
+            return ("The " + field + " field may only contain alphabetic characters.");
+        },
         before: function (field, ref) {
             var target = ref[0];
             var inclusion = ref[1];
@@ -2947,8 +3089,12 @@
 
             return ("The " + field + " field must be between " + min + " and " + max + ".");
         },
-        confirmed: function (field) { return ("The " + field + " confirmation does not match."); },
-        credit_card: function (field) { return ("The " + field + " field is invalid."); },
+        confirmed: function (field) {
+            return ("The " + field + " confirmation does not match.");
+        },
+        credit_card: function (field) {
+            return ("The " + field + " field is invalid.");
+        },
         date_between: function (field, ref) {
             var min = ref[0];
             var max = ref[1];
@@ -2961,8 +3107,9 @@
             return ("The " + field + " must be in the format " + format + ".");
         },
         decimal: function (field, ref) {
-            if ( ref === void 0 ) ref = [];
-            var decimals = ref[0]; if ( decimals === void 0 ) decimals = '*';
+            if (ref === void 0) ref = [];
+            var decimals = ref[0];
+            if (decimals === void 0) decimals = '*';
 
             return ("The " + field + " field must be numeric and may contain " + (!decimals || decimals === '*' ? '' : decimals) + " decimal points.");
         },
@@ -2977,12 +3124,24 @@
 
             return ("The " + field + " field must be " + width + " pixels by " + height + " pixels.");
         },
-        email: function (field) { return ("The " + field + " field must be a valid email."); },
-        ext: function (field) { return ("The " + field + " field must be a valid file."); },
-        image: function (field) { return ("The " + field + " field must be an image."); },
-        in: function (field) { return ("The " + field + " field must be a valid value."); },
-        integer: function (field) { return ("The " + field + " field must be an integer."); },
-        ip: function (field) { return ("The " + field + " field must be a valid ip address."); },
+        email: function (field) {
+            return ("The " + field + " field must be a valid email.");
+        },
+        ext: function (field) {
+            return ("The " + field + " field must be a valid file.");
+        },
+        image: function (field) {
+            return ("The " + field + " field must be an image.");
+        },
+        in: function (field) {
+            return ("The " + field + " field must be a valid value.");
+        },
+        integer: function (field) {
+            return ("The " + field + " field must be an integer.");
+        },
+        ip: function (field) {
+            return ("The " + field + " field must be a valid ip address.");
+        },
         length: function (field, ref) {
             var length = ref[0];
             var max = ref[1];
@@ -3002,7 +3161,9 @@
 
             return ("The " + field + " field must be " + max + " or less.");
         },
-        mimes: function (field) { return ("The " + field + " field must have a valid file type."); },
+        mimes: function (field) {
+            return ("The " + field + " field must have a valid file type.");
+        },
         min: function (field, ref) {
             var length = ref[0];
 
@@ -3013,16 +3174,26 @@
 
             return ("The " + field + " field must be " + min + " or more.");
         },
-        not_in: function (field) { return ("The " + field + " field must be a valid value."); },
-        numeric: function (field) { return ("The " + field + " field may only contain numeric characters."); },
-        regex: function (field) { return ("The " + field + " field format is invalid."); },
-        required: function (field) { return ("The " + field + " field is required."); },
+        not_in: function (field) {
+            return ("The " + field + " field must be a valid value.");
+        },
+        numeric: function (field) {
+            return ("The " + field + " field may only contain numeric characters.");
+        },
+        regex: function (field) {
+            return ("The " + field + " field format is invalid.");
+        },
+        required: function (field) {
+            return ("The " + field + " field is required.");
+        },
         size: function (field, ref) {
             var size = ref[0];
 
             return ("The " + field + " size must be less than " + (formatFileSize(size)) + ".");
         },
-        url: function (field) { return ("The " + field + " field is not a valid URL."); }
+        url: function (field) {
+            return ("The " + field + " field is not a valid URL.");
+        }
     };
     var locale$1 = {
         name: 'en',
@@ -3030,7 +3201,7 @@
         attributes: {}
     };
     if (isDefinedGlobally()) {
-        VeeValidate.Validator.localize(( obj = {}, obj[locale$1.name] = locale$1, obj ));
+        VeeValidate.Validator.localize((obj = {}, obj[locale$1.name] = locale$1, obj));
     }
 
     var ErrorBag = function ErrorBag() {
@@ -3041,13 +3212,15 @@
 
         var index = 0;
         return {
-            next: function () { return ({
-                value: this$1.items[index++],
-                done: index > this$1.items.length
-            }); }
+            next: function () {
+                return ({
+                    value: this$1.items[index++],
+                    done: index > this$1.items.length
+                });
+            }
         };
     };
-    ErrorBag.prototype.add = function add (error) {
+    ErrorBag.prototype.add = function add(error) {
         var ref;
 
         if (arguments.length > 1) {
@@ -3061,7 +3234,7 @@
         }
         (ref = this.items).push.apply(ref, this._normalizeError(error));
     };
-    ErrorBag.prototype._normalizeError = function _normalizeError (error) {
+    ErrorBag.prototype._normalizeError = function _normalizeError(error) {
         if (Array.isArray(error)) {
             return error.map(function (e) {
                 e.scope = !isNullOrUndefined(e.scope) ? e.scope : null;
@@ -3071,13 +3244,15 @@
         error.scope = !isNullOrUndefined(error.scope) ? error.scope : null;
         return [error];
     };
-    ErrorBag.prototype.regenerate = function regenerate () {
+    ErrorBag.prototype.regenerate = function regenerate() {
         this.items.forEach(function (i) {
             i.msg = isCallable(i.regenerate) ? i.regenerate() : i.msg;
         });
     };
-    ErrorBag.prototype.update = function update (id, error) {
-        var item = find(this.items, function (i) { return i.id === id; });
+    ErrorBag.prototype.update = function update(id, error) {
+        var item = find(this.items, function (i) {
+            return i.id === id;
+        });
         if (!item) {
             return;
         }
@@ -3086,33 +3261,41 @@
         item.scope = error.scope;
         this.items.push(item);
     };
-    ErrorBag.prototype.all = function all (scope) {
+    ErrorBag.prototype.all = function all(scope) {
         if (isNullOrUndefined(scope)) {
-            return this.items.map(function (e) { return e.msg; });
+            return this.items.map(function (e) {
+                return e.msg;
+            });
         }
-        return this.items.filter(function (e) { return e.scope === scope; }).map(function (e) { return e.msg; });
+        return this.items.filter(function (e) {
+            return e.scope === scope;
+        }).map(function (e) {
+            return e.msg;
+        });
     };
-    ErrorBag.prototype.any = function any (scope) {
+    ErrorBag.prototype.any = function any(scope) {
         if (isNullOrUndefined(scope)) {
             return !(!this.items.length);
         }
-        return !(!this.items.filter(function (e) { return e.scope === scope; }).length);
+        return !(!this.items.filter(function (e) {
+            return e.scope === scope;
+        }).length);
     };
-    ErrorBag.prototype.clear = function clear (scope) {
+    ErrorBag.prototype.clear = function clear(scope) {
         var this$1 = this;
 
         if (isNullOrUndefined(scope)) {
             scope = null;
         }
-        for (var i = 0;i < this.items.length; ++i) {
+        for (var i = 0; i < this.items.length; ++i) {
             if (this$1.items[i].scope === scope) {
                 this$1.items.splice(i, 1);
                 --i;
             }
         }
     };
-    ErrorBag.prototype.collect = function collect (field, scope, map) {
-        if ( map === void 0 ) map = true;
+    ErrorBag.prototype.collect = function collect(field, scope, map) {
+        if (map === void 0) map = true;
 
         if (!field) {
             var collection = {};
@@ -3126,20 +3309,30 @@
         }
         field = !isNullOrUndefined(field) ? String(field) : field;
         if (isNullOrUndefined(scope)) {
-            return this.items.filter(function (e) { return e.field === field; }).map(function (e) { return map ? e.msg : e; });
+            return this.items.filter(function (e) {
+                return e.field === field;
+            }).map(function (e) {
+                return map ? e.msg : e;
+            });
         }
-        return this.items.filter(function (e) { return e.field === field && e.scope === scope; }).map(function (e) { return map ? e.msg : e; });
+        return this.items.filter(function (e) {
+            return e.field === field && e.scope === scope;
+        }).map(function (e) {
+            return map ? e.msg : e;
+        });
     };
-    ErrorBag.prototype.count = function count () {
+    ErrorBag.prototype.count = function count() {
         return this.items.length;
     };
-    ErrorBag.prototype.firstById = function firstById (id) {
-        var error = find(this.items, function (i) { return i.id === id; });
+    ErrorBag.prototype.firstById = function firstById(id) {
+        var error = find(this.items, function (i) {
+            return i.id === id;
+        });
         return error ? error.msg : null;
     };
-    ErrorBag.prototype.first = function first (field, scope) {
+    ErrorBag.prototype.first = function first(field, scope) {
         var this$1 = this;
-        if ( scope === void 0 ) scope = null;
+        if (scope === void 0) scope = null;
 
         if (isNullOrUndefined(field)) {
             return null;
@@ -3156,50 +3349,56 @@
         if (selector) {
             return this.firstByRule(selector.name, selector.rule, scope);
         }
-        for (var i = 0;i < this.items.length; ++i) {
+        for (var i = 0; i < this.items.length; ++i) {
             if (this$1.items[i].field === field && this$1.items[i].scope === scope) {
                 return this$1.items[i].msg;
             }
         }
         return null;
     };
-    ErrorBag.prototype.firstRule = function firstRule (field, scope) {
+    ErrorBag.prototype.firstRule = function firstRule(field, scope) {
         var errors = this.collect(field, scope, false);
         return errors.length && errors[0].rule || null;
     };
-    ErrorBag.prototype.has = function has (field, scope) {
-        if ( scope === void 0 ) scope = null;
+    ErrorBag.prototype.has = function has(field, scope) {
+        if (scope === void 0) scope = null;
 
         return !(!this.first(field, scope));
     };
-    ErrorBag.prototype.firstByRule = function firstByRule (name, rule, scope) {
-        if ( scope === void 0 ) scope = null;
+    ErrorBag.prototype.firstByRule = function firstByRule(name, rule, scope) {
+        if (scope === void 0) scope = null;
 
-        var error = this.collect(name, scope, false).filter(function (e) { return e.rule === rule; })[0];
+        var error = this.collect(name, scope, false).filter(function (e) {
+            return e.rule === rule;
+        })[0];
         return error && error.msg || null;
     };
-    ErrorBag.prototype.firstNot = function firstNot (name, rule, scope) {
-        if ( rule === void 0 ) rule = 'required';
-        if ( scope === void 0 ) scope = null;
+    ErrorBag.prototype.firstNot = function firstNot(name, rule, scope) {
+        if (rule === void 0) rule = 'required';
+        if (scope === void 0) scope = null;
 
-        var error = this.collect(name, scope, false).filter(function (e) { return e.rule !== rule; })[0];
+        var error = this.collect(name, scope, false).filter(function (e) {
+            return e.rule !== rule;
+        })[0];
         return error && error.msg || null;
     };
-    ErrorBag.prototype.removeById = function removeById (id) {
+    ErrorBag.prototype.removeById = function removeById(id) {
         var this$1 = this;
 
         if (Array.isArray(id)) {
-            this.items = this.items.filter(function (i) { return id.indexOf(i.id) === -1; });
+            this.items = this.items.filter(function (i) {
+                return id.indexOf(i.id) === -1;
+            });
             return;
         }
-        for (var i = 0;i < this.items.length; ++i) {
+        for (var i = 0; i < this.items.length; ++i) {
             if (this$1.items[i].id === id) {
                 this$1.items.splice(i, 1);
                 --i;
             }
         }
     };
-    ErrorBag.prototype.remove = function remove (field, scope) {
+    ErrorBag.prototype.remove = function remove(field, scope) {
         var this$1 = this;
 
         field = !isNullOrUndefined(field) ? String(field) : field;
@@ -3209,14 +3408,14 @@
             }
             return e.field === field && e.scope === null;
         };
-        for (var i = 0;i < this.items.length; ++i) {
+        for (var i = 0; i < this.items.length; ++i) {
             if (removeCondition(this$1.items[i])) {
                 this$1.items.splice(i, 1);
                 --i;
             }
         }
     };
-    ErrorBag.prototype._selector = function _selector (field) {
+    ErrorBag.prototype._selector = function _selector(field) {
         if (field.indexOf(':') > -1) {
             var ref = field.split(':');
             var name = ref[0];
@@ -3228,7 +3427,7 @@
         }
         return null;
     };
-    ErrorBag.prototype._scope = function _scope (field) {
+    ErrorBag.prototype._scope = function _scope(field) {
         if (field.indexOf('.') > -1) {
             var ref = field.split('.');
             var scope = ref[0];
@@ -3243,35 +3442,35 @@
 
     var LOCALE = 'en';
     var Dictionary = function Dictionary(dictionary) {
-        if ( dictionary === void 0 ) dictionary = {};
+        if (dictionary === void 0) dictionary = {};
 
         this.container = {};
         this.merge(dictionary);
     };
 
-    var prototypeAccessors = { locale: { configurable: true } };
+    var prototypeAccessors = {locale: {configurable: true}};
     prototypeAccessors.locale.get = function () {
         return LOCALE;
     };
     prototypeAccessors.locale.set = function (value) {
         LOCALE = value || 'en';
     };
-    Dictionary.prototype.hasLocale = function hasLocale (locale) {
+    Dictionary.prototype.hasLocale = function hasLocale(locale) {
         return !(!this.container[locale]);
     };
-    Dictionary.prototype.setDateFormat = function setDateFormat (locale, format) {
+    Dictionary.prototype.setDateFormat = function setDateFormat(locale, format) {
         if (!this.container[locale]) {
             this.container[locale] = {};
         }
         this.container[locale].dateFormat = format;
     };
-    Dictionary.prototype.getDateFormat = function getDateFormat (locale) {
+    Dictionary.prototype.getDateFormat = function getDateFormat(locale) {
         if (!this.container[locale] || !this.container[locale].dateFormat) {
             return null;
         }
         return this.container[locale].dateFormat;
     };
-    Dictionary.prototype.getMessage = function getMessage (locale, key, data) {
+    Dictionary.prototype.getMessage = function getMessage(locale, key, data) {
         var message = null;
         if (!this.hasMessage(locale, key)) {
             message = this._getDefaultMessage(locale);
@@ -3280,7 +3479,7 @@
         }
         return isCallable(message) ? message.apply(void 0, data) : message;
     };
-    Dictionary.prototype.getFieldMessage = function getFieldMessage (locale, field, key, data) {
+    Dictionary.prototype.getFieldMessage = function getFieldMessage(locale, field, key, data) {
         if (!this.hasLocale(locale)) {
             return this.getMessage(locale, key, data);
         }
@@ -3291,30 +3490,30 @@
         var message = dict[key];
         return isCallable(message) ? message.apply(void 0, data) : message;
     };
-    Dictionary.prototype._getDefaultMessage = function _getDefaultMessage (locale) {
+    Dictionary.prototype._getDefaultMessage = function _getDefaultMessage(locale) {
         if (this.hasMessage(locale, '_default')) {
             return this.container[locale].messages._default;
         }
         return this.container.en.messages._default;
     };
-    Dictionary.prototype.getAttribute = function getAttribute (locale, key, fallback) {
-        if ( fallback === void 0 ) fallback = '';
+    Dictionary.prototype.getAttribute = function getAttribute(locale, key, fallback) {
+        if (fallback === void 0) fallback = '';
 
         if (!this.hasAttribute(locale, key)) {
             return fallback;
         }
         return this.container[locale].attributes[key];
     };
-    Dictionary.prototype.hasMessage = function hasMessage (locale, key) {
+    Dictionary.prototype.hasMessage = function hasMessage(locale, key) {
         return !(!(this.hasLocale(locale) && this.container[locale].messages && this.container[locale].messages[key]));
     };
-    Dictionary.prototype.hasAttribute = function hasAttribute (locale, key) {
+    Dictionary.prototype.hasAttribute = function hasAttribute(locale, key) {
         return !(!(this.hasLocale(locale) && this.container[locale].attributes && this.container[locale].attributes[key]));
     };
-    Dictionary.prototype.merge = function merge$1 (dictionary) {
+    Dictionary.prototype.merge = function merge$1(dictionary) {
         merge$2(this.container, dictionary);
     };
-    Dictionary.prototype.setMessage = function setMessage (locale, key, message) {
+    Dictionary.prototype.setMessage = function setMessage(locale, key, message) {
         if (!this.hasLocale(locale)) {
             this.container[locale] = {
                 messages: {},
@@ -3323,7 +3522,7 @@
         }
         this.container[locale].messages[key] = message;
     };
-    Dictionary.prototype.setAttribute = function setAttribute (locale, key, attribute) {
+    Dictionary.prototype.setAttribute = function setAttribute(locale, key, attribute) {
         if (!this.hasLocale(locale)) {
             this.container[locale] = {
                 messages: {},
@@ -3333,7 +3532,7 @@
         this.container[locale].attributes[key] = attribute;
     };
 
-    Object.defineProperties( Dictionary.prototype, prototypeAccessors );
+    Object.defineProperties(Dictionary.prototype, prototypeAccessors);
 
     var normalizeValue = function (value) {
         if (isObject(value)) {
@@ -3343,7 +3542,7 @@
             }, {});
         }
         if (isCallable(value)) {
-            return value('{0}', ['{1}','{2}','{3}']);
+            return value('{0}', ['{1}', '{2}', '{3}']);
         }
         return value;
     };
@@ -3362,28 +3561,28 @@
         this.rootKey = rootKey;
     };
 
-    var prototypeAccessors$1 = { locale: { configurable: true } };
+    var prototypeAccessors$1 = {locale: {configurable: true}};
     prototypeAccessors$1.locale.get = function () {
         return this.i18n.locale;
     };
     prototypeAccessors$1.locale.set = function (value) {
         warn('Cannot set locale from the validator when using vue-i18n, use i18n.locale setter instead');
     };
-    I18nDictionary.prototype.getDateFormat = function getDateFormat (locale) {
+    I18nDictionary.prototype.getDateFormat = function getDateFormat(locale) {
         return this.i18n.getDateTimeFormat(locale || this.locale);
     };
-    I18nDictionary.prototype.setDateFormat = function setDateFormat (locale, value) {
+    I18nDictionary.prototype.setDateFormat = function setDateFormat(locale, value) {
         this.i18n.setDateTimeFormat(locale || this.locale, value);
     };
-    I18nDictionary.prototype.getMessage = function getMessage (locale, key, data) {
+    I18nDictionary.prototype.getMessage = function getMessage(locale, key, data) {
         var path = (this.rootKey) + ".messages." + key;
         if (!this.i18n.te(path)) {
             return this.i18n.t(((this.rootKey) + ".messages._default"), locale, data);
         }
         return this.i18n.t(path, locale, data);
     };
-    I18nDictionary.prototype.getAttribute = function getAttribute (locale, key, fallback) {
-        if ( fallback === void 0 ) fallback = '';
+    I18nDictionary.prototype.getAttribute = function getAttribute(locale, key, fallback) {
+        if (fallback === void 0) fallback = '';
 
         var path = (this.rootKey) + ".attributes." + key;
         if (!this.i18n.te(path)) {
@@ -3391,14 +3590,14 @@
         }
         return this.i18n.t(path, locale);
     };
-    I18nDictionary.prototype.getFieldMessage = function getFieldMessage (locale, field, key, data) {
+    I18nDictionary.prototype.getFieldMessage = function getFieldMessage(locale, field, key, data) {
         var path = (this.rootKey) + ".custom." + field + "." + key;
         if (this.i18n.te(path)) {
             return this.i18n.t(path);
         }
         return this.getMessage(locale, key, data);
     };
-    I18nDictionary.prototype.merge = function merge$1 (dictionary) {
+    I18nDictionary.prototype.merge = function merge$1(dictionary) {
         var this$1 = this;
 
         Object.keys(dictionary).forEach(function (localeKey) {
@@ -3406,28 +3605,28 @@
 
             var clone = merge$2({}, getPath((localeKey + "." + (this$1.rootKey)), this$1.i18n.messages, {}));
             var locale = merge$2(clone, normalizeFormat(dictionary[localeKey]));
-            this$1.i18n.mergeLocaleMessage(localeKey, ( obj = {}, obj[this$1.rootKey] = locale, obj ));
+            this$1.i18n.mergeLocaleMessage(localeKey, (obj = {}, obj[this$1.rootKey] = locale, obj));
             if (locale.dateFormat) {
                 this$1.i18n.setDateTimeFormat(localeKey, locale.dateFormat);
             }
         });
     };
-    I18nDictionary.prototype.setMessage = function setMessage (locale, key, value) {
+    I18nDictionary.prototype.setMessage = function setMessage(locale, key, value) {
         var obj, obj$1;
 
-        this.merge(( obj$1 = {}, obj$1[locale] = {
-            messages: ( obj = {}, obj[key] = value, obj )
-        }, obj$1 ));
+        this.merge((obj$1 = {}, obj$1[locale] = {
+            messages: (obj = {}, obj[key] = value, obj)
+        }, obj$1));
     };
-    I18nDictionary.prototype.setAttribute = function setAttribute (locale, key, value) {
+    I18nDictionary.prototype.setAttribute = function setAttribute(locale, key, value) {
         var obj, obj$1;
 
-        this.merge(( obj$1 = {}, obj$1[locale] = {
-            attributes: ( obj = {}, obj[key] = value, obj )
-        }, obj$1 ));
+        this.merge((obj$1 = {}, obj$1[locale] = {
+            attributes: (obj = {}, obj[key] = value, obj)
+        }, obj$1));
     };
 
-    Object.defineProperties( I18nDictionary.prototype, prototypeAccessors$1 );
+    Object.defineProperties(I18nDictionary.prototype, prototypeAccessors$1);
 
     var defaultConfig = {
         locale: 'en',
@@ -3456,9 +3655,10 @@
             }
         })
     };
-    var Config = function Config () {};
+    var Config = function Config() {
+    };
 
-    var staticAccessors = { default: { configurable: true },current: { configurable: true } };
+    var staticAccessors = {default: {configurable: true}, current: {configurable: true}};
 
     staticAccessors.default.get = function () {
         return defaultConfig;
@@ -3466,28 +3666,29 @@
     staticAccessors.current.get = function () {
         return currentConfig;
     };
-    Config.dependency = function dependency (key) {
+    Config.dependency = function dependency(key) {
         return dependencies[key];
     };
-    Config.merge = function merge (config) {
+    Config.merge = function merge(config) {
         currentConfig = assign({}, currentConfig, config);
         if (currentConfig.i18n) {
             Config.register('dictionary', new I18nDictionary(currentConfig.i18n, currentConfig.i18nRootKey));
         }
     };
-    Config.register = function register (key, value) {
+    Config.register = function register(key, value) {
         dependencies[key] = value;
     };
-    Config.resolve = function resolve (context) {
+    Config.resolve = function resolve(context) {
         var selfConfig = getPath('$options.$_veeValidate', context, {});
         return assign({}, Config.current, selfConfig);
     };
 
-    Object.defineProperties( Config, staticAccessors );
+    Object.defineProperties(Config, staticAccessors);
 
-    var Generator = function Generator () {};
+    var Generator = function Generator() {
+    };
 
-    Generator.generate = function generate (el, binding, vnode) {
+    Generator.generate = function generate(el, binding, vnode) {
         var model = Generator.resolveModel(binding, vnode);
         var options = Config.resolve(vnode.context);
         return {
@@ -3511,26 +3712,29 @@
             initialValue: Generator.resolveInitialValue(vnode)
         };
     };
-    Generator.getCtorConfig = function getCtorConfig (vnode) {
-        if (!vnode.child)
-        { return null; }
+    Generator.getCtorConfig = function getCtorConfig(vnode) {
+        if (!vnode.child) {
+            return null;
+        }
         var config = getPath('child.$options.$_veeValidate', vnode);
         return config;
     };
-    Generator.resolveRules = function resolveRules (el, binding) {
+    Generator.resolveRules = function resolveRules(el, binding) {
         if (!binding.value && (!binding || !binding.expression)) {
             return getDataAttribute(el, 'rules');
         }
-        if (binding.value && ~['string','object'].indexOf(typeof binding.value.rules)) {
+        if (binding.value && ~['string', 'object'].indexOf(typeof binding.value.rules)) {
             return binding.value.rules;
         }
         return binding.value;
     };
-    Generator.resolveInitialValue = function resolveInitialValue (vnode) {
-        var model = vnode.data.model || find(vnode.data.directives, function (d) { return d.name === 'model'; });
+    Generator.resolveInitialValue = function resolveInitialValue(vnode) {
+        var model = vnode.data.model || find(vnode.data.directives, function (d) {
+            return d.name === 'model';
+        });
         return model && model.value;
     };
-    Generator.makeVM = function makeVM (vm) {
+    Generator.makeVM = function makeVM(vm) {
         return {
             get $el() {
                 return vm.$el;
@@ -3538,7 +3742,8 @@
             get $refs() {
                 return vm.$refs;
             },
-            $watch: vm.$watch ? vm.$watch.bind(vm) : function () {},
+            $watch: vm.$watch ? vm.$watch.bind(vm) : function () {
+            },
             $validator: vm.$validator ? {
                 errors: vm.$validator.errors,
                 validate: vm.$validator.validate.bind(vm.$validator),
@@ -3546,7 +3751,7 @@
             } : null
         };
     };
-    Generator.resolveDelay = function resolveDelay (el, vnode, options) {
+    Generator.resolveDelay = function resolveDelay(el, vnode, options) {
         var delay = getDataAttribute(el, 'delay');
         var globalDelay = options && 'delay' in options ? options.delay : 0;
         if (!delay && vnode.child && vnode.child.$attrs) {
@@ -3558,7 +3763,7 @@
         globalDelay.input = delay || 0;
         return deepParseInt(globalDelay);
     };
-    Generator.resolveEvents = function resolveEvents (el, vnode) {
+    Generator.resolveEvents = function resolveEvents(el, vnode) {
         var events = getDataAttribute(el, 'validate-on');
         if (!events && vnode.child && vnode.child.$attrs) {
             events = vnode.child.$attrs['data-vv-validate-on'];
@@ -3569,8 +3774,8 @@
         }
         return events;
     };
-    Generator.resolveScope = function resolveScope (el, binding, vnode) {
-        if ( vnode === void 0 ) vnode = {};
+    Generator.resolveScope = function resolveScope(el, binding, vnode) {
+        if (vnode === void 0) vnode = {};
 
         var scope = null;
         if (vnode.child && isNullOrUndefined(scope)) {
@@ -3578,13 +3783,15 @@
         }
         return !isNullOrUndefined(scope) ? scope : getScope(el);
     };
-    Generator.resolveModel = function resolveModel (binding, vnode) {
+    Generator.resolveModel = function resolveModel(binding, vnode) {
         if (binding.arg) {
             return {
                 expression: binding.arg
             };
         }
-        var model = vnode.data.model || find(vnode.data.directives, function (d) { return d.name === 'model'; });
+        var model = vnode.data.model || find(vnode.data.directives, function (d) {
+            return d.name === 'model';
+        });
         if (!model) {
             return null;
         }
@@ -3601,7 +3808,7 @@
             lazy: lazy
         };
     };
-    Generator.resolveName = function resolveName (el, vnode) {
+    Generator.resolveName = function resolveName(el, vnode) {
         var name = getDataAttribute(el, 'name');
         if (!name && !vnode.child) {
             return el.name;
@@ -3619,43 +3826,68 @@
         }
         return name;
     };
-    Generator.resolveGetter = function resolveGetter (el, vnode, model) {
+    Generator.resolveGetter = function resolveGetter(el, vnode, model) {
         if (model && model.expression) {
-            return function () { return getPath(model.expression, vnode.context); };
+            return function () {
+                return getPath(model.expression, vnode.context);
+            };
         }
         if (vnode.child) {
             var path = getDataAttribute(el, 'value-path') || vnode.child.$attrs && vnode.child.$attrs['data-vv-value-path'];
             if (path) {
-                return function () { return getPath(path, vnode.child); };
+                return function () {
+                    return getPath(path, vnode.child);
+                };
             }
             var config = Generator.getCtorConfig(vnode);
             if (config && isCallable(config.value)) {
                 var boundGetter = config.value.bind(vnode.child);
-                return function () { return boundGetter(); };
+                return function () {
+                    return boundGetter();
+                };
             }
-            return function () { return vnode.child.value; };
+            return function () {
+                return vnode.child.value;
+            };
         }
         switch (el.type) {
             case 'checkbox':
                 return function () {
                     var els = document.querySelectorAll(("input[name=\"" + (el.name) + "\"]"));
-                    els = toArray(els).filter(function (el) { return el.checked; });
-                    if (!els.length)
-                    { return undefined; }
-                    return els.map(function (checkbox) { return checkbox.value; });
+                    els = toArray(els).filter(function (el) {
+                        return el.checked;
+                    });
+                    if (!els.length) {
+                        return undefined;
+                    }
+                    return els.map(function (checkbox) {
+                        return checkbox.value;
+                    });
                 };
             case 'radio':
                 return function () {
                     var els = document.querySelectorAll(("input[name=\"" + (el.name) + "\"]"));
-                    var elm = find(els, function (el) { return el.checked; });
+                    var elm = find(els, function (el) {
+                        return el.checked;
+                    });
                     return elm && elm.value;
                 };
             case 'file':
-                return function (context) { return toArray(el.files); };
+                return function (context) {
+                    return toArray(el.files);
+                };
             case 'select-multiple':
-                return function () { return toArray(el.options).filter(function (opt) { return opt.selected; }).map(function (opt) { return opt.value; }); };
+                return function () {
+                    return toArray(el.options).filter(function (opt) {
+                        return opt.selected;
+                    }).map(function (opt) {
+                        return opt.value;
+                    });
+                };
             default:
-                return function () { return el && el.value; };
+                return function () {
+                    return el && el.value;
+                };
         }
     };
 
@@ -3682,7 +3914,7 @@
         }
     };
     var Field = function Field(options) {
-        if ( options === void 0 ) options = {};
+        if (options === void 0) options = {};
 
         this.id = uniqId();
         this.el = options.el;
@@ -3707,12 +3939,20 @@
         this.updated = false;
     };
 
-    var prototypeAccessors$2 = { validator: { configurable: true },isRequired: { configurable: true },isDisabled: { configurable: true },alias: { configurable: true },value: { configurable: true },rejectsFalse: { configurable: true } };
+    var prototypeAccessors$2 = {
+        validator: {configurable: true},
+        isRequired: {configurable: true},
+        isDisabled: {configurable: true},
+        alias: {configurable: true},
+        value: {configurable: true},
+        rejectsFalse: {configurable: true}
+    };
     prototypeAccessors$2.validator.get = function () {
         if (!this.vm || !this.vm.$validator) {
             warn('No validator instance detected.');
             return {
-                validate: function () {}
+                validate: function () {
+                }
             };
         }
         return this.vm.$validator;
@@ -3751,7 +3991,7 @@
         }
         return this.el.type === 'checkbox';
     };
-    Field.prototype.matches = function matches (options) {
+    Field.prototype.matches = function matches(options) {
         if (!options) {
             return true;
         }
@@ -3769,12 +4009,12 @@
         }
         return options.name === this.name && options.scope === this.scope;
     };
-    Field.prototype._cacheId = function _cacheId (options) {
+    Field.prototype._cacheId = function _cacheId(options) {
         if (this.el && !options.targetOf) {
             setDataAttribute(this.el, 'id', this.id);
         }
     };
-    Field.prototype.update = function update (options) {
+    Field.prototype.update = function update(options) {
         this.targetOf = options.targetOf || null;
         this.initial = options.initial || this.initial || false;
         if (!isNullOrUndefined(options.scope) && options.scope !== this.scope && isCallable(this.validator.update)) {
@@ -3812,11 +4052,13 @@
         this.updateClasses();
         this.updateAriaAttrs();
     };
-    Field.prototype.reset = function reset () {
+    Field.prototype.reset = function reset() {
         var this$1 = this;
 
         var defaults = createFlags();
-        Object.keys(this.flags).filter(function (flag) { return flag !== 'required'; }).forEach(function (flag) {
+        Object.keys(this.flags).filter(function (flag) {
+            return flag !== 'required';
+        }).forEach(function (flag) {
             this$1.flags[flag] = defaults[flag];
         });
         this.addActionListeners();
@@ -3824,7 +4066,7 @@
         this.updateAriaAttrs();
         this.updateCustomValidity();
     };
-    Field.prototype.setFlags = function setFlags (flags) {
+    Field.prototype.setFlags = function setFlags(flags) {
         var this$1 = this;
 
         var negated = {
@@ -3848,10 +4090,12 @@
         this.updateAriaAttrs();
         this.updateCustomValidity();
     };
-    Field.prototype.updateDependencies = function updateDependencies () {
+    Field.prototype.updateDependencies = function updateDependencies() {
         var this$1 = this;
 
-        this.dependencies.forEach(function (d) { return d.field.destroy(); });
+        this.dependencies.forEach(function (d) {
+            return d.field.destroy();
+        });
         this.dependencies = [];
         var fields = Object.keys(this.rules).reduce(function (prev, r) {
             if (Validator.isTargetRule(r)) {
@@ -3866,8 +4110,9 @@
             }
             return prev;
         }, []);
-        if (!fields.length || !this.vm || !this.vm.$el)
-        { return; }
+        if (!fields.length || !this.vm || !this.vm.$el) {
+            return;
+        }
         fields.forEach(function (ref) {
             var selector = ref.selector;
             var name = ref.name;
@@ -3919,20 +4164,29 @@
             });
         });
     };
-    Field.prototype.unwatch = function unwatch (tag) {
-        if ( tag === void 0 ) tag = null;
+    Field.prototype.unwatch = function unwatch(tag) {
+        if (tag === void 0) tag = null;
 
         if (!tag) {
-            this.watchers.forEach(function (w) { return w.unwatch(); });
+            this.watchers.forEach(function (w) {
+                return w.unwatch();
+            });
             this.watchers = [];
             return;
         }
-        this.watchers.filter(function (w) { return tag.test(w.tag); }).forEach(function (w) { return w.unwatch(); });
-        this.watchers = this.watchers.filter(function (w) { return !tag.test(w.tag); });
+        this.watchers.filter(function (w) {
+            return tag.test(w.tag);
+        }).forEach(function (w) {
+            return w.unwatch();
+        });
+        this.watchers = this.watchers.filter(function (w) {
+            return !tag.test(w.tag);
+        });
     };
-    Field.prototype.updateClasses = function updateClasses () {
-        if (!this.classes || this.isDisabled)
-        { return; }
+    Field.prototype.updateClasses = function updateClasses() {
+        if (!this.classes || this.isDisabled) {
+            return;
+        }
         toggleClass(this.el, this.classNames.dirty, this.flags.dirty);
         toggleClass(this.el, this.classNames.pristine, this.flags.pristine);
         toggleClass(this.el, this.classNames.touched, this.flags.touched);
@@ -3944,12 +4198,13 @@
             toggleClass(this.el, this.classNames.invalid, this.flags.invalid);
         }
     };
-    Field.prototype.addActionListeners = function addActionListeners () {
+    Field.prototype.addActionListeners = function addActionListeners() {
         var this$1 = this;
 
         this.unwatch(/class/);
-        if (!this.el)
-        { return; }
+        if (!this.el) {
+            return;
+        }
         var onBlur = function () {
             this$1.flags.touched = true;
             this$1.flags.untouched = false;
@@ -3986,10 +4241,11 @@
             });
             return;
         }
-        if (!this.el)
-        { return; }
+        if (!this.el) {
+            return;
+        }
         addEventListener(this.el, inputEvent, onInput);
-        var blurEvent = ['radio','checkbox'].indexOf(this.el.type) === -1 ? 'blur' : 'click';
+        var blurEvent = ['radio', 'checkbox'].indexOf(this.el.type) === -1 ? 'blur' : 'click';
         addEventListener(this.el, blurEvent, onBlur);
         this.watchers.push({
             tag: 'class_input',
@@ -4004,24 +4260,25 @@
             }
         });
     };
-    Field.prototype.checkValueChanged = function checkValueChanged () {
+    Field.prototype.checkValueChanged = function checkValueChanged() {
         if (this.initialValue === null && this.value === '' && isTextInput(this.el)) {
             return false;
         }
         return this.value !== this.initialValue;
     };
-    Field.prototype.addValueListeners = function addValueListeners () {
+    Field.prototype.addValueListeners = function addValueListeners() {
         var this$1 = this;
 
         this.unwatch(/^input_.+/);
-        if (!this.listen || !this.el)
-        { return; }
+        if (!this.listen || !this.el) {
+            return;
+        }
         var fn = this.targetOf ? function () {
             this$1.flags.changed = this$1.checkValueChanged();
             this$1.validator.validate(("#" + (this$1.targetOf)));
         } : function () {
             var args = [], len = arguments.length;
-            while ( len-- ) args[ len ] = arguments[ len ];
+            while (len--) args[len] = arguments[len];
 
             if (args.length === 0 || isCallable(Event) && args[0] instanceof Event || args[0] && args[0].srcElement) {
                 args[0] = this$1.value;
@@ -4036,7 +4293,7 @@
             var debouncedFn = debounce(fn, this.delay[inputEvent]);
             var unwatch = this.vm.$watch(this.model.expression, function () {
                 var args = [], len = arguments.length;
-                while ( len-- ) args[ len ] = arguments[ len ];
+                while (len--) args[len] = arguments[len];
 
                 this$1.flags.pending = true;
                 debouncedFn.apply(void 0, args);
@@ -4045,13 +4302,15 @@
                 tag: 'input_model',
                 unwatch: unwatch
             });
-            events = events.filter(function (e) { return e !== inputEvent; });
+            events = events.filter(function (e) {
+                return e !== inputEvent;
+            });
         }
         events.forEach(function (e) {
             var debouncedFn = debounce(fn, this$1.delay[e]);
             var validate = function () {
                 var args = [], len = arguments.length;
-                while ( len-- ) args[ len ] = arguments[ len ];
+                while (len--) args[len] = arguments[len];
 
                 this$1.flags.pending = true;
                 debouncedFn.apply(void 0, args);
@@ -4060,11 +4319,12 @@
             this$1._addHTMLEventListener(e, validate);
         });
     };
-    Field.prototype._addComponentEventListener = function _addComponentEventListener (evt, validate) {
+    Field.prototype._addComponentEventListener = function _addComponentEventListener(evt, validate) {
         var this$1 = this;
 
-        if (!this.component)
-        { return; }
+        if (!this.component) {
+            return;
+        }
         this.component.$on(evt, validate);
         this.watchers.push({
             tag: 'input_vue',
@@ -4073,11 +4333,12 @@
             }
         });
     };
-    Field.prototype._addHTMLEventListener = function _addHTMLEventListener (evt, validate) {
+    Field.prototype._addHTMLEventListener = function _addHTMLEventListener(evt, validate) {
         var this$1 = this;
 
-        if (!this.el || this.component)
-        { return; }
+        if (!this.el || this.component) {
+            return;
+        }
         addEventListener(this.el, evt, validate);
         this.watchers.push({
             tag: 'input_native',
@@ -4085,7 +4346,7 @@
                 this$1.el.removeEventListener(evt, validate);
             }
         });
-        if (~['radio','checkbox'].indexOf(this.el.type)) {
+        if (~['radio', 'checkbox'].indexOf(this.el.type)) {
             var els = document.querySelectorAll(("input[name=\"" + (this.el.name) + "\"]"));
             toArray(els).forEach(function (el) {
                 if (getDataAttribute(el, 'id') && el !== this$1.el) {
@@ -4101,70 +4362,85 @@
             });
         }
     };
-    Field.prototype.updateAriaAttrs = function updateAriaAttrs () {
-        if (!this.aria || !this.el || !isCallable(this.el.setAttribute))
-        { return; }
+    Field.prototype.updateAriaAttrs = function updateAriaAttrs() {
+        if (!this.aria || !this.el || !isCallable(this.el.setAttribute)) {
+            return;
+        }
         this.el.setAttribute('aria-required', this.isRequired ? 'true' : 'false');
         this.el.setAttribute('aria-invalid', this.flags.invalid ? 'true' : 'false');
     };
-    Field.prototype.updateCustomValidity = function updateCustomValidity () {
-        if (!this.validity || !this.el || !isCallable(this.el.setCustomValidity))
-        { return; }
+    Field.prototype.updateCustomValidity = function updateCustomValidity() {
+        if (!this.validity || !this.el || !isCallable(this.el.setCustomValidity)) {
+            return;
+        }
         this.el.setCustomValidity(this.flags.valid ? '' : this.validator.errors.firstById(this.id) || '');
     };
-    Field.prototype.destroy = function destroy () {
+    Field.prototype.destroy = function destroy() {
         this.unwatch();
-        this.dependencies.forEach(function (d) { return d.field.destroy(); });
+        this.dependencies.forEach(function (d) {
+            return d.field.destroy();
+        });
         this.dependencies = [];
     };
 
-    Object.defineProperties( Field.prototype, prototypeAccessors$2 );
+    Object.defineProperties(Field.prototype, prototypeAccessors$2);
 
     var FieldBag = function FieldBag() {
         this.items = [];
     };
 
-    var prototypeAccessors$3 = { length: { configurable: true } };
+    var prototypeAccessors$3 = {length: {configurable: true}};
     FieldBag.prototype[typeof Symbol === 'function' ? Symbol.iterator : '@@iterator'] = function () {
         var this$1 = this;
 
         var index = 0;
         return {
-            next: function () { return ({
-                value: this$1.items[index++],
-                done: index > this$1.items.length
-            }); }
+            next: function () {
+                return ({
+                    value: this$1.items[index++],
+                    done: index > this$1.items.length
+                });
+            }
         };
     };
     prototypeAccessors$3.length.get = function () {
         return this.items.length;
     };
-    FieldBag.prototype.find = function find$1 (matcher) {
-        return find(this.items, function (item) { return item.matches(matcher); });
+    FieldBag.prototype.find = function find$1(matcher) {
+        return find(this.items, function (item) {
+            return item.matches(matcher);
+        });
     };
-    FieldBag.prototype.filter = function filter (matcher) {
+    FieldBag.prototype.filter = function filter(matcher) {
         if (Array.isArray(matcher)) {
-            return this.items.filter(function (item) { return matcher.some(function (m) { return item.matches(m); }); });
+            return this.items.filter(function (item) {
+                return matcher.some(function (m) {
+                    return item.matches(m);
+                });
+            });
         }
-        return this.items.filter(function (item) { return item.matches(matcher); });
+        return this.items.filter(function (item) {
+            return item.matches(matcher);
+        });
     };
-    FieldBag.prototype.map = function map (mapper) {
+    FieldBag.prototype.map = function map(mapper) {
         return this.items.map(mapper);
     };
-    FieldBag.prototype.remove = function remove (matcher) {
+    FieldBag.prototype.remove = function remove(matcher) {
         var item = null;
         if (matcher instanceof Field) {
             item = matcher;
         } else {
             item = this.find(matcher);
         }
-        if (!item)
-        { return null; }
+        if (!item) {
+            return null;
+        }
         var index = this.items.indexOf(item);
         this.items.splice(index, 1);
         return item;
     };
-    FieldBag.prototype.push = function push (item) {
+    FieldBag.prototype.push = function push(item) {
         if (!(item instanceof Field)) {
             throw createError('FieldBag only accepts instances of Field that has an id defined.');
         }
@@ -4172,21 +4448,21 @@
             throw createError('Field id must be defined.');
         }
         if (this.find({
-                id: item.id
-            })) {
+            id: item.id
+        })) {
             throw createError(("Field with id " + (item.id) + " is already added."));
         }
         this.items.push(item);
     };
 
-    Object.defineProperties( FieldBag.prototype, prototypeAccessors$3 );
+    Object.defineProperties(FieldBag.prototype, prototypeAccessors$3);
 
     var RULES = {};
     var STRICT_MODE = true;
-    var TARGET_RULES = ['confirmed','after','before'];
+    var TARGET_RULES = ['confirmed', 'after', 'before'];
     var Validator = function Validator(validations, options) {
         var this$1 = this;
-        if ( options === void 0 ) options = {
+        if (options === void 0) options = {
             fastExit: true
         };
 
@@ -4206,8 +4482,17 @@
         }
     };
 
-    var prototypeAccessors$4 = { dictionary: { configurable: true },_vm: { configurable: true },locale: { configurable: true },rules: { configurable: true } };
-    var staticAccessors$1 = { dictionary: { configurable: true },locale: { configurable: true },rules: { configurable: true } };
+    var prototypeAccessors$4 = {
+        dictionary: {configurable: true},
+        _vm: {configurable: true},
+        locale: {configurable: true},
+        rules: {configurable: true}
+    };
+    var staticAccessors$1 = {
+        dictionary: {configurable: true},
+        locale: {configurable: true},
+        rules: {configurable: true}
+    };
     prototypeAccessors$4.dictionary.get = function () {
         return Config.dependency('dictionary');
     };
@@ -4239,11 +4524,11 @@
     staticAccessors$1.rules.get = function () {
         return RULES;
     };
-    Validator.create = function create (validations, options) {
+    Validator.create = function create(validations, options) {
         return new Validator(validations, options);
     };
-    Validator.extend = function extend (name, validator, options) {
-        if ( options === void 0 ) options = {};
+    Validator.extend = function extend(name, validator, options) {
+        if (options === void 0) options = {};
 
         Validator._guardExtend(name, validator);
         Validator._merge(name, validator);
@@ -4251,25 +4536,26 @@
             TARGET_RULES.push(name);
         }
     };
-    Validator.remove = function remove (name) {
+    Validator.remove = function remove(name) {
         delete RULES[name];
         var idx = TARGET_RULES.indexOf(name);
-        if (idx === -1)
-        { return; }
+        if (idx === -1) {
+            return;
+        }
         TARGET_RULES.splice(idx, 1);
     };
-    Validator.isTargetRule = function isTargetRule (name) {
+    Validator.isTargetRule = function isTargetRule(name) {
         return TARGET_RULES.indexOf(name) !== -1;
     };
-    Validator.setStrictMode = function setStrictMode (strictMode) {
-        if ( strictMode === void 0 ) strictMode = true;
+    Validator.setStrictMode = function setStrictMode(strictMode) {
+        if (strictMode === void 0) strictMode = true;
 
         STRICT_MODE = strictMode;
     };
-    Validator.prototype.localize = function localize (lang, dictionary) {
+    Validator.prototype.localize = function localize(lang, dictionary) {
         Validator.localize(lang, dictionary);
     };
-    Validator.localize = function localize (lang, dictionary) {
+    Validator.localize = function localize(lang, dictionary) {
         var obj;
 
         if (isObject(lang)) {
@@ -4279,13 +4565,13 @@
         if (dictionary) {
             var locale = lang || dictionary.name;
             dictionary = assign({}, dictionary);
-            Validator.dictionary.merge(( obj = {}, obj[locale] = dictionary, obj ));
+            Validator.dictionary.merge((obj = {}, obj[locale] = dictionary, obj));
         }
         if (lang) {
             Validator.locale = lang;
         }
     };
-    Validator.prototype.attach = function attach (field) {
+    Validator.prototype.attach = function attach(field) {
         if (arguments.length > 1) {
             warn('This signature of the attach method has been deprecated, please consult the docs.');
             field = assign({}, {
@@ -4313,17 +4599,18 @@
         this._addFlag(field, field.scope);
         return field;
     };
-    Validator.prototype.flag = function flag (name, flags) {
+    Validator.prototype.flag = function flag(name, flags) {
         var field = this._resolveField(name);
         if (!field || !flags) {
             return;
         }
         field.setFlags(flags);
     };
-    Validator.prototype.detach = function detach (name, scope) {
+    Validator.prototype.detach = function detach(name, scope) {
         var field = name instanceof Field ? name : this._resolveField(name, scope);
-        if (!field)
-        { return; }
+        if (!field) {
+            return;
+        }
         field.destroy();
         this.errors.remove(field.name, field.scope, field.id);
         this.fields.remove(field);
@@ -4335,12 +4622,12 @@
         }
         this.flags = assign({}, flags);
     };
-    Validator.prototype.extend = function extend (name, validator, options) {
-        if ( options === void 0 ) options = {};
+    Validator.prototype.extend = function extend(name, validator, options) {
+        if (options === void 0) options = {};
 
         Validator.extend(name, validator, options);
     };
-    Validator.prototype.reset = function reset (matcher) {
+    Validator.prototype.reset = function reset(matcher) {
         return new Promise((function ($return, $error) {
             return this._vm.$nextTick().then((function ($await_1) {
                 try {
@@ -4363,12 +4650,13 @@
             }).bind(this), $error);
         }).bind(this));
     };
-    Validator.prototype.update = function update (id, ref) {
+    Validator.prototype.update = function update(id, ref) {
         var scope = ref.scope;
 
         var field = this._resolveField(("#" + id));
-        if (!field)
-        { return; }
+        if (!field) {
+            return;
+        }
         this.errors.update(id, {
             scope: scope
         });
@@ -4379,18 +4667,19 @@
         }
         this._addFlag(field, scope);
     };
-    Validator.prototype.remove = function remove (name) {
+    Validator.prototype.remove = function remove(name) {
         Validator.remove(name);
     };
-    Validator.prototype.validate = function validate (name, value, scope, silent) {
-        if ( scope === void 0 ) scope = null;
-        if ( silent === void 0 ) silent = false;
+    Validator.prototype.validate = function validate(name, value, scope, silent) {
+        if (scope === void 0) scope = null;
+        if (silent === void 0) silent = false;
 
         var $args = arguments;
         return new Promise((function ($return, $error) {
             var matched, field, result;
-            if (this.paused)
-            { return $return(Promise.resolve(true)); }
+            if (this.paused) {
+                return $return(Promise.resolve(true));
+            }
             if ($args.length === 0) {
                 return $return(this.validateScopes());
             }
@@ -4405,8 +4694,9 @@
             if (!field) {
                 return $return(this._handleFieldNotFound(name, scope));
             }
-            if (!silent)
-            { field.flags.pending = true; }
+            if (!silent) {
+                field.flags.pending = true;
+            }
             if ($args.length === 1) {
                 value = field.value;
             }
@@ -4426,25 +4716,26 @@
             }).bind(this), $error);
         }).bind(this));
     };
-    Validator.prototype.pause = function pause () {
+    Validator.prototype.pause = function pause() {
         this.paused = true;
         return this;
     };
-    Validator.prototype.resume = function resume () {
+    Validator.prototype.resume = function resume() {
         this.paused = false;
         return this;
     };
-    Validator.prototype.validateAll = function validateAll (values, scope, silent) {
-        if ( scope === void 0 ) scope = null;
-        if ( silent === void 0 ) silent = false;
+    Validator.prototype.validateAll = function validateAll(values, scope, silent) {
+        if (scope === void 0) scope = null;
+        if (silent === void 0) silent = false;
 
         return new Promise((function ($return, $error) {
             var this$1 = this;
 
             var results;
             var matcher, providedValues;
-            if (this.paused)
-            { return $return(true); }
+            if (this.paused) {
+                return $return(true);
+            }
             matcher = null;
             providedValues = false;
             if (typeof values === 'string') {
@@ -4452,64 +4743,78 @@
                     scope: values
                 };
             } else if (isObject(values)) {
-                matcher = Object.keys(values).map(function (key) { return ({
-                    name: key,
-                    scope: scope
-                }); });
+                matcher = Object.keys(values).map(function (key) {
+                    return ({
+                        name: key,
+                        scope: scope
+                    });
+                });
                 providedValues = true;
             } else if (Array.isArray(values)) {
-                matcher = values.map(function (key) { return ({
-                    name: key,
-                    scope: scope
-                }); });
+                matcher = values.map(function (key) {
+                    return ({
+                        name: key,
+                        scope: scope
+                    });
+                });
             } else {
                 matcher = {
                     scope: scope
                 };
             }
-            return Promise.all(this.fields.filter(matcher).map(function (field) { return this$1._validate(field, providedValues ? values[field.name] : field.value); })).then((function ($await_4) {
+            return Promise.all(this.fields.filter(matcher).map(function (field) {
+                return this$1._validate(field, providedValues ? values[field.name] : field.value);
+            })).then((function ($await_4) {
                 try {
                     results = $await_4;
                     if (!silent) {
                         this._handleValidationResults(results);
                     }
-                    return $return(results.every(function (t) { return t.valid; }));
+                    return $return(results.every(function (t) {
+                        return t.valid;
+                    }));
                 } catch ($boundEx) {
                     return $error($boundEx);
                 }
             }).bind(this), $error);
         }).bind(this));
     };
-    Validator.prototype.validateScopes = function validateScopes (silent) {
-        if ( silent === void 0 ) silent = false;
+    Validator.prototype.validateScopes = function validateScopes(silent) {
+        if (silent === void 0) silent = false;
 
         return new Promise((function ($return, $error) {
             var this$1 = this;
 
             var results;
-            if (this.paused)
-            { return $return(true); }
-            return Promise.all(this.fields.map(function (field) { return this$1._validate(field, field.value); })).then((function ($await_5) {
+            if (this.paused) {
+                return $return(true);
+            }
+            return Promise.all(this.fields.map(function (field) {
+                return this$1._validate(field, field.value);
+            })).then((function ($await_5) {
                 try {
                     results = $await_5;
                     if (!silent) {
                         this._handleValidationResults(results);
                     }
-                    return $return(results.every(function (t) { return t.valid; }));
+                    return $return(results.every(function (t) {
+                        return t.valid;
+                    }));
                 } catch ($boundEx) {
                     return $error($boundEx);
                 }
             }).bind(this), $error);
         }).bind(this));
     };
-    Validator.prototype.destroy = function destroy () {
+    Validator.prototype.destroy = function destroy() {
         this._vm.$off('localeChanged', this._localeListener);
     };
-    Validator.prototype._createFields = function _createFields (validations) {
+    Validator.prototype._createFields = function _createFields(validations) {
         var this$1 = this;
 
-        if (!validations)
-        { return; }
+        if (!validations) {
+            return;
+        }
         Object.keys(validations).forEach(function (field) {
             var options = assign({}, {
                 name: field,
@@ -4518,27 +4823,27 @@
             this$1.attach(options);
         });
     };
-    Validator.prototype._getDateFormat = function _getDateFormat (validations) {
+    Validator.prototype._getDateFormat = function _getDateFormat(validations) {
         var format = null;
         if (validations.date_format && Array.isArray(validations.date_format)) {
             format = validations.date_format[0];
         }
         return format || this.dictionary.getDateFormat(this.locale);
     };
-    Validator.prototype._isADateRule = function _isADateRule (rule) {
-        return !(!(~['after','before','date_between','date_format'].indexOf(rule)));
+    Validator.prototype._isADateRule = function _isADateRule(rule) {
+        return !(!(~['after', 'before', 'date_between', 'date_format'].indexOf(rule)));
     };
-    Validator.prototype._formatErrorMessage = function _formatErrorMessage (field, rule, data, targetName) {
-        if ( data === void 0 ) data = {};
-        if ( targetName === void 0 ) targetName = null;
+    Validator.prototype._formatErrorMessage = function _formatErrorMessage(field, rule, data, targetName) {
+        if (data === void 0) data = {};
+        if (targetName === void 0) targetName = null;
 
         var name = this._getFieldDisplayName(field);
         var params = this._getLocalizedParams(rule, targetName);
         return this.dictionary.getFieldMessage(this.locale, field.name, rule.name, [name,
-            params,data]);
+            params, data]);
     };
-    Validator.prototype._getLocalizedParams = function _getLocalizedParams (rule, targetName) {
-        if ( targetName === void 0 ) targetName = null;
+    Validator.prototype._getLocalizedParams = function _getLocalizedParams(rule, targetName) {
+        if (targetName === void 0) targetName = null;
 
         if (~TARGET_RULES.indexOf(rule.name) && rule.params && rule.params[0]) {
             var localizedName = targetName || this.dictionary.getAttribute(this.locale, rule.params[0], rule.params[0]);
@@ -4546,21 +4851,21 @@
         }
         return rule.params;
     };
-    Validator.prototype._getFieldDisplayName = function _getFieldDisplayName (field) {
+    Validator.prototype._getFieldDisplayName = function _getFieldDisplayName(field) {
         return field.alias || this.dictionary.getAttribute(this.locale, field.name, field.name);
     };
-    Validator.prototype._addFlag = function _addFlag (field, scope) {
+    Validator.prototype._addFlag = function _addFlag(field, scope) {
         var obj, obj$1, obj$2;
 
-        if ( scope === void 0 ) scope = null;
+        if (scope === void 0) scope = null;
         if (isNullOrUndefined(scope)) {
-            this.flags = assign({}, this.flags, ( obj = {}, obj[("" + (field.name))] = field.flags, obj ));
+            this.flags = assign({}, this.flags, (obj = {}, obj[("" + (field.name))] = field.flags, obj));
             return;
         }
-        var scopeObj = assign({}, this.flags[("$" + scope)] || {}, ( obj$1 = {}, obj$1[("" + (field.name))] = field.flags, obj$1 ));
-        this.flags = assign({}, this.flags, ( obj$2 = {}, obj$2[("$" + scope)] = scopeObj, obj$2 ));
+        var scopeObj = assign({}, this.flags[("$" + scope)] || {}, (obj$1 = {}, obj$1[("" + (field.name))] = field.flags, obj$1));
+        this.flags = assign({}, this.flags, (obj$2 = {}, obj$2[("$" + scope)] = scopeObj, obj$2));
     };
-    Validator.prototype._test = function _test (field, value, rule) {
+    Validator.prototype._test = function _test(field, value, rule) {
         var this$1 = this;
 
         var validator = RULES[rule.name];
@@ -4570,7 +4875,9 @@
             throw createError(("No such validator '" + (rule.name) + "' exists."));
         }
         if (TARGET_RULES.indexOf(rule.name) !== -1) {
-            var target = find(field.dependencies, function (d) { return d.name === rule.name; });
+            var target = find(field.dependencies, function (d) {
+                return d.name === rule.name;
+            });
             if (target) {
                 targetName = target.field.alias;
                 params = [target.field.value].concat(params.slice(1));
@@ -4590,7 +4897,9 @@
                 var allValid = true;
                 var data = {};
                 if (Array.isArray(values)) {
-                    allValid = values.every(function (t) { return isObject(t) ? t.valid : t; });
+                    allValid = values.every(function (t) {
+                        return isObject(t) ? t.valid : t;
+                    });
                 } else {
                     allValid = isObject(values) ? values.valid : values;
                     data = values.data;
@@ -4612,7 +4921,7 @@
             errors: result.valid ? [] : [this._createFieldError(field, rule, result.data, targetName)]
         };
     };
-    Validator._merge = function _merge (name, validator) {
+    Validator._merge = function _merge(name, validator) {
         if (isCallable(validator)) {
             RULES[name] = validator;
             return;
@@ -4622,7 +4931,7 @@
             Validator.dictionary.setMessage(this.locale, name, validator.getMessage);
         }
     };
-    Validator._guardExtend = function _guardExtend (name, validator) {
+    Validator._guardExtend = function _guardExtend(name, validator) {
         if (isCallable(validator)) {
             return;
         }
@@ -4630,7 +4939,7 @@
             throw createError(("Extension Error: The validator '" + name + "' must be a function or have a 'validate' method."));
         }
     };
-    Validator.prototype._createFieldError = function _createFieldError (field, rule, data, targetName) {
+    Validator.prototype._createFieldError = function _createFieldError(field, rule, data, targetName) {
         var this$1 = this;
 
         return {
@@ -4639,10 +4948,12 @@
             msg: this._formatErrorMessage(field, rule, data, targetName),
             rule: rule.name,
             scope: field.scope,
-            regenerate: function () { return this$1._formatErrorMessage(field, rule, data, targetName); }
+            regenerate: function () {
+                return this$1._formatErrorMessage(field, rule, data, targetName);
+            }
         };
     };
-    Validator.prototype._resolveField = function _resolveField (name, scope) {
+    Validator.prototype._resolveField = function _resolveField(name, scope) {
         if (!isNullOrUndefined(scope)) {
             return this.fields.find({
                 name: name,
@@ -4671,24 +4982,31 @@
             scope: null
         });
     };
-    Validator.prototype._handleFieldNotFound = function _handleFieldNotFound (name, scope) {
-        if (!this.strict)
-        { return true; }
+    Validator.prototype._handleFieldNotFound = function _handleFieldNotFound(name, scope) {
+        if (!this.strict) {
+            return true;
+        }
         var fullName = isNullOrUndefined(scope) ? name : ("" + (!isNullOrUndefined(scope) ? scope + '.' : '') + name);
         throw createError(("Validating a non-existent field: \"" + fullName + "\". Use \"attach()\" first."));
     };
-    Validator.prototype._handleValidationResults = function _handleValidationResults (results) {
-        var matchers = results.map(function (result) { return ({
-            id: result.id
-        }); });
-        this.errors.removeById(matchers.map(function (m) { return m.id; }));
+    Validator.prototype._handleValidationResults = function _handleValidationResults(results) {
+        var matchers = results.map(function (result) {
+            return ({
+                id: result.id
+            });
+        });
+        this.errors.removeById(matchers.map(function (m) {
+            return m.id;
+        }));
         var allErrors = results.reduce(function (prev, curr) {
             prev.push.apply(prev, curr.errors);
             return prev;
         }, []);
         this.errors.add(allErrors);
         this.fields.filter(matchers).forEach(function (field) {
-            var result = find(results, function (r) { return r.id === field.id; });
+            var result = find(results, function (r) {
+                return r.id === field.id;
+            });
             field.setFlags({
                 pending: false,
                 valid: result.valid,
@@ -4696,7 +5014,7 @@
             });
         });
     };
-    Validator.prototype._validate = function _validate (field, value) {
+    Validator.prototype._validate = function _validate(field, value) {
         return new Promise((function ($return, $error) {
             var this$1 = this;
 
@@ -4723,7 +5041,9 @@
                     errors.push.apply(errors, result.errors);
                     isExitEarly = true;
                 } else {
-                    promises.push(new Promise(function (resolve) { return resolve(result); }));
+                    promises.push(new Promise(function (resolve) {
+                        return resolve(result);
+                    }));
                 }
                 return isExitEarly;
             });
@@ -4756,8 +5076,8 @@
         }).bind(this));
     };
 
-    Object.defineProperties( Validator.prototype, prototypeAccessors$4 );
-    Object.defineProperties( Validator, staticAccessors$1 );
+    Object.defineProperties(Validator.prototype, prototypeAccessors$4);
+    Object.defineProperties(Validator, staticAccessors$1);
 
     var requestsValidator = function (injections) {
         if (isObject(injections) && injections.$validator) {
@@ -4765,10 +5085,12 @@
         }
         return false;
     };
-    var createValidator = function (vm, options) { return new Validator(null, {
-        vm: vm,
-        fastExit: options.fastExit
-    }); };
+    var createValidator = function (vm, options) {
+        return new Validator(null, {
+            vm: vm,
+            fastExit: options.fastExit
+        });
+    };
     var mixin = {
         provide: function provide() {
             if (this.$validator && !isBuiltInComponent(this.$vnode)) {
@@ -4816,8 +5138,9 @@
             };
         },
         beforeDestroy: function beforeDestroy() {
-            if (isBuiltInComponent(this.$vnode))
-            { return; }
+            if (isBuiltInComponent(this.$vnode)) {
+                return;
+            }
             if (this.$validator && this.$validator.ownerId === this._uid) {
                 this.$validator.pause();
                 this.$validator.destroy();
@@ -4846,8 +5169,9 @@
         inserted: function (el, binding, vnode) {
             var field = findField(el, vnode.context);
             var scope = Generator.resolveScope(el, binding, vnode);
-            if (!field || scope === field.scope)
-            { return; }
+            if (!field || scope === field.scope) {
+                return;
+            }
             field.update({
                 scope: scope
             });
@@ -4855,8 +5179,9 @@
         },
         update: function (el, binding, vnode) {
             var field = findField(el, vnode.context);
-            if (!field || field.updated && isEqual$1(binding.value, binding.oldValue))
-            { return; }
+            if (!field || field.updated && isEqual$1(binding.value, binding.oldValue)) {
+                return;
+            }
             var scope = Generator.resolveScope(el, binding, vnode);
             var rules = Generator.resolveRules(el, binding);
             field.update({
@@ -4868,15 +5193,17 @@
             var context = ref.context;
 
             var field = findField(el, context);
-            if (!field)
-            { return; }
+            if (!field) {
+                return;
+            }
             context.$validator.detach(field);
         }
     }
 
     var Vue;
+
     function install(_Vue, options) {
-        if ( options === void 0 ) options = {};
+        if (options === void 0) options = {};
 
         if (Vue && _Vue === Vue) {
             if (process.env.NODE_ENV !== 'production') {
@@ -4908,7 +5235,7 @@
     }
 
     function use(plugin, options) {
-        if ( options === void 0 ) options = {};
+        if (options === void 0) options = {};
 
         if (!isCallable(plugin)) {
             return warn('The plugin must be a callable function');
@@ -4935,15 +5262,33 @@
     };
     var combine = function (lhs, rhs) {
         var mapper = {
-            pristine: function (lhs, rhs) { return lhs && rhs; },
-            dirty: function (lhs, rhs) { return lhs || rhs; },
-            touched: function (lhs, rhs) { return lhs || rhs; },
-            untouched: function (lhs, rhs) { return lhs && rhs; },
-            valid: function (lhs, rhs) { return lhs && rhs; },
-            invalid: function (lhs, rhs) { return lhs || rhs; },
-            pending: function (lhs, rhs) { return lhs || rhs; },
-            required: function (lhs, rhs) { return lhs || rhs; },
-            validated: function (lhs, rhs) { return lhs && rhs; }
+            pristine: function (lhs, rhs) {
+                return lhs && rhs;
+            },
+            dirty: function (lhs, rhs) {
+                return lhs || rhs;
+            },
+            touched: function (lhs, rhs) {
+                return lhs || rhs;
+            },
+            untouched: function (lhs, rhs) {
+                return lhs && rhs;
+            },
+            valid: function (lhs, rhs) {
+                return lhs && rhs;
+            },
+            invalid: function (lhs, rhs) {
+                return lhs || rhs;
+            },
+            pending: function (lhs, rhs) {
+                return lhs || rhs;
+            },
+            required: function (lhs, rhs) {
+                return lhs || rhs;
+            },
+            validated: function (lhs, rhs) {
+                return lhs && rhs;
+            }
         };
         return Object.keys(mapper).reduce(function (flags, flag) {
             flags[flag] = mapper[flag](lhs[flag], rhs[flag]);
@@ -4951,7 +5296,7 @@
         }, {});
     };
     var mapScope = function (scope, deep) {
-        if ( deep === void 0 ) deep = true;
+        if (deep === void 0) deep = true;
 
         return Object.keys(scope).reduce(function (flags, field) {
             if (!flags) {

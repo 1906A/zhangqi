@@ -3,11 +3,11 @@
     <v-text-field v-model="brand.name" label="请输入品牌名称" required :rules="nameRules"/>
     <v-text-field v-model="brand.letter" label="请输入品牌首字母" required :rules="letterRules"/>
     <v-cascader
-    url="/item/category/list"
-    multiple
-    required
-    v-model="brand.categories"
-    label="类请选择商品分"/>
+      url="/item/category/list"
+      multiple
+      required
+      v-model="brand.categories"
+      label="类请选择商品分"/>
     <v-layout row>
       <v-flex xs3>
         <span style="font-size: 16px; color: #444">品牌LOGO：</span>
@@ -72,9 +72,7 @@
           // 将数据提交到后台
           // this.$http.post('/item/brand', this.$qs.stringify(params))
 
-          const user = {
-
-          }
+          const user = {}
           //name=123&image=&cids=3%2C80&letter=A
           // console.log(this.$qs.stringify(params));
           this.$http({

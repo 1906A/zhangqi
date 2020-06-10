@@ -67,16 +67,16 @@
           height: this.picHeight + 'px',
           'line-height': this.picHeight + 'px'
         },
-        fileList:[]
+        fileList: []
       }
     },
-    mounted(){
+    mounted() {
       if (!this.value || this.value.length <= 0) {
         return;
       }
       if (this.multiple) {
         this.fileList = this.value.map(f => {
-          return {response: f, url:f}
+          return {response: f, url: f}
         });
       } else {
         this.dialogImageUrl = this.value;
@@ -106,13 +106,13 @@
       }
     },
     watch: {
-      value:{
-        deep:true,
-        handler(val,oldVal){
-    
+      value: {
+        deep: true,
+        handler(val, oldVal) {
+
           if (this.multiple) {
             this.fileList = val.map(f => {
-              return {response: f,url:f}
+              return {response: f, url: f}
             });
           } else {
             this.dialogImageUrl = val;

@@ -1,7 +1,7 @@
 <template>
   <cas :data="options" @on-change="handleChange" :loadData="loadOption" transfer>
     <v-select :label="label" chips clearable v-model="selected" tags :required="required"
-      :rules="defaultRules">
+              :rules="defaultRules">
       <template slot="selection" slot-scope="data">
         <v-chip @click.stop="" v-if="multiple" close @input="remove(data.item)" small outline color="green">
           {{ data.item.label}}&nbsp;
@@ -49,19 +49,19 @@
         type: Boolean,
         default: false
       },
-      required:{
+      required: {
         type: Boolean,
         default: false
       },
-      rules:{
-        type:Array,
+      rules: {
+        type: Array,
       }
     },
     data() {
       return {
         options: [],
         selected: [],
-        defaultRules:[]
+        defaultRules: []
       }
     },
     methods: {
@@ -137,8 +137,8 @@
           return obj;
         })
       },
-      validate(){
-        if(this.required){
+      validate() {
+        if (this.required) {
           this.$refs.form.validate();
         }
       }
@@ -147,10 +147,10 @@
       this.loadData(0).then(data => {
         this.options = data;
       })
-      if(this.required){
+      if (this.required) {
         this.defaultRules.push(v => v.length > 0 || this.label + "不能为空");
       }
-      if(this.rules){
+      if (this.rules) {
         this.rules.forEach(r => this.defaultRules.push(r));
       }
     },
@@ -158,11 +158,11 @@
       value: {
         deep: true,
         handler(val) {
-          if(!val){
+          if (!val) {
             this.selected = [];
             return;
           }
-          if(val && this.showAllLevels && !this.multiple){
+          if (val && this.showAllLevels && !this.multiple) {
             this.selected = [val.map(o => o[this.itemText]).join("/")]
           } else if (this.multiple && val) {
             this.selected = val.map(o => {
@@ -171,7 +171,7 @@
                 value: o[this.itemValue]
               }
             })
-          } else{
+          } else {
             this.selected = [val[this.itemText]]
           }
         }

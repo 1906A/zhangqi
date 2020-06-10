@@ -24,16 +24,16 @@
         type: Boolean,
         default: false
       },
-      treeData:{
-        type:Array
+      treeData: {
+        type: Array
       }
     },
     data() {
       return {
         db: [],
-        nodes:{
-          opened:null,
-          selected:{isSelected:false}
+        nodes: {
+          opened: null,
+          selected: {isSelected: false}
         }
       }
     },
@@ -41,7 +41,7 @@
       TreeItem
     },
     created() {
-      if(this.treeData && this.treeData.length > 0){
+      if (this.treeData && this.treeData.length > 0) {
         this.db = this.treeData;
         return;
       }
@@ -64,7 +64,7 @@
         this.deleteById(id, this.db);
         this.$emit("handleDelete", id);
       },
-      handleClick(node){
+      handleClick(node) {
         this.$emit("handleClick", this.copyNodeInfo(node))
       },
       // 根据id删除
@@ -81,9 +81,9 @@
           }
         }
       },
-      copyNodeInfo(node){
+      copyNodeInfo(node) {
         const o = {};
-        for(let i in node){
+        for (let i in node) {
           o[i] = node[i];
         }
         return o;

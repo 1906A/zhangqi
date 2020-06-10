@@ -31,7 +31,7 @@
       <v-card>
         <v-card-text style="height: 300px;">
           <v-flex class="px-3">
-            <v-text-field label="参数名称：" v-model="param.name"  />
+            <v-text-field label="参数名称：" v-model="param.name"/>
             <v-checkbox label="是否为通用属性" v-model="param.generic" color="primary" hide-details/>
             <v-checkbox label="是否为数值类型" v-model="param.numeric" color="primary" hide-details/>
             <v-text-field label="数值单位：" v-model="param.unit" v-if="param.numeric"/>
@@ -56,7 +56,9 @@
                 <v-spacer/>
                 <v-flex xs1>
                   <v-tooltip left>
-                    <v-btn slot="activator" icon @click="param.segments.push([0,0])"><v-icon>add</v-icon></v-btn>
+                    <v-btn slot="activator" icon @click="param.segments.push([0,0])">
+                      <v-icon>add</v-icon>
+                    </v-btn>
                     <span>点击为数值类型的参数添加分段，便于搜索过滤</span>
                   </v-tooltip>
                 </v-flex>
@@ -84,13 +86,14 @@
     data() {
       return {
         headers: [
-          { text: "id", value: "id", align: "center", sortable: false },
-          { text: "参数名", value: "name", align: "center", sortable: false },
-          { text: "是否为数值", value: "numeric",
+          {text: "id", value: "id", align: "center", sortable: false},
+          {text: "参数名", value: "name", align: "center", sortable: false},
+          {
+            text: "是否为数值", value: "numeric",
             align: "center",
             sortable: false
           },
-          { text: "单位", value: "unit", align: "center", sortable: false },
+          {text: "单位", value: "unit", align: "center", sortable: false},
           {
             text: "是否通用",
             value: "generic",
@@ -103,7 +106,7 @@
             align: "center",
             sortable: false
           },
-          { text: "操作", align: "center", sortable: false }
+          {text: "操作", align: "center", sortable: false}
         ],
         params: [], // 参数
         show: false,
@@ -112,10 +115,10 @@
       };
     },
     watch: {
-      group:{
-        deep:true,
-        handler(val){
-          if(val && val.id){
+      group: {
+        deep: true,
+        handler(val) {
+          if (val && val.id) {
             this.loadData();
           }
         }
@@ -125,7 +128,7 @@
       loadData() {
         this.$http
           .get("/item/spec/params?gid=" + this.group.id)
-          .then(({ data }) => {
+          .then(({data}) => {
             data.forEach(p => {
               p.segments = p.segments ? p.segments.split(",").map(s => s.split("-")) : [];
             })
@@ -144,10 +147,11 @@
         this.param = {
           cid: this.group.cid,
           groupId: this.group.id,
-          segments:[],
-          numeric:false,
-          searching:false,
-          generic:false}
+          segments: [],
+          numeric: false,
+          searching: false,
+          generic: false
+        }
         this.show = true;
       },
       deleteParam(id) {
@@ -166,15 +170,15 @@
       formatBoolean(boo) {
         return boo ? "是" : "否";
       },
-      save(){
+      save() {
         const p = {};
         Object.assign(p, this.param);
-        if(!p.numeric){
-          p.unit="";
-          p.segments=[];
+        if (!p.numeric) {
+          p.unit = "";
+          p.segments = [];
         }
-        if(!p.searching){
-          p.segments=[];
+        if (!p.searching) {
+          p.segments = [];
         }
         p.segments = p.segments.map(s => s.join("-")).join(",")
         this.$http({

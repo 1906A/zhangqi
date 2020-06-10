@@ -26,6 +26,7 @@
             </if>
         </where>
         <if test="sortBy != null and sortBy != ''">
+            <!--@ignoreSql-->
             order by ${sortBy}
             <if test="desc">
                 desc

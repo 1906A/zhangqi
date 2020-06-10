@@ -20,7 +20,7 @@
                     :append-icon="e1 ? 'visibility' : 'visibility_off'"
                     :append-icon-cb="() => (e1 = !e1)"
                     :type="e1 ? 'text' : 'password'"
-                 ></v-text-field>
+                  ></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -34,29 +34,29 @@
     </v-content>
     <v-dialog v-model="dialog" width="300px">
       <v-alert icon="warning" color="error" :value="true">
-      用户名和密码不能为空
+        用户名和密码不能为空
       </v-alert>
     </v-dialog>
   </v-app>
 </template>
 
 <script>
-export default {
-  data: () => ({
-    username: "",
-    password: "",
-    dialog: false,
-    e1:false
-  }),
-  methods: {
-    doLogin() {
-      if (!this.username || !this.password) {
-        this.dialog = true;
-        return false;
+  export default {
+    data: () => ({
+      username: "",
+      password: "",
+      dialog: false,
+      e1: false
+    }),
+    methods: {
+      doLogin() {
+        if (!this.username || !this.password) {
+          this.dialog = true;
+          return false;
+        }
+        console.log(this.username + " ... " + this.password);
+        this.$router.push("/");
       }
-      console.log(this.username + " ... " + this.password);
-      this.$router.push("/");
     }
-  }
-};
+  };
 </script>

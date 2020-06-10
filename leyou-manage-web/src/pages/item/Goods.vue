@@ -165,7 +165,7 @@
         // 获取要编辑的goods
         this.oldGoods = oldGoods;
       },
-      deleteBySpuId(id){
+      deleteBySpuId(id) {
         alert(id);
         this.$message.confirm('此操作将永久删除数据，是否继续?', '提示', {
           confirmButtonText: '确定删除',
@@ -177,33 +177,33 @@
               this.$message.info('删除成功');
               this.getDataFromServer();
             })
-        }).catch(()=>{
+        }).catch(() => {
           this.$message.info('删除失败');
         })
       },
-      downOrUp(status,id){
-        alert(status+"==="+id)
-        let name="上架";
-        if(status=='0'){
-            name="下架";
+      downOrUp(status, id) {
+        alert(status + "===" + id)
+        let name = "上架";
+        if (status == '0') {
+          name = "下架";
         }
-        this.$message.confirm('此操作将商品'+name+'，是否继续?', '提示', {
+        this.$message.confirm('此操作将商品' + name + '，是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$http.get("/item/spu/downOrUp",{
-            params:{
-              saleable:status,
-              spuid:id
+          this.$http.get("/item/spu/downOrUp", {
+            params: {
+              saleable: status,
+              spuid: id
             }
           })
             .then((res) => {
-              this.$message.info(name+'成功');
+              this.$message.info(name + '成功');
               this.getDataFromServer();
             })
-        }).catch(()=>{
-          this.$message.info(name+'失败');
+        }).catch(() => {
+          this.$message.info(name + '失败');
         })
 
 
@@ -217,13 +217,13 @@
         // 将步骤调整到1
         this.step = 1;
       },
-      previous(){
-        if(this.step > 1){
+      previous() {
+        if (this.step > 1) {
           this.step--
         }
       },
-      next(){
-        if(this.step < 4 && this.$refs.goodsForm.$refs.basic.validate()){
+      next() {
+        if (this.step < 4 && this.$refs.goodsForm.$refs.basic.validate()) {
           this.step++
         }
       }

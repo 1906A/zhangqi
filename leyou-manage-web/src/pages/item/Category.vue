@@ -1,14 +1,14 @@
 <template>
   <v-card>
-      <v-flex xs12 sm10>
-        <v-tree url="/item/category/list"
-                :isEdit="isEdit"
-                @handleAdd="handleAdd"
-                @handleEdit="handleEdit"
-                @handleDelete="handleDelete"
-                @handleClick="handleClick"
-        />
-      </v-flex>
+    <v-flex xs12 sm10>
+      <v-tree url="/item/category/list"
+              :isEdit="isEdit"
+              @handleAdd="handleAdd"
+              @handleEdit="handleEdit"
+              @handleDelete="handleDelete"
+              @handleClick="handleClick"
+      />
+    </v-flex>
   </v-card>
 </template>
 
@@ -18,7 +18,7 @@
     name: "category",
     data() {
       return {
-        isEdit:true,
+        isEdit: true,
       }
     },
     methods: {
@@ -47,22 +47,22 @@
         console.log(node);
         console.log("------------------------------");
 
-        let id=node.id;
-        if(id==0){
+        let id = node.id;
+        if (id == 0) {
 
           this.$http.post("/item/category/add",
             node
-          ).then((res)=>{
-            if(res.data=="SUCC"){
+          ).then((res) => {
+            if (res.data == "SUCC") {
               alert("添加成功")
-            }else if(res.data=="FAIL"){
+            } else if (res.data == "FAIL") {
               alert("添加失败")
             }
             window.location.reload();
-          }).catch((err)=>{
+          }).catch((err) => {
             alert("出现错误")
           });
-        }else {
+        } else {
           this.$http.post("/item/category/update", node).then((res) => {
             if (res.data == "SUCC") {
               alert("修改成功")
@@ -80,20 +80,19 @@
       handleDelete(id) {
         console.log("delete ... " + id)
 
-        this.$http.get("/item/category/deleteById",{
-              params:{
-                id:id
-              }
+        this.$http.get("/item/category/deleteById", {
+            params: {
+              id: id
+            }
           }
-
-        ).then((res)=>{
-          if(res.data=="SUCC"){
-              alert("删除成功")
-          }else if(res.data=="FAIL"){
-              alert("删除失败")
+        ).then((res) => {
+          if (res.data == "SUCC") {
+            alert("删除成功")
+          } else if (res.data == "FAIL") {
+            alert("删除失败")
           }
-        }).catch((err)=>{
-            alert("出现错误")
+        }).catch((err) => {
+          alert("出现错误")
         })
 
       },

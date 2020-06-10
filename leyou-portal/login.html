@@ -43,11 +43,11 @@
                         <form class="sui-form">
                             <div class="input-prepend"><span class="add-on loginname"></span>
                                 <input id="username" type="text" placeholder="邮箱/用户名/手机号" class="span2 input-xfat"
-                                    v-model="form.username">
+                                       v-model="form.username">
                             </div>
                             <div class="input-prepend"><span class="add-on loginpwd"></span>
                                 <input id="password" type="password" placeholder="请输入密码" class="span2 input-xfat"
-                                    v-model="form.password">
+                                       v-model="form.password">
                             </div>
                             <div class="setting">
                                 <label class="checkbox inline">
@@ -101,17 +101,17 @@
     var loginVm = new Vue({
         el: "#loginApp",
         data: {
-            form:{
-                username:'',
-                password:''
+            form: {
+                username: '',
+                password: ''
             },
-            msg:''
+            msg: ''
         },
-        methods:{
-            login(){
-                leyou.http.post("/user/login",leyou.stringify(this.form))
+        methods: {
+            login() {
+                leyou.http.post("/user/login", leyou.stringify(this.form))
                     .then(resp => {
-                        if(resp.status === 200){
+                        if (resp.status === 200) {
                             const url = leyou.getUrlParam("returnUrl");
                             window.location = url || 'http://www.leyou.com';
                         }
