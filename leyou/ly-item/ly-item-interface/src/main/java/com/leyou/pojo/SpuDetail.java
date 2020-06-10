@@ -3,7 +3,7 @@ package com.leyou.pojo;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name="tb_spu_detail")
+@Table(name = "tb_spu_detail")
 public class SpuDetail {
     @Id
     private Long spuId;// 对应的SPU的id

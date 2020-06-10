@@ -14,9 +14,9 @@ public class SpecParamService {
     SpecParamMapper specParamMapper;
 
     public List<SpecParam> findAllParams(Long groupId) {
-        SpecParam specParam=new SpecParam();
+        SpecParam specParam = new SpecParam();
         specParam.setGroupId(groupId);
-        return  specParamMapper.select(specParam);
+        return specParamMapper.select(specParam);
         //return  specParamMapper.findAllParams(groupId);
     }
 
@@ -40,7 +40,7 @@ public class SpecParamService {
 
     public List<SpecParam> findSpecParamsByCid1(Long cid) {
 
-        SpecParam specParam=new SpecParam();
+        SpecParam specParam = new SpecParam();
         specParam.setCid(cid);
         specParam.setSearching(true);
 
@@ -49,7 +49,7 @@ public class SpecParamService {
 
     public List<SpecParam> findSpecParamsByCidAndGeneric(Long cid, boolean generic) {
 
-        SpecParam specParam=new SpecParam();
+        SpecParam specParam = new SpecParam();
         specParam.setCid(cid);
         specParam.setGeneric(generic);
 

@@ -32,13 +32,10 @@ public class SpuService {
     SpuClientServer spuClientServer;
 
 
-
-    private static final ObjectMapper MAPPER=new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
 
     public Goods convert(SpuVo spuVo) throws Exception {
-
-
 
 
         Goods goods = new Goods();
@@ -53,53 +50,55 @@ public class SpuService {
         goods.setCreateTime(spuVo.getCreateTime());
 
         //存储可搜素的字段
-        goods.setAll(spuVo.getTitle()+" "+spuVo.getCname().replace("/"," ")+" "+spuVo.getBname());
+        goods.setAll(spuVo.getTitle() + " " + spuVo.getCname().replace("/", " ") + " " + spuVo.getBname());
 
         //复杂数据
         //根据spuid查询sku
         List<Sku> skuList = skuCilentServer.findSkuBySpuId(spuVo.getId());
 
-        List<Long> price =new ArrayList<>();
-        skuList.forEach(sku->{
+        List<Long> price = new ArrayList<>();
+        skuList.forEach(sku -> {
             price.add(sku.getPrice());
         });
 
         goods.setPrice(price);
         goods.setSkus(MAPPER.writeValueAsString(skuList));
 
-        Map<String, Object> specs =new HashMap<>();
+        Map<String, Object> specs = new HashMap<>();
 
         //根据三级分类id和可搜索条件查询规格参数
         List<SpecParam> specParamList = specClientServer.findSpecParamsByCid1(spuVo.getCid3());
 
         //根据spuid查询spudetail
         SpuDetail spuDetail = spuClientServer.findSpuDetailBySpuId(spuVo.getId());
-        specParamList.forEach(sp ->{
-            if(sp.getGeneric()){
+        specParamList.forEach(sp -> {
+            if (sp.getGeneric()) {
                 try {
-                    Map<Long,Object> genericSpec = MAPPER.readValue(spuDetail.getGenericSpec(), new TypeReference<Map<Long, Object>>(){}) ;
+                    Map<Long, Object> genericSpec = MAPPER.readValue(spuDetail.getGenericSpec(), new TypeReference<Map<Long, Object>>() {
+                    });
                     String value = genericSpec.get(sp.getId()).toString();
 
-                    if(sp.getNumeric()){
-                        value = chooseSegment(value,sp);
+                    if (sp.getNumeric()) {
+                        value = chooseSegment(value, sp);
                     }
 
-                    specs.put(sp.getName(),value);
+                    specs.put(sp.getName(), value);
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }else{
+            } else {
 
-                Map<Long,Object> specialSpec = null;
+                Map<Long, Object> specialSpec = null;
                 try {
-                    specialSpec = MAPPER.readValue(spuDetail.getSpecialSpec(), new TypeReference<Map<Long, Object>>(){});
+                    specialSpec = MAPPER.readValue(spuDetail.getSpecialSpec(), new TypeReference<Map<Long, Object>>() {
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 String value = specialSpec.get(sp.getId()).toString();
 
-                specs.put(sp.getName(),value);
+                specs.put(sp.getName(), value);
             }
 
         });
@@ -117,16 +116,16 @@ public class SpuService {
             // 获取数值范围
             double begin = NumberUtils.toDouble(segs[0]);
             double end = Double.MAX_VALUE;
-            if(segs.length == 2){
+            if (segs.length == 2) {
                 end = NumberUtils.toDouble(segs[1]);
             }
             // 判断是否在范围内
-            if(val >= begin && val < end){
-                if(segs.length == 1){
+            if (val >= begin && val < end) {
+                if (segs.length == 1) {
                     result = segs[0] + p.getUnit() + "以上";
-                }else if(begin == 0){
+                } else if (begin == 0) {
                     result = segs[1] + p.getUnit() + "以下";
-                }else{
+                } else {
                     result = segment + p.getUnit();
                 }
                 break;

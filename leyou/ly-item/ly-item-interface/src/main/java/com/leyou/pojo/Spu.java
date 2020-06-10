@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Table(name = "tb_spu")
-public class Spu{
+public class Spu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,8 +21,6 @@ public class Spu{
     private Boolean valid;// 是否有效，逻辑删除用
     private Date createTime;// 创建时间
     private Date lastUpdateTime;// 最后修改时间
-
-
 
 
     @Override

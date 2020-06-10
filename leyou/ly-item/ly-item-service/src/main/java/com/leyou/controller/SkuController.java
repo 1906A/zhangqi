@@ -18,18 +18,15 @@ public class SkuController {
 
     /**
      * 根据spuid来查询所有得商品信息
+     *
      * @param id
      * @return
      */
     @RequestMapping("list")
-    public List<Sku> findSkuBySpuId(@RequestParam("id") Long id){
+    public List<Sku> findSkuBySpuId(@RequestParam("id") Long id) {
 
-       return skuService.findSkuBySpuId(id);
+        return skuService.findSkuBySpuId(id);
     }
-
-
-
-
 
 
 }

@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface SpuClient {
 
     @RequestMapping("page")
-    public PageResult<SpuVo> findAllSpu(@RequestParam( value = "key",required = false)String key, @RequestParam( value = "saleable")Integer saleable,
-                                        @RequestParam("page")Integer page, @RequestParam("rows")Integer rows);
+    public PageResult<SpuVo> findAllSpu(@RequestParam(value = "key", required = false) String key, @RequestParam(value = "saleable") Integer saleable,
+                                        @RequestParam("page") Integer page, @RequestParam("rows") Integer rows);
 
 
     @RequestMapping("detail/{id}")
-    public SpuDetail findSpuDetailBySpuId(@PathVariable("id")Long id);
+    public SpuDetail findSpuDetailBySpuId(@PathVariable("id") Long id);
 
     @RequestMapping("findSpuById")
     public Spu findSpuById(@RequestParam("SpuId") Long id);

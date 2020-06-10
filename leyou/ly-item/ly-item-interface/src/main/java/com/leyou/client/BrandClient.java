@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("brand")
 public interface BrandClient {
     @RequestMapping("findBrandById")
-    public Brand findBrandById(@RequestParam("id")Long id);
+    public Brand findBrandById(@RequestParam("id") Long id);
 
 }

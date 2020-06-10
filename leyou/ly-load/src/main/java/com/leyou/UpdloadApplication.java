@@ -10,7 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class UpdloadApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UpdloadApplication.class,args);
+        SpringApplication.run(UpdloadApplication.class, args);
     }
 
 

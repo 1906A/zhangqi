@@ -31,14 +31,14 @@ public class SpecGroupService {
 
         //根据id查询参数组及组内的参数列表
 
-        List<SpecGroup> GroupList= new  ArrayList<>();
+        List<SpecGroup> GroupList = new ArrayList<>();
 
-            specGroupMapper.select(specGroup);
+        specGroupMapper.select(specGroup);
 
-        GroupList=specGroupMapper.select(specGroup);
+        GroupList = specGroupMapper.select(specGroup);
 
         GroupList.forEach(group -> {
-            SpecParam specParam=new SpecParam();
+            SpecParam specParam = new SpecParam();
             specParam.setGroupId(group.getId());
             List<SpecParam> params = specParamMapper.select(specParam);
             group.setParams(params);
@@ -51,7 +51,7 @@ public class SpecGroupService {
 
     public void deleteSpecGroupById(Long id) {
 
-         specGroupMapper.deleteByPrimaryKey(id);
+        specGroupMapper.deleteByPrimaryKey(id);
     }
 
     public void updateSpecGroup(SpecGroup specGroup) {

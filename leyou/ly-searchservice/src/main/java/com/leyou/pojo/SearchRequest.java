@@ -9,7 +9,8 @@ public class SearchRequest {
 
     private String SortBy; //排序字段
 
-    private Map<String,Object>  filter;
+    private Map<String, Object> filter;
+
     public String getSortBy() {
         return SortBy;
     }
@@ -29,7 +30,6 @@ public class SearchRequest {
     private boolean descending; //是否升降
 
 
-
     private static final Integer DEFAULT_SIZE = 20;// 每页大小，不从页面接收，而是固定大小
     private static final Integer DEFAULT_PAGE = 1;// 默认页
 
@@ -42,7 +42,7 @@ public class SearchRequest {
     }
 
     public Integer getPage() {
-        if(page == null){
+        if (page == null) {
             return DEFAULT_PAGE;
         }
         // 获取页码时做一些校验，不能小于1

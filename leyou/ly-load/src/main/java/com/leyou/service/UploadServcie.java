@@ -23,7 +23,7 @@ public class UploadServcie {
 
     /*将符合格式的图片类型存储进数组*/
     private static final List<String> content_types = Arrays.asList("image/png", "image/jpeg", "image/gif",
-             "image/TIFF" , "image/tiff" , "image/PNG" , "image/GIF", "image/JPEG"
+            "image/TIFF", "image/tiff", "image/PNG", "image/GIF", "image/JPEG"
 
     );
 
@@ -66,7 +66,7 @@ public class UploadServcie {
             //file.transferTo(Paths.get(String.valueOf(new File("C:\\images\\" + originalFilename))));
 
             //保存到服务器
-             /*1.获取文件后缀*/
+            /*1.获取文件后缀*/
             String lastname = StringUtils.substringAfterLast(originalFilename, ".");
 
             //        服务器对象                                    文件             文件大小       后缀名      原数据

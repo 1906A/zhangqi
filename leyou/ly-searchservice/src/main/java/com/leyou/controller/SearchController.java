@@ -50,47 +50,47 @@ public class SearchController {
 
 
     @RequestMapping("page")
-    public PageResult<Goods> findAllGoods(@RequestBody SearchRequest searchRequest){
+    public PageResult<Goods> findAllGoods(@RequestBody SearchRequest searchRequest) {
 
         //一获取前台发送的查询数据和分页页数
-        System.out.println(searchRequest.getKey()+"==="+searchRequest.getPage());
+        System.out.println(searchRequest.getKey() + "===" + searchRequest.getPage());
 
         //一创建 NativeSearchQueryBuilder对象
-        NativeSearchQueryBuilder queryBuilder=new NativeSearchQueryBuilder();
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
 
         //一通过match查询all中对应的字段
-        queryBuilder.withQuery(QueryBuilders.matchQuery("all",searchRequest.getKey()).operator(Operator.AND));
+        queryBuilder.withQuery(QueryBuilders.matchQuery("all", searchRequest.getKey()).operator(Operator.AND));
 
 
         //三过滤filter查询条件
         //三匹配规则参数时改造
         BoolQueryBuilder queryBuilder1 = QueryBuilders.boolQuery()
-                                         .must(QueryBuilders.matchQuery("all", searchRequest.getKey()));
+                .must(QueryBuilders.matchQuery("all", searchRequest.getKey()));
         //判断过滤条件
-       if(searchRequest.getFilter()!=null && searchRequest.getFilter().size()>0){
-           searchRequest.getFilter().keySet().forEach(key->{
-               String filed="specs."+key+".keyword";
-               if(key.equals("分类")){
-                   filed="cid3";
-               }else if (key.equals("品牌")){
-                   filed="brandId";
-               }
-               //根据过滤条件过滤
-               queryBuilder1.filter(QueryBuilders.termQuery(filed,searchRequest.getFilter().get(key)));
-           });
-       }
-       //组装过滤条件
+        if (searchRequest.getFilter() != null && searchRequest.getFilter().size() > 0) {
+            searchRequest.getFilter().keySet().forEach(key -> {
+                String filed = "specs." + key + ".keyword";
+                if (key.equals("分类")) {
+                    filed = "cid3";
+                } else if (key.equals("品牌")) {
+                    filed = "brandId";
+                }
+                //根据过滤条件过滤
+                queryBuilder1.filter(QueryBuilders.termQuery(filed, searchRequest.getFilter().get(key)));
+            });
+        }
+        //组装过滤条件
         queryBuilder.withQuery(queryBuilder1);
 
         //一进行分页
-        queryBuilder.withPageable(PageRequest.of(searchRequest.getPage()-1,searchRequest.getSize()));
+        queryBuilder.withPageable(PageRequest.of(searchRequest.getPage() - 1, searchRequest.getSize()));
 
         //一排序
-        queryBuilder.withSort(SortBuilders.fieldSort(searchRequest.getSortBy()).order(searchRequest.isDescending() ? SortOrder.ASC : SortOrder.DESC ));
+        queryBuilder.withSort(SortBuilders.fieldSort(searchRequest.getSortBy()).order(searchRequest.isDescending() ? SortOrder.ASC : SortOrder.DESC));
 
         //二加载分类和品牌
-        String categoryName="categoryName";
-        String brandName="brandName";
+        String categoryName = "categoryName";
+        String brandName = "brandName";
 
         //二聚合查询
         queryBuilder.addAggregation(AggregationBuilders.terms(categoryName).field("cid3"));
@@ -102,12 +102,12 @@ public class SearchController {
         AggregatedPage<Goods> search = (AggregatedPage<Goods>) goodsRepository.search(queryBuilder.build());
 
         //二页面展示分类集合
-        List<Category> categoryList=new ArrayList<>();
+        List<Category> categoryList = new ArrayList<>();
         //二 构造分页信息--根据分类id获取名称 强转 LongTerms   stringTerms doubleTerms
         LongTerms categoryAgg = (LongTerms) search.getAggregation(categoryName);
 
         //二 不知道根据三级分类聚合能聚合桶多少条数据，所以循环遍历
-        categoryAgg.getBuckets().forEach(bucket->{
+        categoryAgg.getBuckets().forEach(bucket -> {
             Long categoryId = (Long) bucket.getKey();
 
             //根据分类id去数据库查询
@@ -119,13 +119,13 @@ public class SearchController {
         });
 
         //二页面展示品牌集合
-        List<Brand> brandList=new ArrayList<>();
+        List<Brand> brandList = new ArrayList<>();
         //二 构造分页信息--根据品牌id获取名称 强转 LongTerms   stringTerms doubleTerms
         LongTerms brandAgg = (LongTerms) search.getAggregation(brandName);
 
 
         //二 不知道根据品牌聚合能聚合桶多少条数据，所以循环遍历
-        brandAgg.getBuckets().forEach(bucket->{
+        brandAgg.getBuckets().forEach(bucket -> {
             Long brandId = (Long) bucket.getKey();
             //根据分类id去数据库查询
             Brand brand = brandClientServer.findBrandById(brandId);
@@ -134,21 +134,20 @@ public class SearchController {
         });
 
 
-
         //三构造规格参数组数据
         //规格参数是根据分类的id获取的
         //三 根据三级分类id查询规格参数，集合是Map形式的集合
-        List<Map<String,Object>> paramList=new ArrayList<>();
+        List<Map<String, Object>> paramList = new ArrayList<>();
         //如果分类能查到   默认前端显示栏显示一个分类
-        if(categoryList.size()==1){
+        if (categoryList.size() == 1) {
             //规格参数是根据分类的id获取的
             List<SpecParam> specParams = specClientServer.findSpecParamsByCid1(categoryList.get(0).getId());
             //遍历分组的属性
-            specParams.forEach(specParam->{
+            specParams.forEach(specParam -> {
                 //得到Map的key值
                 String key = specParam.getName();
                 //聚合查询                                              设置不分词
-                queryBuilder.addAggregation(AggregationBuilders.terms(key).field("specs"+"."+key+"."+"keyword"));
+                queryBuilder.addAggregation(AggregationBuilders.terms(key).field("specs" + "." + key + "." + "keyword"));
             });
         }
 
@@ -161,25 +160,25 @@ public class SearchController {
 
         //因为分类和品牌聚合查询完有id
         //遍历Map集合
-        aggregationMap.keySet().forEach(mKey->{
+        aggregationMap.keySet().forEach(mKey -> {
 
             //三把品牌和分类的聚合过滤掉
-            if(!(mKey.equals(categoryName)||mKey.equals(brandName))){
+            if (!(mKey.equals(categoryName) || mKey.equals(brandName))) {
                 //转换数据类型
-                StringTerms aggregation = (StringTerms)aggregationMap.get(mKey);
+                StringTerms aggregation = (StringTerms) aggregationMap.get(mKey);
                 //封装到Map集合
-                Map<String,Object> map=new HashMap<>();
-                map.put("key",mKey);
+                Map<String, Object> map = new HashMap<>();
+                map.put("key", mKey);
 
-                List<Map<String,String>> list=new ArrayList<>();
+                List<Map<String, String>> list = new ArrayList<>();
                 //遍历桶集合
                 aggregation.getBuckets().forEach(bucket -> {
-                    Map<String,String> valueMap=new HashMap<>();
-                    valueMap.put("name",bucket.getKeyAsString());
+                    Map<String, String> valueMap = new HashMap<>();
+                    valueMap.put("name", bucket.getKeyAsString());
                     list.add(valueMap); //对应的属性没有id，封装到options中为对象
                 });
 
-                map.put("options",list);
+                map.put("options", list);
 
                 //获取到的参数加入paramlist集合
                 paramList.add(map);
@@ -188,9 +187,8 @@ public class SearchController {
         });
 
 
-
         //一执行查询  tatalelement 总条数 totalpage 总页数  count 数据内容
-       // Page<Goods> page = goodsRepository.search(queryBuilder.build());
+        // Page<Goods> page = goodsRepository.search(queryBuilder.build());
 
         //return new PageResult<Goods>(page.getTotalElements(), page.getContent(), page.getTotalPages());
         //二聚合查询 分类加品牌
@@ -199,8 +197,7 @@ public class SearchController {
 //                );
         //二聚合查询 分类加品牌 规格组
         return new SearchResult(search.getTotalElements(), search.getContent(), search.getTotalPages(),
-                categoryList,brandList,paramList);
-
+                categoryList, brandList, paramList);
 
 
     }

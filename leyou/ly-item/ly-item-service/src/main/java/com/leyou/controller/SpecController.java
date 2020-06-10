@@ -20,71 +20,68 @@ public class SpecController {
     SpecParamService specParamService;
 
 
-
-
     /**
      * 添加,修改商品组信息
+     *
      * @param specGroup
      */
     @RequestMapping("group")
-    public void addSpecGroup(@RequestBody SpecGroup specGroup){
-        if(specGroup.getId()==null){
+    public void addSpecGroup(@RequestBody SpecGroup specGroup) {
+        if (specGroup.getId() == null) {
             specGroupService.addSpecGroup(specGroup);
-        }else {
+        } else {
             specGroupService.updateSpecGroup(specGroup);
         }
     }
 
     /**
      * 查询商品规格组信息
+     *
      * @param cid
      * @return
      */
     @RequestMapping("groups/{cid}")
-    public List<SpecGroup> findAllSpecGroup(@PathVariable("cid") Long cid){
+    public List<SpecGroup> findAllSpecGroup(@PathVariable("cid") Long cid) {
         return specGroupService.findAllSpecGroup(cid);
     }
 
 
     /**
      * 根据id删除商品规格表
+     *
      * @param id
      */
     @RequestMapping("group/{id}")
-    public void deleteSpecGroupById(@PathVariable("id") Long id){
+    public void deleteSpecGroupById(@PathVariable("id") Long id) {
         specGroupService.deleteSpecGroupById(id);
     }
 
 
-
-
-
-
-
-
     /**
      * 展示商品规格参数
+     *
      * @param gid
      * @return
      */
     @GetMapping("params")
-    public List<SpecParam> findAllParams(@RequestParam(value = "gid",required = false)Long gid){
+    public List<SpecParam> findAllParams(@RequestParam(value = "gid", required = false) Long gid) {
 
 
-       List<SpecParam> list= specParamService.findAllParams(gid);
-       return list;
+        List<SpecParam> list = specParamService.findAllParams(gid);
+        return list;
     }
 
 
     /**
      * 添加或修改商品规格参数
+     *
      * @param specParam
      */
     @RequestMapping("param")
-    public void addSpecParam(@RequestBody SpecParam specParam){
-        if(specParam.getId()==null){
+    public void addSpecParam(@RequestBody SpecParam specParam) {
+        if (specParam.getId() == null) {
             specParamService.addSpecParam(specParam);
-        }else{
+        } else {
             specParamService.updateSpecParam(specParam);
         }
     }
@@ -92,53 +89,58 @@ public class SpecController {
 
     /**
      * 根据id删除参数
+     *
      * @param id
      */
     @RequestMapping("param/{id}")
-    public void deleteBySpecParamId(@PathVariable("id")Long id){
+    public void deleteBySpecParamId(@PathVariable("id") Long id) {
         specParamService.deleteBySpecParamId(id);
     }
 
 
     /**
      * 根据分类id 查询规格参数
+     *
      * @param cid
      * @return
      */
     @RequestMapping("paramsByCid")
-    public List<SpecParam>  findSpecParamByCid(@RequestParam("cid")Long cid){
+    public List<SpecParam> findSpecParamByCid(@RequestParam("cid") Long cid) {
 
-      List<SpecParam> specParamList=  specParamService.findParamByCid(cid);
+        List<SpecParam> specParamList = specParamService.findParamByCid(cid);
 
-      return  specParamList;
+        return specParamList;
     }
 
     /**
      * 根据分类id 查询规格参数，查询出可搜素的字段
+     *
      * @param cid
      * @return
      */
     @RequestMapping("paramByCid")
-    public List<SpecParam>  findSpecParamsByCid1(@RequestParam("cid")Long cid){
+    public List<SpecParam> findSpecParamsByCid1(@RequestParam("cid") Long cid) {
 
-        List<SpecParam> specParamList=  specParamService.findSpecParamsByCid1(cid);
+        List<SpecParam> specParamList = specParamService.findSpecParamsByCid1(cid);
 
-        return  specParamList;
+        return specParamList;
     }
 
 
-    /**根据三级分类id加上是否通用参数查询
+    /**
+     * 根据三级分类id加上是否通用参数查询
+     *
      * @param cid
      * @return
      */
     @RequestMapping("findSpecParamsByCidAndGeneric")
-    public List<SpecParam>  findSpecParamsByCidAndGeneric(@RequestParam("cid")Long cid,
-                                                          @RequestParam("generic")Boolean generic
-                                                          ){
+    public List<SpecParam> findSpecParamsByCidAndGeneric(@RequestParam("cid") Long cid,
+                                                         @RequestParam("generic") Boolean generic
+    ) {
 
-        List<SpecParam> specParamList=  specParamService.findSpecParamsByCidAndGeneric(cid,generic);
+        List<SpecParam> specParamList = specParamService.findSpecParamsByCidAndGeneric(cid, generic);
 
-        return  specParamList;
+        return specParamList;
     }
 
 

@@ -33,10 +33,10 @@ public class GoodsService {
     public void addGoods(SpuVo spuVo) {
 
         //设置一个时间
-        Date nowDate=new Date();
+        Date nowDate = new Date();
 
         //新增spu
-        Spu spu=new Spu();
+        Spu spu = new Spu();
         spu.setId(null);  //设置id
         spu.setSaleable(false); //设置默认下线状态
         spu.setValid(true); //设置有效
@@ -58,7 +58,7 @@ public class GoodsService {
 
         //新增sku
         List<Sku> skuList = spuVo.getSkus();
-        skuList.forEach(sku->{
+        skuList.forEach(sku -> {
             sku.setSpuId(spu.getId());  //此处设置得是spuid
             sku.setCreateTime(nowDate);
             sku.setLastUpdateTime(nowDate);
@@ -66,7 +66,7 @@ public class GoodsService {
             skuMapper.insertSelective(sku);
 
             //新增库存表
-            Stock stock=new Stock();
+            Stock stock = new Stock();
             stock.setSkuId(sku.getId());
             stock.setStock(sku.getStock());
             stockMapper.insertSelective(stock);
@@ -74,15 +74,12 @@ public class GoodsService {
         });
 
 
-
-
-
     }
 
     public void updateGoods(SpuVo spuVo) {
 
         //设置一个时间
-        Date nowDate=new Date();
+        Date nowDate = new Date();
 
         //修改spu
         spuVo.setSaleable(null); //设置默认下线状态
@@ -107,14 +104,14 @@ public class GoodsService {
 
         //新增sku
         List<Sku> skuList1 = spuVo.getSkus();
-        skuList1.forEach(sku->{
+        skuList1.forEach(sku -> {
             sku.setSpuId(spuVo.getId());  //此处设置得是spuid
             sku.setCreateTime(nowDate);
             sku.setLastUpdateTime(nowDate);
             sku.setEnable(true);
             skuMapper.insertSelective(sku);
             //新增库存表
-            Stock stock=new Stock();
+            Stock stock = new Stock();
             stock.setSkuId(sku.getId());
             stock.setStock(sku.getStock());
             stockMapper.insertSelective(stock);

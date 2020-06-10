@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface BrandMapper extends Mapper<Brand> {
 
-    List<Brand> findBrandAll(@Param("key")String key, @Param("sortBy") String sortBy, @Param("desc") boolean desc);
+    List<Brand> findBrandAll(@Param("key") String key, @Param("sortBy") String sortBy, @Param("desc") boolean desc);
 
-    List<Brand> findBrandAll2(@Param("page")int page, @Param("rows") Integer rows, @Param("key") String key, @Param("sortBy") String sortBy, @Param("desc") boolean desc);
+    List<Brand> findBrandAll2(@Param("page") int page, @Param("rows") Integer rows, @Param("key") String key, @Param("sortBy") String sortBy, @Param("desc") boolean desc);
 
-    Long findCount(@Param("key")String key,@Param("sortBy") String sortBy,@Param("desc") boolean desc);
+    Long findCount(@Param("key") String key, @Param("sortBy") String sortBy, @Param("desc") boolean desc);
 
     void insertBrand(Brand brand);
 
-    void isertCategoryAndBrand(@Param("bid")Long bid,@Param("cid") Long cid);
+    void isertCategoryAndBrand(@Param("bid") Long bid, @Param("cid") Long cid);
 
 
     void deleteBrandAndCategory(Long id);

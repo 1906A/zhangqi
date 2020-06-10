@@ -16,14 +16,15 @@ public class GoodsController {
 
     /**
      * 添加,修改商品信息
+     *
      * @param spuVo
      */
     @RequestMapping("goods")
-    public void addGoods(@RequestBody SpuVo spuVo){
+    public void addGoods(@RequestBody SpuVo spuVo) {
 
-        if(spuVo.getId()==null){
+        if (spuVo.getId() == null) {
             goodsService.addGoods(spuVo);
-        }else {
+        } else {
             goodsService.updateGoods(spuVo);
         }
 

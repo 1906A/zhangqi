@@ -12,14 +12,14 @@ import java.util.List;
 public interface SpecClient {
 
     @RequestMapping("paramByCid")
-    public List<SpecParam> findSpecParamsByCid1(@RequestParam("cid")Long cid);
+    public List<SpecParam> findSpecParamsByCid1(@RequestParam("cid") Long cid);
 
     @RequestMapping("groups/{cid}")
     public List<SpecGroup> findAllSpecGroup(@PathVariable("cid") Long cid);
 
     @RequestMapping("findSpecParamsByCidAndGeneric")
-    public List<SpecParam>  findSpecParamsByCidAndGeneric(@RequestParam("cid")Long cid,
-                                                          @RequestParam("generic")Boolean generic
+    public List<SpecParam> findSpecParamsByCidAndGeneric(@RequestParam("cid") Long cid,
+                                                         @RequestParam("generic") Boolean generic
     );
 
 

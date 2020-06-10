@@ -20,8 +20,8 @@ public class SpuController {
     SpuService spuService;
 
     /**
-     *
      * 分页展示所有商品集
+     *
      * @param key
      * @param saleable
      * @param page
@@ -29,11 +29,11 @@ public class SpuController {
      * @return
      */
     @RequestMapping("page")
-    public PageResult<SpuVo> findAllSpu(@RequestParam( value = "key",required = false)String key, @RequestParam( value = "saleable")Integer saleable,
-                                        @RequestParam("page")Integer page, @RequestParam("rows")Integer rows
-                                ){
+    public PageResult<SpuVo> findAllSpu(@RequestParam(value = "key", required = false) String key, @RequestParam(value = "saleable") Integer saleable,
+                                        @RequestParam("page") Integer page, @RequestParam("rows") Integer rows
+    ) {
 
-        PageResult<SpuVo> spuList= spuService.findAllSpu(key,saleable,page,rows);
+        PageResult<SpuVo> spuList = spuService.findAllSpu(key, saleable, page, rows);
 
         return spuList;
     }
@@ -41,11 +41,12 @@ public class SpuController {
 
     /**
      * 根据商品集得id查询扩展表信息
+     *
      * @param id
      * @return
      */
     @RequestMapping("detail/{id}")
-    public SpuDetail findSpuDetailBySpuId(@PathVariable("id")Long id){
+    public SpuDetail findSpuDetailBySpuId(@PathVariable("id") Long id) {
 
         return spuService.findSpuDetail(id);
     }
@@ -53,37 +54,40 @@ public class SpuController {
 
     /**
      * 根据spu的id删除商品
+     *
      * @param id
      */
     @RequestMapping("deleteById/{id}")
-    public void deleteBySpuId(@PathVariable("id")Long id){
+    public void deleteBySpuId(@PathVariable("id") Long id) {
         spuService.deleteBySpuId(id);
     }
 
 
     /**
      * 商品的下架上架
+     *
      * @param saleable
      * @param id
      */
     @RequestMapping("downOrUp")
-    public void downOrUpSpu(@RequestParam("saleable")int saleable, @RequestParam("spuid")Long id){
-        spuService.downOrUp(saleable,id);
+    public void downOrUpSpu(@RequestParam("saleable") int saleable, @RequestParam("spuid") Long id) {
+        spuService.downOrUp(saleable, id);
     }
 
 
-    /**根据SpuId查spu
+    /**
+     * 根据SpuId查spu
+     *
      * @param id
      * @return
      */
     @RequestMapping("findSpuById")
-    public Spu findSpuById(@RequestParam("SpuId") Long id){
+    public Spu findSpuById(@RequestParam("SpuId") Long id) {
 
 
-        return  spuService.findSpuById(id);
+        return spuService.findSpuById(id);
 
     }
-
 
 
 }

@@ -10,14 +10,14 @@ import org.springframework.web.filter.CorsFilter;
 public class CORSConfig {
 
     @Bean
-    public CorsFilter corsFilter(){
+    public CorsFilter corsFilter() {
 
 
-        CorsConfiguration corsConfiguration=new CorsConfiguration();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
         //core配置
         corsConfiguration.addAllowedOrigin("http://manage.leyou.com");
         corsConfiguration.addAllowedOrigin("http://www.leyou.com");
-        corsConfiguration.addAllowedOrigin("http://127.0.0.1:9002");
+        corsConfiguration.addAllowedOrigin("http://127.0.0.1:8080");
         corsConfiguration.addAllowedOrigin("http://zhangqi.free.idcfengye.com");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
@@ -26,17 +26,11 @@ public class CORSConfig {
         //配置过滤地址
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        source.registerCorsConfiguration("/**",corsConfiguration);
+        source.registerCorsConfiguration("/**", corsConfiguration);
 
 
-        return  new org.springframework.web.filter.CorsFilter(source);
+        return new org.springframework.web.filter.CorsFilter(source);
     }
-
-
-
-
-
-
 
 
 }

@@ -12,7 +12,7 @@ public class SearchResult extends PageResult<Goods> {
     private List<Category> categoryList;
     private List<Brand> brandList;
     //三
-    private List<Map<String,Object>> paramList;
+    private List<Map<String, Object>> paramList;
     //新追加的有参构造
 
 

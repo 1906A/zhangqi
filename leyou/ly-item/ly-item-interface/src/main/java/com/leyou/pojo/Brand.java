@@ -16,7 +16,6 @@ public class Brand {
     private Character letter;
 
 
-
     public Long getId() {
         return id;
     }

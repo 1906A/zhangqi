@@ -37,7 +37,7 @@ public class UploadContoller {
             //图片为空，报400
             return ResponseEntity.badRequest().build();
         }
-           //body 返回读取的图片内容
+        //body 返回读取的图片内容
         return ResponseEntity.status(HttpStatus.CREATED).body(url);
 
     }

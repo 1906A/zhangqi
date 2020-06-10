@@ -34,19 +34,19 @@ public class SpuService {
 
     public PageResult<SpuVo> findAllSpu(String key, Integer saleable, Integer page, Integer rows) {
 
-        PageHelper.startPage(page,rows);
+        PageHelper.startPage(page, rows);
 
         List<SpuVo> spuList = spuMapper.findAllSpu(key, saleable, page, rows);
 
-        PageInfo<SpuVo> page1=new PageInfo<>(spuList);
+        PageInfo<SpuVo> page1 = new PageInfo<>(spuList);
 
-        return new PageResult<SpuVo>(page1.getTotal(),page1.getList());
+        return new PageResult<SpuVo>(page1.getTotal(), page1.getList());
 
     }
 
     public SpuDetail findSpuDetail(Long id) {
 
-          return  spuDetailMapper.selectByPrimaryKey(id);
+        return spuDetailMapper.selectByPrimaryKey(id);
     }
 
 
@@ -55,7 +55,7 @@ public class SpuService {
         //先删除sku表
 
 
-        Sku sku=new Sku();
+        Sku sku = new Sku();
         sku.setSpuId(id);
         List<Sku> skuList = skuMapper.select(sku);
         skuList.forEach(sku1 -> {
@@ -73,20 +73,19 @@ public class SpuService {
         spuMapper.updateByPrimaryKeySelective(spu);
 
 
-
     }
 
     public void downOrUp(Integer saleable, Long id) {
         //查询出商品
         Spu spu = spuMapper.selectByPrimaryKey(id);
         //设置状态
-        spu.setSaleable(saleable==1?true:false);
+        spu.setSaleable(saleable == 1 ? true : false);
         spuMapper.updateByPrimaryKey(spu);
     }
 
     public Spu findSpuById(Long id) {
 
-       return  spuMapper.selectByPrimaryKey(id);
+        return spuMapper.selectByPrimaryKey(id);
 
     }
 }

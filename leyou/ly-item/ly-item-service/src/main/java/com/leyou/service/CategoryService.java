@@ -14,7 +14,7 @@ public class CategoryService {
     CategoryMapper categoryMapper;
 
 
-    public List<Category> findCategoryAll(Category category){
+    public List<Category> findCategoryAll(Category category) {
         return categoryMapper.select(category);
     }
 

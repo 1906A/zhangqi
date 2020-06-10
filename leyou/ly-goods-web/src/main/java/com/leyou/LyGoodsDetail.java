@@ -13,12 +13,9 @@ public class LyGoodsDetail {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(LyGoodsDetail.class,args);
+        SpringApplication.run(LyGoodsDetail.class, args);
 
     }
-
-
-
 
 
 }

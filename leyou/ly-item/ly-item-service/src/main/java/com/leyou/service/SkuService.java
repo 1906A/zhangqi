@@ -20,16 +20,17 @@ public class SkuService {
 
     /**
      * 根据spuid查询商品
+     *
      * @param id
      * @return
      */
     public List<Sku> findSkuBySpuId(Long id) {
-     List<Sku> skuList= skuMapper.findSkuBySpuId(id);
-     //根据对应的商品查询库存
-     skuList.forEach(sku->{
-         Stock stock = stockMapper.selectByPrimaryKey(sku.getId());
-         sku.setStock(stock.getStock());
-     });
+        List<Sku> skuList = skuMapper.findSkuBySpuId(id);
+        //根据对应的商品查询库存
+        skuList.forEach(sku -> {
+            Stock stock = stockMapper.selectByPrimaryKey(sku.getId());
+            sku.setStock(stock.getStock());
+        });
         return skuList;
     }
 

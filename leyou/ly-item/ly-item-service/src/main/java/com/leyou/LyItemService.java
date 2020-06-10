@@ -11,6 +11,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 public class LyItemService {
 
     public static void main(String[] args) {
-        SpringApplication.run(LyItemService.class,args);
+        SpringApplication.run(LyItemService.class, args);
     }
 }

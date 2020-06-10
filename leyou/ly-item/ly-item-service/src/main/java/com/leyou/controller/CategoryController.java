@@ -20,85 +20,86 @@ public class CategoryController {
 
     /**
      * 查询全部商品分类信息
+     *
      * @param pid
      * @return
      */
     @RequestMapping("list")
-    public List<Category> list(@RequestParam("pid")Long pid){
-        Category category=new Category();
+    public List<Category> list(@RequestParam("pid") Long pid) {
+        Category category = new Category();
         category.setParentId(pid);
         return categoryService.findCategoryAll(category);
     }
 
 
-
     /**
-     *
      * 添加商品分类信息
+     *
      * @param category
      * @return
      */
     @RequestMapping("add")
-    public String add(@RequestBody Category category){
-        String result="SUCC";
+    public String add(@RequestBody Category category) {
+        String result = "SUCC";
 
-            try {
-                    categoryService.addCategory(category);
-            }catch (Exception e){
-                result="FAIL";
-            }
+        try {
+            categoryService.addCategory(category);
+        } catch (Exception e) {
+            result = "FAIL";
+        }
         return result;
     }
 
     /**
-     *
      * 修改商品分类信息
+     *
      * @param category
      * @return
      */
     @RequestMapping("update")
-    public String update(@RequestBody Category category){
-        String result="SUCC";
+    public String update(@RequestBody Category category) {
+        String result = "SUCC";
         try {
             categoryService.updateCategory(category);
-        }catch (Exception e){
-            result="FAIL";
+        } catch (Exception e) {
+            result = "FAIL";
         }
         return result;
     }
 
 
     /**
-     *
      * 删除商品分类信息
-     * @param  id
+     *
+     * @param id
      * @return
      */
     @RequestMapping("deleteById")
-    public String deleteById(@RequestParam("id")Long id){
-        String result="SUCC";
+    public String deleteById(@RequestParam("id") Long id) {
+        String result = "SUCC";
         try {
 
             categoryService.deleteById(id);
-        }catch (Exception e){
-            result="FAIL";
+        } catch (Exception e) {
+            result = "FAIL";
         }
         return result;
     }
 
-    /**根据分类id查询分类名称
+    /**
+     * 根据分类id查询分类名称
+     *
      * @param id
      * @return
      */
     @RequestMapping("findCategoryById")
-    public Category findCategoryById(@RequestParam("id")Long id){
+    public Category findCategoryById(@RequestParam("id") Long id) {
 
 
-        Category category= categoryService.findCategoryById(id);
+        Category category = categoryService.findCategoryById(id);
 
         return category;
     }
-
 
 
 }

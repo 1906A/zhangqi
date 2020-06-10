@@ -6,7 +6,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   thymeleaf:
-      cache: false
+    cache: false
 eureka:
   client:
     service-url:

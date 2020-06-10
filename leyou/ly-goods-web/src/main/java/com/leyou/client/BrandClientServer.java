@@ -3,6 +3,6 @@ package com.leyou.client;
 import org.springframework.cloud.openfeign.FeignClient;
 
 @FeignClient(name = "item-service")
-public interface BrandClientServer extends  BrandClient {
+public interface BrandClientServer extends BrandClient {
 
 }

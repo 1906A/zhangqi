@@ -31,7 +31,7 @@ public class LySearchApplicationTest {
 
 
     @Test
-    public void findAll(){
+    public void findAll() {
 
         //创建索引
         elasticsearchTemplate.createIndex(Goods.class);
@@ -42,7 +42,7 @@ public class LySearchApplicationTest {
 
         PageResult<SpuVo> spuList = spuClientServer.findAllSpu("", 2, 1, 200);
 
-        spuList.getItems().forEach(spu->{
+        spuList.getItems().forEach(spu -> {
 
             System.out.println(spu.getId());
             try {
