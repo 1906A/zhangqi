@@ -3,11 +3,14 @@ package com.leyou.controller;
 import com.leyou.pojo.User;
 import com.leyou.service.UserService;
 import com.leyou.utils.CodeUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -74,9 +77,23 @@ public class UserController {
      * @param code
      */
     @PostMapping("/register")
-    public void register(User user , String code){
+    public void register(@Valid User user , String code){
 
-        System.out.println("校验"+user.getUsername()+"code："+code);
+        System.out.println("用户注册:"+user.getUsername()+"code："+code);
+
+        if(user!=null){
+            //从redis中获取code
+            String redisCode = stringRedisTemplate.opsForValue().get("lysms_" + user.getPhone());
+            //判断code验证码是否一致
+            if(code.equals(redisCode)){
+                userService.add(user);
+            }
+
+        }
+
+
+
+
 
     }
 
@@ -93,5 +110,41 @@ public class UserController {
       return  new User();
     }
 
+
+    /**登录校验
+     * @param username
+     * @param password
+     * @return
+     */
+    @PostMapping("login")
+    public ResponseEntity <Void> login(@RequestParam("username")String username, @RequestParam("password")String password){
+
+        Boolean result=false;
+
+        User user=userService.findusername(username);
+
+        if(user!=null){
+
+            //比对密码
+            String md5Hex = DigestUtils.md5Hex(password + user.getSalt());
+
+            if(md5Hex.equals(user.getPassword())){
+
+                result =true;
+                return  ResponseEntity.ok().build();
+            }
+            else{
+                return  ResponseEntity.notFound().build();
+            }
+
+
+        }
+        else{
+            return  ResponseEntity.notFound().build();
+        }
+
+      //  return  result;
+
+    }
 
 }
