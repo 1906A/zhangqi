@@ -11,6 +11,8 @@
         <module>ly-load</module>
         <module>ly-searchservice</module>
         <module>ly-goods-web</module>
+        <module>ly-user</module>
+        <module>ly-sms</module>
 
 
     </modules>
