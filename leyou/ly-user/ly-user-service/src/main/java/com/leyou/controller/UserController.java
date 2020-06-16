@@ -107,7 +107,18 @@ public class UserController {
     public User query(@RequestParam("username")String username,@RequestParam("password")String password){
 
         System.out.println("校验username："+username+"password："+password);
-      return  new User();
+        //1：根据用户名查询用户信息
+        User user  = userService.findusername(username);
+        if(user!=null){
+            //2：比对密码
+            String newPassword = DigestUtils.md5Hex(password + user.getSalt());
+            System.out.println("newPassword:"+newPassword);
+            System.out.println("password:"+user.getPassword());
+            if(user.getPassword().equals(newPassword)){
+                return user;
+            }
+        }
+        return null;
     }
 
 
@@ -117,9 +128,9 @@ public class UserController {
      * @return
      */
     @PostMapping("login")
-    public ResponseEntity <Void> login(@RequestParam("username")String username, @RequestParam("password")String password){
+    public String login(@RequestParam("username")String username, @RequestParam("password")String password){
 
-        Boolean result=false;
+        String result="1";
 
         User user=userService.findusername(username);
 
@@ -130,20 +141,13 @@ public class UserController {
 
             if(md5Hex.equals(user.getPassword())){
 
-                result =true;
-                return  ResponseEntity.ok().build();
-            }
-            else{
-                return  ResponseEntity.notFound().build();
+                result ="0";
             }
 
 
         }
-        else{
-            return  ResponseEntity.notFound().build();
-        }
 
-      //  return  result;
+       return  result;
 
     }
 
