@@ -12,7 +12,10 @@ spring:
       minimum-idle: 10
   rabbitmq:
     host: 192.168.58.132
-
+  redis:
+    host: 192.168.58.132
+    port: 6379
+    password: root
 eureka:
   client:
     service-url:
