@@ -59,7 +59,7 @@ public class UserController {
         map.put("code",code);
 
         //临时注销掉
-      //  amqpTemplate.convertAndSend("sms.changes","sms.send",map);
+       amqpTemplate.convertAndSend("sms.changes","sms.send",map);
 
 
         //发送短信后存放redis 放验证码 code
