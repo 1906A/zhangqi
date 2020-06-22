@@ -48,7 +48,7 @@
                                 </li>
                                 <li class="yui3-u-11-24">
                                     <div class="good-item">
-                                        <div class="item-img"><img :src="cart.image" width="80px" height="80px"/>
+                                        <div class="item-img"><img :src="cart.images" width="80px" height="80px"/>
                                         </div>
                                         <div class="item-msg">
 												<span style="line-height:70px ">
@@ -68,7 +68,7 @@
                                 </li>
                                 <li class="yui3-u-1-8"><span style="line-height:70px " class="sum">{{ly.formatPrice(cart.price*cart.num)}}</span></li>
                                 <li class="yui3-u-1-8">
-                                    <a href="#none" @click="deleteCart(i)">删除</a><br/>
+                                    <a href="#none" @click="deleteCart(cart,i)">删除</a><br/>
                                     <a href="#none">移到我的关注</a>
                                 </li>
                             </ul>
@@ -281,8 +281,12 @@
                         this.carts=ly.store.get("carts");
                         this.selected=this.carts;
                     }else{
-                        alert("已登录")
-
+                       // alert("已登录")
+                        this.ly.http.post("/cart/query").then(resp=>{
+                            console.info(resp.data)
+                            this.carts=resp.data;
+                            this.selected=this.carts;
+                        })
                     }
                 })
 
@@ -308,7 +312,13 @@
                     .then(resp => {
                         let user = resp.data; //对象为空代表购物车为空 对象有值已经登录
                         if(user.id!=null){
-                            alert("已登录")
+                            //alert("已登录")
+                            //刷新redis
+                            this.ly.http.post("/cart/update",cart).then(resp=>{
+
+
+                            })
+
                         }else{
 
                             ly.store.set("carts",this.carts)
@@ -327,7 +337,12 @@
                     .then(resp => {
                         let user = resp.data; //对象为空代表购物车为空 对象有值已经登录
                         if(user.id!=null){
-                            alert("已登录")
+                            //alert("已登录")
+                            //刷新redis
+                            this.ly.http.post("/cart/update",cart).then(resp=>{
+
+
+                            })
                         }else{
 
                             ly.store.set("carts",this.carts)
@@ -341,12 +356,17 @@
                 }
 
             },
-            deleteCart(i){
+            deleteCart(cart,i){
                 this.ly.http("/auth/verify")
                     .then(resp => {
                         let user = resp.data; //对象为空代表购物车为空 对象有值已经登录
                         if(user.id!=null){
-                            alert("已登录")
+                           // alert("已登录")
+                           // alert(cart.id)
+                            let id = cart.id
+                            this.ly.http.post("/cart/delete?id="+id).then(resp =>{
+                                window.location.reload();
+                            })
                         }else{
                             this.carts.splice(i,1); //下标删除几位
                             ly.store.set("carts",this.carts)
