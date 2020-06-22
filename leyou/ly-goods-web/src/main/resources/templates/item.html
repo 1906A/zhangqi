@@ -671,7 +671,7 @@
                     .then(resp => {
                         this.user = resp.data; //对象为空代表购物车为空 对象有值已经登录
                         if(this.user.id==null){
-                            alert("未登录")
+                            //alert("未登录")
                             // 未登录保存在浏览器本地的localStorage中
                             // 1、查询本地购物车
                             let carts = ly.store.get("carts") || [];
@@ -692,7 +692,7 @@
                                     skuId: this.sku.id,
                                     title: this.sku.title,
                                     price: this.sku.price,
-                                    image: this.sku.images,
+                                    images: this.sku.images,
                                     num: this.num,
                                     ownSpec: this.sku.ownSpec
                                 }
@@ -706,7 +706,13 @@
                             //window.location.href = "http://www.leyou.com/cart.html";
                         }else{
                             alert("已登录")
+                            //后台存放redis中的购物车信息
+                            this.sku.num=this.num;
+                            let skuVo=this.sku;
+                            console.info(skuVo);
+                            this.ly.http.post("/cart/add",skuVo).then(resp=>{
 
+                            })
                         }
                     })
 
