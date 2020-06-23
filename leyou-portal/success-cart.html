@@ -674,7 +674,7 @@
                         this.selectedSku=ly.store.get("selectedSku")
                         this.ownSpec=Object.values(JSON.parse(this.selectedSku.ownSpec)).join("/")
                     }else{
-                        alert("已登录")
+                       // alert("已登录")
                         //从后台查redis中的当前的购物车信息
 
                         this.ly.http.post("/cart/selectedSku").then(resp=>{
