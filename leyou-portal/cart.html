@@ -28,7 +28,7 @@
 
         <!--All goods-->
         <div class="allgoods">
-            <h4>全部商品<span>11</span></h4>
+            <h4 >全部商品:<span>{{pin_num}}个</span></h4>
             <div class="cart-main">
                 <div class="yui3-g cart-th">
                     <div class="yui3-u-1-4"><input type="checkbox" value="false"  v-model="allSelect" @click="selectAll"  /> 全部</div>
@@ -94,7 +94,7 @@
                         <span><em>已节省：</em><i>-¥20.00</i></span>
                     </div>
                     <div class="sumbtn">
-                        <a class="sum-btn" href="getOrderInfo.html" target="_blank">结算</a>
+                        <a class="sum-btn"  @click="toPay"  >结算</a>
                     </div>
                 </div>
             </div>
@@ -270,7 +270,8 @@
             carts:[],
             selected:[],
             allSelect:true,
-            totalPrice:0
+            totalPrice:0,
+            pin_num:0
         },
         created(){
 
@@ -292,7 +293,32 @@
 
         },
         methods:{
+            toPay(){
+               /* this.ly.http.post("/cart/selectedSku").then(resp=>{
+                    console.info(resp.data)
+                    this.selectedSku=resp.data;
+                    this.ownSpec=Object.values(JSON.parse(this.selectedSku.ownSpec)).join("/")
+                })*/
+                //判断用户是否登录
+                this.ly.http("/auth/verify")
+                    .then(resp => {
+                        this.user = resp.data; //对象为空代表购物车为空 对象有值已经登录
+                        if(this.user.id==null){
 
+                          //未登录
+                          location.href="http://www.leyou.com/login.html?returnUrl="+location.href;
+
+                        }else{
+                            // alert("已登录")
+                            //从后台查redis中的当前的购物车信息
+                            //把选择的商品放入本地local storage
+                            ly.store.set("js_selected",this.selected)
+                            window.open("http://www.leyou.com/getOrderInfo.html",target="_blank")
+
+                        }
+                    })
+
+            },
             selectAll(){
                 alert(this.allSelect)
 
@@ -327,6 +353,7 @@
                 for(let i=0;i<this.selected.length;i++){
                     if(this.selected.id==cart.id){
                         this.selected.num=cart.num;
+                        this.pin=pincart.num;
                     }
 
                 }
@@ -350,7 +377,7 @@
                     })
                 for(let i=0;i<this.selected.length;i++){
                     if(this.selected.id==cart.id){
-                        this.selected.num=cart.num;
+
                     }
 
                 }
@@ -391,7 +418,9 @@
                     let price=0;
                     for(let i=0;i<newVal.length;i++){
                         price=price+newVal[i].price*+newVal[i].num;
+                        this.pin_num+=newVal[i].num;
                     }
+
                     this.totalPrice=ly.formatPrice(price);
                 }
 
