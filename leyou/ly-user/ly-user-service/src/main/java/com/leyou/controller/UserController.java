@@ -1,5 +1,7 @@
 package com.leyou.controller;
 
+import com.leyou.dao.UserRepository;
+import com.leyou.pojo.Address;
 import com.leyou.pojo.User;
 import com.leyou.service.UserService;
 import com.leyou.utils.CodeUtils;
@@ -7,11 +9,11 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -25,6 +27,10 @@ public class UserController {
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+
+
+    @Autowired
+    com.leyou.dao.UserRepository UserRepository;
 
 
     /**实现用户数据的校验 手机号 用户名的唯一校验
@@ -149,5 +155,120 @@ public class UserController {
        return  result;
 
     }
+
+
+    @PostMapping("tianjiadizhi")
+    public void tianjiadizhi(@RequestBody( required = true) Address address){
+
+          /* name: "李四",// 收件人姓名
+                    phone: "13600000000",// 电话
+                    state: "北京",// 省份
+                    city: "北京",// 城市
+                    district: "朝阳区",// 区
+                    address: "天堂路 3号楼",// 街道地址
+                    zipCode: "100000", // 邮编
+                    defaulter: true*/
+      /*  address.setName("小明");
+        address.setPhone("13600000000");
+*/
+
+        String addressZongdizhi = address.getZongdizhi();
+
+        String[] arr = addressZongdizhi.split("-");
+
+        address.setState(arr[0]);
+        address.setCity(arr[1]);
+        address.setDistrict(arr[2]);
+        address.setAddress(arr[3]);
+
+
+
+        address.setDefaulter(address.getDefaulter());
+        UserRepository.save(address);
+
+
+    }
+    @GetMapping("getbyid")
+    public Address getbyid(@RequestParam(name = "id") Long id){
+
+          /* name: "李四",// 收件人姓名
+                    phone: "13600000000",// 电话
+                    state: "北京",// 省份
+                    city: "北京",// 城市
+                    district: "朝阳区",// 区
+                    address: "天堂路 3号楼",// 街道地址
+                    zipCode: "100000", // 邮编
+                    defaulter: true*/
+      /*  address.setName("小明");
+        address.setPhone("13600000000");
+*/
+
+
+
+        Address address = UserRepository.getOne(id);
+
+        String state = address.getState();
+        String city = address.getCity();
+        String district = address.getDistrict();
+        String addressAddress = address.getAddress();
+        String newaddress = String.join("-", state, city, district, addressAddress);
+
+
+
+
+        address.setZongdizhi(newaddress);
+
+        address.setDefaulter(address.getDefaulter());
+
+
+         return  address;
+    }
+
+
+    @GetMapping("deletebyid")
+    public void deletebyid(@RequestParam(name = "id") Long id){
+
+
+        UserRepository.deleteById(id);
+
+    }
+
+
+
+    @PostMapping("selectaddressAll")
+    public List<Address> selectaddressAll(){
+
+
+
+
+        List<Address> addresses=new ArrayList<>();
+
+        List<Address> listaddresses = UserRepository.findAll();
+
+
+        listaddresses.forEach(address -> {
+
+            String state = address.getState();
+            String city = address.getCity();
+            String district = address.getDistrict();
+            String addressAddress = address.getAddress();
+            String newaddress = String.join("-", state, city, district, addressAddress);
+            address.setZongdizhi(newaddress);
+            address.setDefaulter(address.getDefaulter());
+
+            addresses.add(address);
+
+        });
+
+
+
+
+
+         return  addresses;
+    }
+
+
+
+
 
 }

@@ -1,15 +1,26 @@
 server:
   port: 8085
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: user-service
   datasource:
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/leyou?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
     username: root
     password: 1234
+
+
     hikari:
       maximum-pool-size: 30
       minimum-idle: 10
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+    show-sql: true
   rabbitmq:
     host: 192.168.58.132
   redis:
