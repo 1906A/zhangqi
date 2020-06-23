@@ -4,6 +4,9 @@ import com.leyou.common.pojo.UserInfo;
 import com.leyou.common.utils.JwtUtils;
 import com.leyou.pojo.SkuVo;
 import com.leyou.utils.JsonUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -14,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Api("购物车服务接口")
 public class CartController {
 
             /*
@@ -41,7 +45,9 @@ public class CartController {
      * @param token
      * @param skuVo
      */
-    @RequestMapping("add")
+    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @ApiOperation(value = "创建添加购物车接口", notes = "创建购物车")
+    @ApiImplicitParam(name = "order", required = true, value = "订单的json对象,包含购物车对象信息")
     public void add(@CookieValue("token") String token,@RequestBody SkuVo skuVo){
         UserInfo userInfo = getUserInfoByToken(token);
         //添加购物车
