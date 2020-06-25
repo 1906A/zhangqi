@@ -245,7 +245,7 @@ public class UserController {
 
         List<Address> listaddresses = UserRepository.findAll();
 
-
+       //遍历 把总地址加进去
         listaddresses.forEach(address -> {
 
             String state = address.getState();
