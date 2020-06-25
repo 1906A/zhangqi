@@ -40,15 +40,16 @@
                     <div class="addressInfo">
                         <ul class="addr-detail">
                             <li class="addr-item" v-for="(a,i) in addresses" :key="i">
+                                <input type="hidden" v-model="a.aid">
                                 <div>
                                     <div :class="{con:true,name:true,selected:i === selectedAddress}"><a
                                             href="javascript:;" @click.stop="selectedAddress=i">{{a.name}}<span
                                             title="点击取消选择"></span>&nbsp;</a></div>
                                     <div class="con address">{{a.state + a.city + a.district + a.address}} <span>{{a.phone}}</span>
-                                        <span class="base" v-if="a.default">默认地址</span>
-                                        <span class="edittext"><a data-toggle="modal" data-target=".edit"
-                                                                  data-keyboard="false">编辑</a>&nbsp;&nbsp;<a
-                                                href="javascript:;">删除</a></span>
+                                        <span class="base" v-if="a.defaulter">默认地址</span>
+                                        <span ><a data-toggle="modal" data-target=".edit"
+                                                                  data-keyboard="false" @click="getbyid(a.aid)">编辑</a>&nbsp;&nbsp;<a
+                                                href="javascript:;" @click="deletebyid(a.aid)">删除</a></span>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -65,31 +66,37 @@
                                         </button>
                                         <h4 id="myModalLabel" class="modal-title">添加收货地址</h4>
                                     </div>
+                                    <input type="hidden" v-model="address.aid" :value="address.aid">
                                     <div class="modal-body">
                                         <form action="" class="sui-form form-horizontal">
                                             <div class="control-group">
                                                 <label class="control-label">收货人：</label>
                                                 <div class="controls">
-                                                    <input type="text" class="input-medium">
+                                                    <input type="text" class="input-medium" v-model="address.name"
+                                                           :value="address.name">
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
                                                 <label class="control-label">详细地址：</label>
                                                 <div class="controls">
-                                                    <input type="text" class="input-large">
+                                                    <input type="text" class="input-large"
+                                                           placeholder="xx省-xx市-xx区-xx街道地址" v-model="address.zongdizhi"
+                                                           :value="address.zongdizhi">
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">联系电话：</label>
                                                 <div class="controls">
-                                                    <input type="text" class="input-medium">
+                                                    <input type="text" class="input-medium" v-model="address.phone"
+                                                           :value="address.phone">
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">邮箱：</label>
                                                 <div class="controls">
-                                                    <input type="text" class="input-medium">
+                                                    <input type="text" class="input-medium" v-model="address.zipcode"
+                                                           :value="address.zipcode">
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -106,7 +113,8 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large">确定
+                                        <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large"
+                                                @click="tianjiadizhi">确定
                                         </button>
                                         <button type="button" data-dismiss="modal"
                                                 class="sui-btn btn-default btn-large">取消
@@ -137,7 +145,7 @@
                         <h5>送货清单</h5>
                     </div>
                     <div class="step-cont">
-                        <ul class="send-detail"  v-for="sku in selectedSku">
+                        <ul class="send-detail" v-for="sku in selectedSku">
                             <li>
                                 <div class="sendGoods">
                                     <ul class="yui3-g">
@@ -220,44 +228,105 @@
             ly,
             addresses: [// 可选地址列表,假数据，需要从后台查询
                 {
+                    aid: 1,
                     name: "锋哥",// 收件人姓名
                     phone: "15800000000",// 电话
                     state: "上海",// 省份
                     city: "上海",// 城市
                     district: "浦东新区",// 区
                     address: "航头镇航头路18号传智播客 3号楼",// 街道地址
-                    zipCode: "210000", // 邮编
-                    default: true
+                    zipcode: "210000", // 邮编
+                    defaulter: true
                 },
                 {
+                    aid: 2,
                     name: "张三",// 收件人姓名
                     phone: "13600000000",// 电话
                     state: "北京",// 省份
                     city: "北京",// 城市
                     district: "朝阳区",// 区
                     address: "天堂路 3号楼",// 街道地址
-                    zipCode: "100000", // 邮编
-                    default: false
+                    zipcode: "100000", // 邮编
+                    defaulter: false
+                },
+                {
+                    aid: 3,
+                    name: "李四",// 收件人姓名
+                    phone: "13600000000",// 电话
+                    state: "北京",// 省份
+                    city: "北京",// 城市
+                    district: "朝阳区",// 区
+                    address: "天堂路 3号楼",// 街道地址
+                    zipcode: "100000", // 邮编
+                    defaulter: true
                 }
             ],
             selectedAddress: 0,
-            selectedSku:[],
-            totalPrice:0,
-            fanxian:475.20,
-            yunfei:0,
-            paymentType:1
-
-        },
-        created(){
-           this.selectedSku= ly.store.get("js_selected")
-            let  price=0;
-            for (let i = 0; i < this.selectedSku.length; i++) {
-                price=price+this.selectedSku[i].price*this.selectedSku[i].num;
+            selectedSku: [],
+            totalPrice: 0,
+            fanxian: 475.20,
+            yunfei: 0,
+            paymentType: 1,
+            address: {
+                aid: null,
+                name: "",// 收件人姓名
+                phone: "",// 电话
+                /* state: "",// 省份
+                 city: "",// 城市
+                 district: "",// 区
+                 address: "",// 街道地址*/
+                zongdizhi: "",
+                zipcode: "", // 邮编
+                defaulter: false
             }
-            this.totalPrice=ly.formatPrice(price);
-            console.info(this.selectedSku)
-        },
 
+        },
+        created() {
+
+
+            ly.http.post("/user/selectaddressAll").then(resp => {
+                this.addresses = resp.data;
+
+            })
+
+
+            this.selectedSku = ly.store.get("js_selected")
+            let price = 0;
+            for (let i = 0; i < this.selectedSku.length; i++) {
+                price = price + this.selectedSku[i].price * this.selectedSku[i].num;
+            }
+            this.totalPrice = ly.formatPrice(price);
+            console.info(this.selectedSku);
+
+
+        },
+        methods: {
+
+            tianjiadizhi() {
+                ly.http.post("/user/tianjiadizhi", this.address).then(resp => {
+                    location.reload();
+
+                })
+
+            },
+            getbyid(id) {
+                alert(id)
+                ly.http.get("/user/getbyid?id=" + id).then(resp => {
+                    this.address = resp.data;
+
+                })
+
+
+            },
+            deletebyid(id) {
+                alert(id)
+                ly.http.get("/user/deletebyid?id=" + id).then(resp => {
+                    location.reload();
+
+                })
+
+            }
+        },
         components: {
             shortcut: () => import("/js/pages/shortcut.js")
         }
